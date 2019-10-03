@@ -14,10 +14,12 @@ function Navbar ( { handleSearch } ) {
 			<span className="logo">AccuWeather</span>
 
 			<ul className="navlinks">
+
 				<SearchField handleSearch={ handleSearch } />
 				<li><NavLink className=" navlink home" to="/" >Home</NavLink></li>
 				<li><NavLink className="navlink  settings" to="/Settings" >Settings</NavLink></li>
 				<Share />
+
 			</ul>
 
 		</Navbar>
@@ -47,6 +49,7 @@ const Navbar_styles = () => styled.div`
 	}
 	.navlinks {
 		height: 100%;
+		width: 45%;
 		margin-right: calc(20px + 2%);
 		display: flex;
 		justify-content: space-evenly;
@@ -85,9 +88,6 @@ const Navbar_styles = () => styled.div`
 				color: ${global.fontColor.secondary };
 				background: ${global.btnClr.primary };
 				border-radius: 7px;
-				border: none;
-				font-size: inherit;
-				font-family: inherit;
 				transition: background 250ms 40ms;
 			}
 			&.share:hover {
@@ -123,12 +123,6 @@ const Navbar_styles = () => styled.div`
 		.ap-nostyle-input,
 		.ap-nostyle-dropdown-menu {
 			max-width: 300px;
-		}
-		.ap-nostyle-input:focus{
-			background: linear-gradient(#bfc1c3, #f2f6f9)
-		}
-		.ap-nostyle-dropdown-menu {
-			background: #f2f6f9;
 		}
 
 		.search-field {

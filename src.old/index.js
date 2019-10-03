@@ -6,7 +6,7 @@ import { Navbar, Home, Footer, Result } from "./components";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import LazyLoad from 'react-lazy-load';
 import { fadeIn } from "./styles/keyframes";
-// import Axios from 'axios';
+import Axios from 'axios';
 import { reduceDailyData } from "./helpers/helpers";
 
 class App extends React.Component {
@@ -20,8 +20,8 @@ class App extends React.Component {
 
 	handleSearch = ( fullISO, history ) => {
 
-		// const key1 = "4db924c717d24ebebe5bfae8f25c6c35";
-		// const key2 = "5a1b838c8e3440a8bf6a2d302170a6ed"
+		const key1 = "4db924c717d24ebebe5bfae8f25c6c35";
+		const key2 = "5a1b838c8e3440a8bf6a2d302170a6ed"
 
 		// Axios.get( `https://api.weatherbit.io/v2.0/forecast/daily?city=${ fullISO }&key=${ key1 }` )
 		// 	.then( resp => { 

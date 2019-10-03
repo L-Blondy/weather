@@ -3,64 +3,39 @@ import { withRouter } from "react-router-dom";
 import styled from 'styled-components';
 import { convertRemToPixels } from "../helpers/helpers";
 import { global } from "../styles/globalStyles";
-import { carousselAnim } from "../styles/keyframes";
 
-class Caroussel extends React.Component {
-	//( { history, dailyData } ) 
-	constructor ( props ) {
-		super( props );
+function Caroussel ( { history, dailyData } ) {
 
-		this.state = {
-			itemWidth: null,
-			items: null,
-			activeDay: 0,
-			scrollCount: 0,
-			prevScrollCount: 0,
-			anim: false,
-		}
-		this.grid = React.createRef()
-	}
+	const [ itemWidth, setItemWidth ] = React.useState();
+	const [ activeDay, setActiveDay ] = React.useState( 0 );
+	const curScroll = React.useRef( 0 )
+	const grid = React.useRef()
+	const Caroussel = Caroussel_styles( itemWidth )
 
-	componentDidMount = () => {
-		window.addEventListener( "resize", this.resize );
-		this.resize();
+	React.useEffect( () => {
+		console.log( "MOUNT" )
+		window.addEventListener( "resize", resize );
+		resize();
 		return () => {
-			window.removeEventListener( "resize", this.resize )
+			window.removeEventListener( "resize", resize )
 		};
+	}, [] )
+	React.useEffect( () => {
+		grid.current.scrollLeft = curScroll.current;
+	} )
+
+	const resize = () => {
+		const gridWidth = grid.current.getBoundingClientRect().width
+		const items = Math.floor( gridWidth / convertRemToPixels( 7.65 ) )
+		setItemWidth( gridWidth / items )
 	}
 
-	resize = () => {
-		const gridWidth = this.grid.current.getBoundingClientRect().width;
-		const items = Math.floor( gridWidth / convertRemToPixels( 7.65 ) );
-		this.setState( {
-			itemWidth: gridWidth / items,
-			items
-		} );
+	const scroll = ( dir ) => {
+		grid.current.scrollLeft = curScroll.current + dir * Math.round( itemWidth );
+		curScroll.current = grid.current.scrollLeft;
 	}
 
-	scrollCount = ( dir ) => {
-		const { scrollCount, items } = this.state;
-
-		if ( scrollCount <= 0 && dir < 0 ) return;
-		if ( scrollCount + items >= 16 && dir > 0 ) return;
-		// if(anim)
-		this.setState( {
-			prevScrollCount: scrollCount,
-			scrollCount: scrollCount + dir,
-			anim: true
-		} );
-	}
-
-	setCurrentActive = ( index ) => {
-		this.setState( {
-			activeDay: index,
-			anim: false
-		} )
-	}
-
-	renderDailyData = () => {
-		let { dailyData } = this.props;
-		const { activeDay } = this.state;
+	const renderDailyData = () => {
 		// if ( !dailyData ) {
 		// 	history.push( '/' )
 		// 	return;
@@ -69,7 +44,7 @@ class Caroussel extends React.Component {
 			dailyData = [ { "date": "Sep 30", "imgSrc": "https://www.weatherbit.io/static/img/icons/c03d.png", "temperature": 25, "weather": "Broken clouds" }, { "date": "Oct 01", "imgSrc": "https://www.weatherbit.io/static/img/icons/c03d.png", "temperature": 24, "weather": "Broken clouds" }, { "date": "Oct 02", "imgSrc": "https://www.weatherbit.io/static/img/icons/t02d.png", "temperature": 23, "weather": "Storm with rain" }, { "date": "Oct 03", "imgSrc": "https://www.weatherbit.io/static/img/icons/r03d.png", "temperature": 20, "weather": "Heavy rain" }, { "date": "Oct 04", "imgSrc": "https://www.weatherbit.io/static/img/icons/c02d.png", "temperature": 22, "weather": "Few clouds" }, { "date": "Oct 05", "imgSrc": "https://www.weatherbit.io/static/img/icons/c02d.png", "temperature": 24, "weather": "Scattered clouds" }, { "date": "Oct 06", "imgSrc": "https://www.weatherbit.io/static/img/icons/c02d.png", "temperature": 25, "weather": "Few clouds" }, { "date": "Oct 07", "imgSrc": "https://www.weatherbit.io/static/img/icons/c03d.png", "temperature": 25, "weather": "Broken clouds" }, { "date": "Oct 08", "imgSrc": "https://www.weatherbit.io/static/img/icons/c02d.png", "temperature": 27, "weather": "Few clouds" }, { "date": "Oct 09", "imgSrc": "https://www.weatherbit.io/static/img/icons/c02d.png", "temperature": 27, "weather": "Few clouds" }, { "date": "Oct 10", "imgSrc": "https://www.weatherbit.io/static/img/icons/c01d.png", "temperature": 27, "weather": "Clear Sky" }, { "date": "Oct 11", "imgSrc": "https://www.weatherbit.io/static/img/icons/c02d.png", "temperature": 27, "weather": "Few clouds" }, { "date": "Oct 12", "imgSrc": "https://www.weatherbit.io/static/img/icons/c02d.png", "temperature": 29, "weather": "Few clouds" }, { "date": "Oct 13", "imgSrc": "https://www.weatherbit.io/static/img/icons/c02d.png", "temperature": 27, "weather": "Few clouds" }, { "date": "Oct 14", "imgSrc": "https://www.weatherbit.io/static/img/icons/c02d.png", "temperature": 25, "weather": "Few clouds" }, { "date": "Oct 15", "imgSrc": "https://www.weatherbit.io/static/img/icons/c04d.png", "temperature": 24, "weather": "Overcast clouds" } ]
 		}
 		return dailyData.map( ( day, index ) => (
-			<button className={ "grid-item " + ( activeDay === index ? "active" : "" ) } key={ "day" + index } onClick={ () => this.setCurrentActive( index ) }>
+			<button className={ "grid-item " + ( activeDay === index ? "active" : "" ) } key={ "day" + index } onClick={ () => setActiveDay( index ) }>
 				<div className="date">{ day.date }</div>
 				<img className="icon" src={ day.imgSrc } alt="" />
 				<div className="temperature">{ day.temperature + "°c" }</div>
@@ -78,36 +53,24 @@ class Caroussel extends React.Component {
 		) )
 	}
 
-	render () {
-		const { itemWidth, scrollCount, prevScrollCount, anim } = this.state;
-		console.log( anim )
-		const Caroussel = Caroussel_styles( itemWidth, prevScrollCount, scrollCount, anim )
+	return (
+		<Caroussel className="caroussel">
+			<button className="left" onClick={ () => scroll( -1 ) } >LEFT</button>
 
+			<ul className="grid" ref={ grid }>
+				{ renderDailyData() }
+			</ul>
 
-		return (
-			<Caroussel className="caroussel">
-				<button className="left" onClick={ () => this.scrollCount( -1 ) } >LEFT</button>
-
-				<div className="grid-container">
-					<ul className="grid" ref={ this.grid }>
-						{ this.renderDailyData() }
-					</ul>
-				</div>
-
-				<button className="right" onClick={ () => this.scrollCount( 1 ) } >RIGHT</button>
-			</Caroussel>
-		)
-	}
+			<button className="right" onClick={ () => scroll( 1 ) } >RIGHT</button>
+		</Caroussel>
+	)
 }
 
-const Caroussel_styles = ( itemWidth, prevScrollCount, scrollCount, anim ) => styled.div`
+const Caroussel_styles = ( itemWidth ) => styled.div`
 	display: grid;
 	grid-template-columns: 50px auto 50px;
 	width: 100%;
 
-	.grid-container {
-		overflow: hidden;
-	}
 	.grid {
 		display: grid;
 		grid-auto-flow: column;
@@ -115,7 +78,7 @@ const Caroussel_styles = ( itemWidth, prevScrollCount, scrollCount, anim ) => st
 		grid-auto-rows: 8rem;
 		place-items: center;
 		list-style: none;
-		animation: ${ carousselAnim( itemWidth, prevScrollCount, scrollCount ) }  ${ () => anim ? "200ms" : "0ms" } forwards ease-out; 
+		overflow: hidden;
 
 		.icon {
 			width: 40px;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import enhanceWithClickOutside from "react-click-outside";
+import styled from 'styled-components';
 
 class Share extends Component {
 
@@ -7,13 +8,19 @@ class Share extends Component {
 		active: false
 	}
 
-	toggleShare = () => {
+	componentDidMount = () => {
+		console.log( "MOUNT" )
+	}
+
+	toggleShare = ( e ) => {
+		console.log( e.target )
 		this.setState( {
 			active: !this.state.active
 		} )
 	}
 
-	handleClickOutside = () => {
+	handleClickOutside = ( e ) => {
+		console.log( e.target )
 		this.setState( {
 			active: false
 		} )
@@ -22,11 +29,11 @@ class Share extends Component {
 	render () {
 		return (
 			<li className="share-link">
-				<button className={ "navlink  share " + ( this.state.active ? "active " : "" ) } onClick={ this.toggleShare }>Share</button>
+				<a className={ "navlink  share " + `${ this.state.active ? "active " : "" }` } onClick={ this.toggleShare }>Share</a>
 				<ul className="float">
-					<li><a href="https://www.google.com">Facebook</a></li>
-					<li><a href="https://www.google.com">Twitter</a></li>
-					<li><a href="https://www.google.com">LinkedIn</a></li>
+					<li><a>Facebook</a></li>
+					<li><a>Twitter</a></li>
+					<li><a>LinkedIn</a></li>
 				</ul>
 			</li>
 		)

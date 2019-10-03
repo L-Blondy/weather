@@ -20,11 +20,3 @@ export const pokeRight = keyframes`
 		transform: translateX(20%);
 	}
 `
-export const carousselAnim = ( itemWidth, prevScrollCount, scrollCount ) => keyframes`
-	from { 
-		transform: translateX(-${prevScrollCount * itemWidth + "px" });
-	}
-	to { 
-		transform: translateX(-${scrollCount * itemWidth + "px" });
-	}
-`

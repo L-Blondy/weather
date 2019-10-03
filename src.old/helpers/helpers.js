@@ -16,8 +16,4 @@ export const reduceDailyData = ( data ) => {
 	}, [] )
 }
 
-export function convertRemToPixels ( rem ) {
-	return rem * parseFloat( getComputedStyle( document.documentElement ).fontSize );
-}
-
 //https://www.weatherbit.io/static/img/icons/r01d.png

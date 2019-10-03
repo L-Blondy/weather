@@ -52,7 +52,7 @@ function SearchForm ( { handleSearch, history, animated } ) {
 			frameID = window.requestAnimationFrame( animPlaceholder )
 		}
 		return () => window.cancelAnimationFrame( frameID )
-	}, [ animated, sentences ] )
+	}, [] )
 
 	return (
 		<SearchField className="search-field" ref={ searchInput }>

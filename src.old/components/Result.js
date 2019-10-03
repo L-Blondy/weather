@@ -1,32 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
 import { global } from "../styles/globalStyles";
-import { Daily } from ".";
+import { Daily, Hourly } from ".";
 
-export default class Result extends React.Component {
+export default function Result ( { place, time, dailyData } ) {
 
-	render () {
-		const { place, time, dailyData } = this.props;
-		const Result = Result_styles()
-		return (
-			<Result>
+	const Result = Result_styles()
 
-				<div className="place-time">
-					<p className="place">{ place }</p>
-					<p className="time">{ time }</p>
-				</div>
+	return (
+		<Result>
 
-				<Daily dailyData={ dailyData } />
+			<div className="place-time">
+				<p className="place">{ place }</p>
+				<p className="time">{ time }</p>
+			</div>
 
-				<div>HOURLY</div>
+			<Daily dailyData={ dailyData } />
 
-				<div className="details">
-					<h4>DAY DETAILS</h4>
-				</div>
+			<div>HOURLY</div>
 
-			</Result >
-		)
-	}
+			<div className="details">
+				<h4>DAY DETAILS</h4>
+			</div>
+
+		</Result >
+	)
 }
 
 const Result_styles = () => styled.div`
