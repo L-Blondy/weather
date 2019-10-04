@@ -41,6 +41,7 @@ class App extends React.Component {
 			history.push( '/Result' )
 		}
 		getFakeDailyData()
+		document.querySelector( ".ap-nostyle-input" ).value = "";
 	}
 
 	render () {

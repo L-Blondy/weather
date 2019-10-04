@@ -8,8 +8,6 @@ import { withRouter } from 'react-router-dom'
 
 function SearchForm ( { handleSearch, history, animated } ) {
 
-	const SearchField = SearchField_styles( animated )
-
 	const searchInput = useRef();
 
 	const sentences = [
@@ -55,7 +53,7 @@ function SearchForm ( { handleSearch, history, animated } ) {
 	}, [ animated, sentences ] )
 
 	return (
-		<SearchField className="search-field" ref={ searchInput }>
+		<SearchField_styled className="search-field" ref={ searchInput } animated={ animated }>
 			<AlgoliaPlaces
 				placeholder=""
 
@@ -83,11 +81,11 @@ function SearchForm ( { handleSearch, history, animated } ) {
 				} }
 			/>
 			<SearchIcon className="search-icon" onClick={ () => handleSearch( document.querySelector( ".ap-nostyle-input" ).value, history ) } />
-		</SearchField>
+		</SearchField_styled>
 	)
 }
 
-const SearchField_styles = ( animated ) => styled.div`
+const SearchField_styled = styled.div`
 	position: relative;
 	display: inline-block;
 
@@ -129,7 +127,7 @@ const SearchField_styles = ( animated ) => styled.div`
 		z-index: 2;
 		transform-origin: left;
 		transform: scaleX( 0 );
-		animation: ${ scaleX } ${ animated ? "1500ms 200ms" : "0ms" } forwards;
+		animation: ${ scaleX } ${ props => props.animated ? "1500ms 200ms" : "0ms" } forwards;
 	}
 	.ap-nostyle-input-icon {
 		width: 0;
@@ -145,7 +143,7 @@ const SearchField_styles = ( animated ) => styled.div`
 		transition: transform 300ms, filter 300ms;
 		color: ${global.fontColor.primary };
 		opacity: 0;
-		animation: ${fadeIn( 1 ) } ${ animated ? "3000ms 1000ms" : "0ms" } forwards;
+		animation: ${fadeIn( 1 ) } ${ props => props.animated ? "3000ms 1000ms" : "0ms" } forwards;
 
 		&:hover {
 			transform: scale(1.15);

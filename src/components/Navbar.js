@@ -7,9 +7,8 @@ import { SearchField, Share } from ".";
 
 function Navbar ( { handleSearch } ) {
 
-	const Navbar = Navbar_styles();
 	return (
-		<Navbar className="navbar">
+		<Navbar_styled className="navbar">
 
 			<span className="logo">AccuWeather</span>
 
@@ -20,11 +19,11 @@ function Navbar ( { handleSearch } ) {
 				<Share />
 			</ul>
 
-		</Navbar>
+		</Navbar_styled>
 	)
 }
 
-const Navbar_styles = () => styled.div`
+const Navbar_styled = styled.div`
 	color: ${global.fontColor.primary };
 	display: flex;
 	align-items: center;

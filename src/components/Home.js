@@ -6,10 +6,8 @@ import { pokeRight } from "../styles/keyframes";
 
 export default function Home ( { handleSearch } ) {
 
-	const Home = Home_styles();
-
 	return (
-		<Home className="home">
+		<Home_styled className="home">
 
 			<div className="side left-side">
 				<Title></Title>
@@ -34,11 +32,11 @@ export default function Home ( { handleSearch } ) {
 			<div className="side right-side">
 				<SearchField handleSearch={ handleSearch } animated />
 			</div>
-		</Home>
+		</Home_styled>
 	)
 }
 
-const Home_styles = () => styled.div`
+const Home_styled = styled.div`
 	flex-grow: 1;
 	display: flex;
 	font-family: ${global.fontFamily.primary };

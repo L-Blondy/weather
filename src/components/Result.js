@@ -1,35 +1,36 @@
 import React from 'react';
 import styled from 'styled-components';
 import { global } from "../styles/globalStyles";
-import { Daily } from ".";
+import { Caroussel } from "./";
 
-export default class Result extends React.Component {
+export default function Result ( { place, time, dailyData } ) {
 
-	render () {
-		const { place, time, dailyData } = this.props;
-		const Result = Result_styles()
-		return (
-			<Result>
+	return (
+		<Result_styled>
 
-				<div className="place-time">
-					<p className="place">{ place }</p>
-					<p className="time">{ time }</p>
-				</div>
+			<div className="place-time">
+				<p className="place">{ place }</p>
+				<p className="time">{ time }</p>
+			</div>
 
-				<Daily dailyData={ dailyData } />
+			<div className="daily" >
+				<h4>DAILY</h4>
+				<Caroussel dailyData={ dailyData } />
+			</div >
 
-				<div>HOURLY</div>
+			<div className="hourly">
+				<h4>HOURLY</h4>
+			</div>
 
-				<div className="details">
-					<h4>DAY DETAILS</h4>
-				</div>
+			<div className="details">
+				<h4>DAY DETAILS</h4>
+			</div>
 
-			</Result >
-		)
-	}
+		</Result_styled >
+	)
 }
 
-const Result_styles = () => styled.div`
+const Result_styled = styled.div`
 	height: 100%;
 	font-family: ${ global.fontFamily.ternary };
 	color: ${ global.fontColor.primary };
