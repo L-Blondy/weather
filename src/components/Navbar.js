@@ -6,24 +6,23 @@ import { SearchField, Share } from ".";
 
 
 function Navbar ( { handleSearch } ) {
-
 	return (
-		<Navbar_styled className="navbar">
+		<NavbarStyled className="navbar">
 
 			<span className="logo">AccuWeather</span>
 
 			<ul className="navlinks">
 				<SearchField handleSearch={ handleSearch } />
 				<li><NavLink className=" navlink home" to="/" >Home</NavLink></li>
-				<li><NavLink className="navlink  settings" to="/Settings" >Settings</NavLink></li>
+				<li><NavLink className="navlink  settings" to="/Settings">Settings</NavLink></li>
 				<Share />
 			</ul>
 
-		</Navbar_styled>
+		</NavbarStyled>
 	)
 }
 
-const Navbar_styled = styled.div`
+const NavbarStyled = styled.div`
 	color: ${global.fontColor.primary };
 	display: flex;
 	align-items: center;
@@ -45,13 +44,14 @@ const Navbar_styled = styled.div`
 		color: inherit;
 	}
 	.navlinks {
+		width: 60%;
 		height: 100%;
 		margin-right: calc(20px + 2%);
 		display: flex;
 		justify-content: space-evenly;
 		align-items: center;
 		font-family: ${global.fontFamily.primary };
-		font-size: 1.2rem;		
+		font-size: 1.1rem;		
 		list-style: none;
 		letter-spacing: 2px;
 

@@ -1,0 +1,24 @@
+<svg class="loading-img" width="77" height="77" viewBox="0 0 77 77" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<style>
+	.loading-img {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		animation: rotateSelf 2000ms infinite linear;
+		opacity: 0.7;
+	}
+
+	@keyframes rotateSelf {
+		from { transform: translate(-50%, -50%) rotate(0) }
+		to { transform: translate(-50%, -50%) rotate(360deg) }
+	}
+	</style>
+	<circle cx="38.5" cy="8.88462" r="8.88462" fill="currentColor"/>
+	<circle cx="38.5" cy="68.1154" r="8.88462" fill="currentColor"/>
+	<circle cx="68.1154" cy="38.5" r="8.88462" fill="currentColor"/>
+	<circle cx="8.88462" cy="38.5" r="8.88462" fill="currentColor"/>
+	<circle cx="17.7692" cy="17.7692" r="8.88462" fill="currentColor"/>
+	<circle cx="59.2308" cy="17.7692" r="8.88462" fill="currentColor"/>
+	<circle cx="59.2308" cy="59.2308" r="8.88462" fill="currentColor"/>
+	<circle cx="17.7692" cy="59.2308" r="8.88462" fill="currentColor"/>
+</svg>

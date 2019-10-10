@@ -1,14 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import AlgoliaPlaces from 'algolia-places-react';
 import styled from 'styled-components';
 import { ReactComponent as SearchIcon } from '../assets/search.svg';
+import { ReactComponent as ClearIcon } from '../assets/clear.svg';
 import { fadeIn, scaleX } from "../styles/keyframes";
 import { global } from "../styles/globalStyles";
 import { withRouter } from 'react-router-dom'
 
 function SearchForm ( { handleSearch, history, animated } ) {
-
-	const searchInput = useRef();
 
 	const sentences = [
 		"Florence, Toscana, Italy".split( "" ),
@@ -23,45 +22,59 @@ function SearchForm ( { handleSearch, history, animated } ) {
 		"Barcelona, Catalunya, Spain".split( "" ),
 	];
 
-	useEffect( () => { //Placeholder effect only on Homepge search field
+	const [ inputVal, setInputVal ] = React.useState();
+	const anim = React.useRef( { letter: 0, sentence: 0, timeout: 170, frameID: 0 } );
+	const searchInput = React.useRef();
+
+	React.useEffect( () => {
 		if ( !animated ) return;
 
-		let letterIndex = 0;
-		let sentence = 0;
-		const timeout = 170
-		let frameID;
 		const input = searchInput.current.querySelector( ".ap-nostyle-input" )
-
+		anim.current = { letter: 0, sentence: 0, timeout: 170 };
+		input.placeholder = "";
+		let { letter, sentence, timeout, frameID } = anim.current;
 		frameID = window.requestAnimationFrame( animPlaceholder )
 		const restartID = frameID + timeout;
 
 		function animPlaceholder () {
-			if ( frameID >= restartID ) { //timeout of ${timeout} frames
-				if ( frameID % 5 === 0 && letterIndex < sentences[ sentence ].length ) {
-					input.placeholder += sentences[ sentence ][ letterIndex ];
-					letterIndex++
+			if ( frameID >= restartID ) {
+				if ( frameID % 5 === 0 && letter < sentences[ sentence ].length ) {
+					input.placeholder += sentences[ sentence ][ letter ];
+					letter++
 				}
 				if ( ( frameID + timeout ) % 300 === 0 ) {
 					input.placeholder = "";
-					letterIndex = 0;
+					letter = 0;
 					sentence < sentences.length - 1 ? sentence++ : sentence = 0;
 				}
 			}
 			frameID = window.requestAnimationFrame( animPlaceholder )
 		}
 		return () => window.cancelAnimationFrame( frameID )
-	}, [ animated, sentences ] )
+	} )
+
+	const resetInput = () => {
+		searchInput.current.querySelector( ".ap-nostyle-icon-clear" ).click()
+		setInputVal( "" );
+	}
 
 	return (
-		<SearchField_styled className="search-field" ref={ searchInput } animated={ animated }>
+		<SearchFieldStyled
+			className="search-field"
+			ref={ searchInput }
+			animated={ animated }
+			inputVal={ inputVal }
+			onChange={ () => {
+				setInputVal( searchInput.current.querySelector( ".ap-nostyle-input" ).value )
+			} }
+		>
 			<AlgoliaPlaces
 				placeholder=""
-
 				onChange={ ( { suggestion } ) => {
-					const fullISO = suggestion.name + "," + suggestion.countryCode
-					handleSearch( fullISO, history );
+					const fullISO = suggestion.name + "," + suggestion.countryCode;
+					const PlaceFullName = suggestion.name + "," + suggestion.country;
+					handleSearch( fullISO, PlaceFullName, history );
 				} }
-
 				options={ {
 					appId: "pl8X2ZGNUAZU",
 					apiKey: "7b2200ebe7e913fe219c6010ed67753b",
@@ -80,12 +93,14 @@ function SearchForm ( { handleSearch, history, animated } ) {
 					getRankingInfo: true
 				} }
 			/>
-			<SearchIcon className="search-icon" onClick={ () => handleSearch( document.querySelector( ".ap-nostyle-input" ).value, history ) } />
-		</SearchField_styled>
+			<SearchIcon className="search-icon" />
+			<ClearIcon className="clear-icon" onClick={ resetInput } />
+
+		</SearchFieldStyled>
 	)
 }
 
-const SearchField_styled = styled.div`
+const SearchFieldStyled = styled.div`
 	position: relative;
 	display: inline-block;
 
@@ -136,20 +151,31 @@ const SearchField_styled = styled.div`
 	.search-icon {
 		height: 1.7rem;
 		width: 1.7rem;
+		opacity: 0;
+		visibility: ${props => props.inputVal ? "hidden" : "visible" };
+		animation: ${fadeIn( 1 ) } ${ props => props.animated ? "3000ms 1000ms" : "0ms" } forwards;
+	}
+	.clear-icon {
+		height: 1.5rem;
+		width: 1.5rem;
+		visibility: ${props => props.inputVal ? "visible" : "hidden" };
+	}
+
+	.search-icon,
+	.clear-icon {
 		position: absolute;
 		bottom: 7px;
 		right: 7px;
 		cursor: pointer;
 		transition: transform 300ms, filter 300ms;
 		color: ${global.fontColor.primary };
-		opacity: 0;
-		animation: ${fadeIn( 1 ) } ${ props => props.animated ? "3000ms 1000ms" : "0ms" } forwards;
 
 		&:hover {
 			transform: scale(1.15);
 			filter: brightness(15%);
 		}
 	}
+
 	.ap-nostyle-dropdown-menu {
 		font-family: ${global.fontFamily.secondary };
 		width: 100%;
