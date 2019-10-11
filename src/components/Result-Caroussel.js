@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
 import styled from 'styled-components';
-import { convertRemToPixels } from "../helpers/helpers";
+import { convertRemToPixels, getIcon } from "../helpers/helpers";
 import { global } from "../styles/globalStyles";
 import { ReactComponent as Loading } from "../assets/loading.svg"
 
@@ -50,18 +50,20 @@ class Caroussel extends React.Component {
 		// 	history.push( '/' )
 		// 	return;
 		// }
-		dailyData = [ { "date": "Sep 30", "imgSrc": "https://www.weatherbit.io/static/img/icons/c03d.png", "temperature": 25, "weather": "Broken clouds" }, { "date": "Oct 01", "imgSrc": "https://www.weatherbit.io/static/img/icons/c03d.png", "temperature": 24, "weather": "Broken clouds" }, { "date": "Oct 02", "imgSrc": "https://www.weatherbit.io/static/img/icons/t02d.png", "temperature": 23, "weather": "Storm with rain" }, { "date": "Oct 03", "imgSrc": "https://www.weatherbit.io/static/img/icons/r03d.png", "temperature": 20, "weather": "Heavy rain" }, { "date": "Oct 04", "imgSrc": "https://www.weatherbit.io/static/img/icons/c02d.png", "temperature": 22, "weather": "Few clouds" }, { "date": "Oct 05", "imgSrc": "https://www.weatherbit.io/static/img/icons/c02d.png", "temperature": 24, "weather": "Scattered clouds" }, { "date": "Oct 06", "imgSrc": "https://www.weatherbit.io/static/img/icons/c02d.png", "temperature": 25, "weather": "Few clouds" }, { "date": "Oct 07", "imgSrc": "https://www.weatherbit.io/static/img/icons/c03d.png", "temperature": 25, "weather": "Broken clouds" }, { "date": "Oct 08", "imgSrc": "https://www.weatherbit.io/static/img/icons/c02d.png", "temperature": 27, "weather": "Few clouds" }, { "date": "Oct 09", "imgSrc": "https://www.weatherbit.io/static/img/icons/c02d.png", "temperature": 27, "weather": "Few clouds" }, { "date": "Oct 10", "imgSrc": "https://www.weatherbit.io/static/img/icons/c01d.png", "temperature": 27, "weather": "Clear Sky" }, { "date": "Oct 11", "imgSrc": "https://www.weatherbit.io/static/img/icons/c02d.png", "temperature": 27, "weather": "Few clouds" }, { "date": "Oct 12", "imgSrc": "https://www.weatherbit.io/static/img/icons/c02d.png", "temperature": 29, "weather": "Few clouds" }, { "date": "Oct 13", "imgSrc": "https://www.weatherbit.io/static/img/icons/c02d.png", "temperature": 27, "weather": "Few clouds" }, { "date": "Oct 14", "imgSrc": "https://www.weatherbit.io/static/img/icons/c02d.png", "temperature": 25, "weather": "Few clouds" }, { "date": "Oct 15", "imgSrc": "https://www.weatherbit.io/static/img/icons/c04d.png", "temperature": 24, "weather": "Overcast clouds" } ]
-
+		dailyData = [ { "date": "Oct 10", "temperature": 33, "icon": "c04d", "weather": "Overcast clouds", "origin": "weatherbit" }, { "date": "Oct 11", "temperature": 26, "icon": "c04d", "weather": "Overcast clouds", "origin": "weatherbit" }, { "date": "Oct 12", "temperature": 23, "icon": "c03d", "weather": "Broken clouds", "origin": "weatherbit" }, { "date": "Oct 13", "temperature": 27, "icon": "c03d", "weather": "Broken clouds", "origin": "weatherbit" }, { "date": "Oct 14", "temperature": 32, "icon": "c04d", "weather": "Overcast clouds", "origin": "weatherbit" }, { "date": "Oct 15", "temperature": 35, "icon": "c02d", "weather": "Scattered clouds", "origin": "weatherbit" }, { "date": "Oct 16", "temperature": 32, "icon": "c03d", "weather": "Broken clouds", "origin": "weatherbit" }, { "date": "Oct 17", "temperature": 32, "icon": "c02d", "weather": "Few clouds", "origin": "weatherbit" }, { "date": "Oct 18", "temperature": 35, "icon": "c02d", "weather": "Few clouds", "origin": "weatherbit" }, { "date": "Oct 19", "temperature": 36, "icon": "c02d", "weather": "Few clouds", "origin": "weatherbit" }, { "date": "Oct 20", "temperature": 32, "icon": "c03d", "weather": "Broken clouds", "origin": "weatherbit" }, { "date": "Oct 21", "temperature": 33, "icon": "c04d", "weather": "Overcast clouds", "origin": "weatherbit" }, { "date": "Oct 22", "temperature": 32, "icon": "t02d", "weather": "Storm with rain", "origin": "weatherbit" }, { "date": "Oct 23", "temperature": 29, "icon": "t03d", "weather": "Thunderstorm with heavy rain", "origin": "weatherbit" }, { "date": "Oct 24", "temperature": 23, "icon": "c04d", "weather": "Overcast clouds", "origin": "weatherbit" }, { "date": "Oct 25", "temperature": 22, "icon": "c04d", "weather": "Overcast clouds", "origin": "weatherbit" } ]
 		return dailyData ?
 			(
-				dailyData.map( ( day, index ) => (
-					<button className={ "grid-item " + ( activeDay === index && "active" ) } key={ "day" + index } onClick={ () => this.props.setCurrentActive( index ) }>
-						<div className="date">{ day.date }</div>
-						<img className="icon" src={ day.imgSrc } alt="" />
-						<div className="temperature">{ day.temperature + "°c" }</div>
-						<div className="weather">{ day.weather }</div>
-					</button>
-				) )
+				dailyData.map( ( day, index ) => {
+					const Icon = getIcon( day )
+					return (
+						<button className={ "grid-item " + ( activeDay === index && "active" ) } key={ "day" + index } onClick={ () => this.props.setCurrentActive( index ) }>
+							<div className="date">{ day.date }</div>
+							<Icon className="dailyIcon" />
+							<div className="temperature">{ day.temperature + "°c" }</div>
+							<div className="weather">{ day.weather }</div>
+						</button>
+					)
+				} )
 			) : (
 				Array( 16 ).fill( "qesad" ).map( ( val, ind ) => (
 					<button className={ "grid-item " } key={ val + ind }>
@@ -164,6 +166,10 @@ const CarousselStyled = styled.div`
 				font-size: 1.2rem;
 				padding: 2px 0;
 				letter-spacing: 1px;
+			}
+			.dailyIcon {
+				height: auto;
+				width: 2.5rem;
 			}
 			* {
 				pointer-events: none;

@@ -5,7 +5,7 @@ import { Caroussel, Graph } from "./";
 
 export default function Result ( { place, dailyData, hourlyData } ) {
 
-	const [ activeDay, setActiveDay ] = React.useState();
+	const [ activeDay, setActiveDay ] = React.useState( 0 );
 
 	const setCurrentActive = ( index ) => {
 		setActiveDay( index )
@@ -22,7 +22,7 @@ export default function Result ( { place, dailyData, hourlyData } ) {
 		<ResultStyled>
 
 			<div className="place-time">
-				<p className="place">{ place }</p>
+				<p className="place">{ place ? place : "Naples, Italy" }</p>
 				<p className="time">{ getTime() }</p>
 			</div>
 
@@ -40,6 +40,7 @@ export default function Result ( { place, dailyData, hourlyData } ) {
 				<h4>HOURLY</h4>
 				<Graph
 					hourlyData={ hourlyData }
+					activeDay={ activeDay }
 				/>
 			</div>
 

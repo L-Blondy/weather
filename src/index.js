@@ -24,25 +24,21 @@ class App extends React.Component {
 		} )
 		const clearSearchField = () => { document.querySelector( ".ap-nostyle-icon-clear" ).click() }
 
-		/*
-		const key1 = "4db924c717d24ebebe5bfae8f25c6c35";
-		const key2 = "5a1b838c8e3440a8bf6a2d302170a6ed"
+		// const key1 = "4db924c717d24ebebe5bfae8f25c6c35";
+		// const key2 = "5a1b838c8e3440a8bf6a2d302170a6ed"
 
-		fetchDaily( `https://api.weatherbit.io/v2.0/forecast/daily?city=${ fullISO }&key=${ key1 }` )
-			.then( dailyData => {
-				console.log( "Daily Data Loaded" )
-				this.setState( {
-					dailyData,
-				} )
-			} )
-			
-			const currentWeather = fetchCurrent( `https://api.weatherbit.io/v2.0/current?city=${ fullISO }&key=${ key2 }` )
-		*/
-		const currentWeather = { "timepoint": 0, "hour": 15, "temp2m": 19.8, "wind10m": { "direction": "NNE", "speed": 4 }, "rh2m": 82, "imgSrc": "./assets/weather/few_clouds_night.svg", "weather": "Few clouds" }
+		// fetchDaily( `https://api.weatherbit.io/v2.0/forecast/daily?city=${ fullISO }&key=${ key1 }` )
+		// 	.then( dailyData => {
+		// 		this.setState( {
+		// 			dailyData,
+		// 		} )
+		// 	} )
+		// const currentWeather = await fetchCurrent( `https://api.weatherbit.io/v2.0/current?city=${ fullISO }&key=${ key2 }` )
+		const currentWeather = { "hour": 20, "timepoint": 0, "temp2m": 32.6, "wind10m": { "direction": "S", "speed": 8 }, "rh2m": 49, "icon": "c02d", "weather": "Scattered clouds", "origin": "weatherbit" }
 
 		const hourlyData = fetchHourly( "http://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=civil&output=json" )
 
-		const day1_index = getDay1Index();
+		const day1_index = getDay1Index( currentWeather.hour );
 
 		Promise.all( [ currentWeather, hourlyData ] )
 			.then( resp => {
@@ -61,7 +57,6 @@ class App extends React.Component {
 				}
 			} )
 			.then( hourlyData => {
-				console.log( "Hourly Data Loaded" );
 				this.setState( {
 					hourlyData,
 				} )
