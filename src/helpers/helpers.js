@@ -1,9 +1,20 @@
 import Axios from 'axios';
 import { AversesDay, AversesNight, ClearDay, ClearNight, Cloud, CloudyDay, CloudyNight, FewCloudsDay, FewCloudsNight, Foggy, Mixed, Rain, Snow, SnowLittle, Storm } from "../assets/weather";
 
+export function convertRemToPixels ( rem ) {
+	return rem * parseFloat( getComputedStyle( document.documentElement ).fontSize );
+}
+
 const getCurrentHour = () => {
 	const d = new Date();
 	return d.getMinutes() <= 30 ? d.getHours() : d.getHours() + 1;
+}
+
+export const fetchDaily = async ( url ) => {
+	return Axios.get( url )
+		.then( resp => resp.data.data )
+		.then( data => reduceDailyData( data ) )
+		.catch( error => console.log( "DAILY : PLACE NOT FOUND", error ) );
 }
 
 export const reduceDailyData = ( data ) => {
@@ -25,26 +36,21 @@ export const reduceDailyData = ( data ) => {
 	}, [] )
 }
 
+export const fetchHourly = async ( url ) => {
+	const raw = await Axios.get( url );
+	const rawData = await raw.data.dataseries;
+	return reduceHourlyData( rawData );
+}
+
 export const reduceHourlyData = ( data ) => {
 	const currentHour = getCurrentHour();
 	const result = data.reduce( ( res, cur ) => {
 		cur.hour = ( currentHour + cur.timepoint ) % 24;
-		cur.hour = cur.hour > 12 ? cur.hour - 12 + "pm" : cur.hour + "am";
+		cur.hour_english = cur.hour > 12 ? cur.hour - 12 + "pm" : cur.hour + "am";
 		cur.origin = "7timer";
 		return [ ...res, cur ];
 	}, [] )
 	return result;
-}
-
-export function convertRemToPixels ( rem ) {
-	return rem * parseFloat( getComputedStyle( document.documentElement ).fontSize );
-}
-
-export const fetchDaily = async ( url ) => {
-	return Axios.get( url )
-		.then( resp => resp.data.data )
-		.then( data => reduceDailyData( data ) )
-		.catch( error => console.log( "DAILY : PLACE NOT FOUND", error ) );
 }
 
 export const fetchCurrent = async ( url ) => {
@@ -54,7 +60,8 @@ export const fetchCurrent = async ( url ) => {
 	const currentHour = getCurrentHour();
 
 	const currentWeather = await {
-		hour: currentHour > 12 ? currentHour - 12 + "pm" : currentHour + "am",
+		hour: currentHour,
+		hour_english: currentHour > 12 ? currentHour - 12 + "pm" : currentHour + "am",
 		timepoint: 0,
 		temp2m: Math.round( currentData.temp ),
 		wind10m: {
@@ -68,11 +75,7 @@ export const fetchCurrent = async ( url ) => {
 	}
 	return currentWeather;
 }
-export const fetchHourly = async ( url ) => {
-	const raw = await Axios.get( url );
-	const rawData = await raw.data.dataseries;
-	return reduceHourlyData( rawData );
-}
+
 
 export const getDay1Index = ( currentHour ) => {
 	return Math.floor( ( 24 - currentHour ) / 3 );

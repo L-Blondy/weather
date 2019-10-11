@@ -71,9 +71,8 @@ function SearchForm ( { handleSearch, history, animated } ) {
 			<AlgoliaPlaces
 				placeholder=""
 				onChange={ ( { suggestion } ) => {
-					const fullISO = suggestion.name + "," + suggestion.countryCode;
 					const PlaceFullName = suggestion.name + "," + suggestion.country;
-					handleSearch( fullISO, PlaceFullName, history, suggestion.latlng );
+					handleSearch( PlaceFullName, history, suggestion.latlng );
 				} }
 				options={ {
 					appId: "pl8X2ZGNUAZU",
