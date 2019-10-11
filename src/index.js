@@ -18,9 +18,10 @@ class App extends React.Component {
 		query: null,
 	}
 
-	handleSearch = async ( fullISO, placeFullName, history ) => {
+	handleSearch = async ( fullISO, placeFullName, history, latlng ) => {
 
 		try {
+			console.log( latlng )
 			this.setState( {
 				placeFullName,
 			} )
@@ -38,7 +39,7 @@ class App extends React.Component {
 			const currentWeather = await fetchCurrent( `https://api.weatherbit.io/v2.0/current?city=${ fullISO }&key=${ key2 }` )
 			// const currentWeather = { "hour": 20, "timepoint": 0, "temp2m": 32, "wind10m": { "direction": "S", "speed": 8 }, "rh2m": 49, "icon": "c02d", "weather": "Scattered clouds", "origin": "weatherbit" }
 
-			const hourlyData = await fetchHourly( "http://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=civil&output=json" )
+			const hourlyData = await fetchHourly( `http://www.7timer.info/bin/api.pl?lon=${ latlng.lng }&lat=${ latlng.lat }&product=civil&output=json` )
 
 			const day1_index = getDay1Index( currentWeather.hour );
 
