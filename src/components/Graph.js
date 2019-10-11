@@ -1,6 +1,7 @@
 import React from 'react';
 import { Line, Area, XAxis, ResponsiveContainer, LabelList, ComposedChart } from 'recharts';
 import styled from "styled-components";
+import { global } from "../styles/globalStyles";
 import { Icon } from "./";
 
 export default function Graph ( { hourlyData, activeDay } ) {
@@ -11,20 +12,28 @@ export default function Graph ( { hourlyData, activeDay } ) {
 		) : (
 			<GraphStyled className="graph-container">
 				<ResponsiveContainer width="100%" height="100%" >
-					<ComposedChart data={ hourlyData[ activeDay ] } margin={ { top: 20, bottom: 20, left: 20, right: 20 } } >
+					<ComposedChart data={ hourlyData[ activeDay ] } margin={ { top: 20, bottom: 0, left: 20, right: 20 } } >
+
+						<defs>
+							<linearGradient id="areaGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+								<stop offset="0%" stopColor="rgba(255,255,255, 0.50)" />
+								<stop offset="100%" stopColor="#A1C7D250" />
+							</linearGradient>
+						</defs>
 
 						<Area
 							type="monotone"
 							dataKey="temp2m"
-							stroke="steelblue"
+							stroke={ global.fontColor.primary }
+							strokeWidth="1.5"
+							fill="url(#areaGrad)"
 							fillOpacity={ 1 }
-							fill="lightblue"
 							animationDuration={ 500 }
 						>
 							<LabelList
 								dataKey="temp2m"
 								position="top"
-								fill="steelblue"
+								fill={ global.fontColor.primary }
 								formatter={ ( val ) => val + "°" }
 								offset={ 10 }
 							/>
@@ -42,6 +51,9 @@ export default function Graph ( { hourlyData, activeDay } ) {
 							xAxisId={ 0 }
 							dataKey="hour"
 							scale="point"
+							tickLine={ false }
+							stroke={ global.fontColor.primary }
+							strokeOpacity={ 1 }
 						/>
 					</ComposedChart>
 				</ResponsiveContainer>
@@ -50,6 +62,6 @@ export default function Graph ( { hourlyData, activeDay } ) {
 }
 
 const GraphStyled = styled.div`
-	height: 300px;
+	height: 12rem;
 	width: 100%;
 `

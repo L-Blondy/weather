@@ -19,51 +19,57 @@ class App extends React.Component {
 	}
 
 	handleSearch = async ( fullISO, placeFullName, history ) => {
-		this.setState( {
-			placeFullName,
-		} )
-		const clearSearchField = () => { document.querySelector( ".ap-nostyle-icon-clear" ).click() }
 
-		// const key1 = "4db924c717d24ebebe5bfae8f25c6c35";
-		// const key2 = "5a1b838c8e3440a8bf6a2d302170a6ed"
-
-		// fetchDaily( `https://api.weatherbit.io/v2.0/forecast/daily?city=${ fullISO }&key=${ key1 }` )
-		// 	.then( dailyData => {
-		// 		this.setState( {
-		// 			dailyData,
-		// 		} )
-		// 	} )
-		// const currentWeather = await fetchCurrent( `https://api.weatherbit.io/v2.0/current?city=${ fullISO }&key=${ key2 }` )
-		const currentWeather = { "hour": 20, "timepoint": 0, "temp2m": 32.6, "wind10m": { "direction": "S", "speed": 8 }, "rh2m": 49, "icon": "c02d", "weather": "Scattered clouds", "origin": "weatherbit" }
-
-		const hourlyData = fetchHourly( "http://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=civil&output=json" )
-
-		const day1_index = getDay1Index( currentWeather.hour );
-
-		Promise.all( [ currentWeather, hourlyData ] )
-			.then( resp => {
-				const current = resp[ 0 ];
-				const hourly = resp[ 1 ];
-
-				return {
-					0: [ current, ...hourly.slice( 0, 7 ) ],
-					1: hourly.slice( day1_index, day1_index + 8 ),
-					2: hourly.slice( day1_index + 8, day1_index + 16 ),
-					3: hourly.slice( day1_index + 16, day1_index + 24 ),
-					4: hourly.slice( day1_index + 24, day1_index + 32 ),
-					5: hourly.slice( day1_index + 32, day1_index + 40 ),
-					6: hourly.slice( day1_index + 40, day1_index + 48 ),
-					7: hourly.slice( day1_index + 48, day1_index + 56 ),
-				}
+		try {
+			this.setState( {
+				placeFullName,
 			} )
-			.then( hourlyData => {
-				this.setState( {
-					hourlyData,
+			const clearSearchField = () => { document.querySelector( ".ap-nostyle-icon-clear" ).click() }
+
+			const key1 = "4db924c717d24ebebe5bfae8f25c6c35";
+			const key2 = "5a1b838c8e3440a8bf6a2d302170a6ed"
+
+			fetchDaily( `https://api.weatherbit.io/v2.0/forecast/daily?city=${ fullISO }&key=${ key1 }` )
+				.then( dailyData => {
+					this.setState( {
+						dailyData,
+					} )
 				} )
-			} )
+			const currentWeather = await fetchCurrent( `https://api.weatherbit.io/v2.0/current?city=${ fullISO }&key=${ key2 }` )
+			// const currentWeather = { "hour": 20, "timepoint": 0, "temp2m": 32, "wind10m": { "direction": "S", "speed": 8 }, "rh2m": 49, "icon": "c02d", "weather": "Scattered clouds", "origin": "weatherbit" }
 
-		history.push( '/Result' )
-		clearSearchField()
+			const hourlyData = await fetchHourly( "http://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=civil&output=json" )
+
+			const day1_index = getDay1Index( currentWeather.hour );
+
+			Promise.all( [ currentWeather, hourlyData ] )
+				.then( resp => {
+					const current = resp[ 0 ];
+					const hourly = resp[ 1 ];
+
+					return {
+						0: [ current, ...hourly.slice( 0, 7 ) ],
+						1: hourly.slice( day1_index, day1_index + 8 ),
+						2: hourly.slice( day1_index + 8, day1_index + 16 ),
+						3: hourly.slice( day1_index + 16, day1_index + 24 ),
+						4: hourly.slice( day1_index + 24, day1_index + 32 ),
+						5: hourly.slice( day1_index + 32, day1_index + 40 ),
+						6: hourly.slice( day1_index + 40, day1_index + 48 ),
+						7: hourly.slice( day1_index + 48, day1_index + 56 ),
+					}
+				} )
+				.then( hourlyData => {
+					this.setState( {
+						hourlyData,
+					} )
+				} )
+
+			history.push( '/Result' )
+			clearSearchField()
+		}
+		catch ( e ) {
+			console.log( "No weather data was found for this location" )
+		}
 	}
 
 	render () {

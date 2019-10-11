@@ -29,6 +29,7 @@ export const reduceHourlyData = ( data ) => {
 	const currentHour = getCurrentHour();
 	const result = data.reduce( ( res, cur ) => {
 		cur.hour = ( currentHour + cur.timepoint ) % 24;
+		cur.hour = cur.hour > 12 ? cur.hour - 12 + "pm" : cur.hour + "am";
 		cur.origin = "7timer";
 		return [ ...res, cur ];
 	}, [] )
@@ -48,13 +49,14 @@ export const fetchDaily = async ( url ) => {
 
 export const fetchCurrent = async ( url ) => {
 	const raw = await Axios.get( url );
-	const currentData = await raw.data.data[ 0 ];
+	const currentData = await raw.data.data[ 0 ]
+
 	const currentHour = getCurrentHour();
 
 	const currentWeather = await {
-		hour: currentHour,
+		hour: currentHour > 12 ? currentHour - 12 + "pm" : currentHour + "am",
 		timepoint: 0,
-		temp2m: currentData.temp,
+		temp2m: Math.round( currentData.temp ),
 		wind10m: {
 			direction: currentData.wind_cdir,
 			speed: Math.round( currentData.wind_spd ),

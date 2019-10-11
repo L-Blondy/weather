@@ -62,6 +62,7 @@ const ResultStyled = styled.div`
 			font-family: ${ global.fontFamily.secondary };
 			font-size: 1.3rem;
 			font-weight: bold;
+			margin: 0.5rem 0;
 		}
 	
 	.place-time {
