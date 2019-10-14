@@ -10,6 +10,33 @@ const getCurrentHour = () => {
 	return d.getMinutes() <= 30 ? d.getHours() : d.getHours() + 1;
 }
 
+const getPrecip = ( precip_lvl ) => {
+	switch ( precip_lvl ) {
+		case 0:
+			return 0;
+		case 1:
+			return 0.2;
+		case 2:
+			return 1;
+		case 3:
+			return 3;
+		case 4:
+			return 8;
+		case 5:
+			return 15;
+		case 6:
+			return 25;
+		case 7:
+			return 40;
+		case 8:
+			return 60;
+		case 9:
+			return 75;
+		default:
+			return 0;
+	}
+}
+
 export const fetchDaily = async ( url ) => {
 	return Axios.get( url )
 		.then( resp => resp.data.data )
@@ -22,7 +49,7 @@ export const reduceDailyData = ( data ) => {
 	return data.reduce( ( res, cur ) => {
 		const day = cur.datetime.slice( 8 )
 		const month = cur.datetime.slice( 5, 7 )
-		let weather = cur.weather.description === "Thunderstorm with rain" ? "Storm with rain" : cur.weather.description;
+		let weather = cur.weather.description === "Thunderstorm with heavy rain" || cur.weather.description === "Thunderstorm with rain" ? "Thunderstorm" : cur.weather.description
 
 		const data = {
 			date: months[ month - 1 ] + " " + day,
@@ -48,6 +75,7 @@ export const reduceHourlyData = ( data ) => {
 		cur.hour = ( currentHour + cur.timepoint ) % 24;
 		cur.hour_english = cur.hour > 12 ? cur.hour - 12 + "pm" : cur.hour + "am";
 		cur.origin = "7timer";
+		cur.prec_amount = getPrecip( cur.prec_amount );
 		return [ ...res, cur ];
 	}, [] )
 	return result;
@@ -56,12 +84,14 @@ export const reduceHourlyData = ( data ) => {
 export const fetchCurrent = async ( url ) => {
 	const raw = await Axios.get( url );
 	const currentData = await raw.data.data[ 0 ]
+	console.log( currentData )
 
 	const currentHour = getCurrentHour();
 
 	const currentWeather = await {
 		hour: currentHour,
 		hour_english: currentHour > 12 ? currentHour - 12 + "pm" : currentHour + "am",
+		prec_amount: currentData.precip,
 		timepoint: 0,
 		temp2m: Math.round( currentData.temp ),
 		wind10m: {
