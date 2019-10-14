@@ -63,6 +63,8 @@ export default function Graph ( { hourlyData, activeDay, graphType } ) {
 								tickLine={ false }
 								stroke={ global.fontColor.primary }
 								strokeOpacity={ 1 }
+								interval={ "preserveStartEnd" }
+								minTickGap={ 5 }
 							/>
 
 							<Line
@@ -113,6 +115,11 @@ const GraphStyled = styled.div`
 	align-items: center;
 	font-family: ${global.fontFamily.primary };
 	font-size: ${props => props.fontSize ? props.fontSize : "1rem" };
+	padding-left: 2rem;
+
+	@media (max-width: 600px) {
+		padding-left: 0;
+	}
 
 	.recharts-layer .loading-img {
 		animation: fadeIn 300ms forwards;

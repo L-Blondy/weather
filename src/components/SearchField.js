@@ -73,6 +73,7 @@ function SearchForm ( { handleSearch, history, animated } ) {
 				onChange={ ( { suggestion } ) => {
 					const PlaceFullName = suggestion.name + "," + suggestion.country;
 					handleSearch( PlaceFullName, history, suggestion.latlng );
+					resetInput()
 				} }
 				options={ {
 					appId: "pl8X2ZGNUAZU",

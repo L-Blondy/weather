@@ -27,7 +27,7 @@ const NavbarStyled = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	height: 50px;
-	box-shadow: 0 0 20px 0 #26374f4f;
+	box-shadow: 0 0 20px 0 #26374f20;
 	flex-shrink: 0;
 
 	ul {
@@ -47,12 +47,9 @@ const NavbarStyled = styled.div`
 		height: 100%;
 		margin-right: calc(20px + 2%);
 		display: flex;
-		justify-content: space-evenly;
+		justify-content: flex-end;
 		align-items: center;
-		font-family: ${global.fontFamily.primary };
-		font-size: 1.1rem;		
 		list-style: none;
-		letter-spacing: 2px;
 
 		.navlink {
 			position: relative;
@@ -65,6 +62,15 @@ const NavbarStyled = styled.div`
 			justify-content: center;
 			align-items: center;
 			user-select: none;
+			margin: 1.5vw;
+			font-family: ${global.fontFamily.primary };
+			font-size: 1.1rem;		
+			letter-spacing: 2px;
+
+			@media (max-width:1024px) {
+				margin: 0vw;
+				font-size: 1rem;		
+			}
 
 			&:not(.share)::before{
 				position: absolute;
@@ -84,8 +90,6 @@ const NavbarStyled = styled.div`
 				background: ${global.btnClr.primary };
 				border-radius: 7px;
 				border: none;
-				font-size: inherit;
-				font-family: inherit;
 				transition: background 250ms 40ms;
 			}
 			&.share:hover {

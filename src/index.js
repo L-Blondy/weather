@@ -24,7 +24,7 @@ class App extends React.Component {
 			hourlyData: null,
 			dailyData: null,
 		} )
-		const clearSearchField = () => { document.querySelector( ".ap-nostyle-icon-clear" ).click() }
+		history.push( '/Result' )
 
 		// const key1 = "4db924c717d24ebebe5bfae8f25c6c35";
 		// const key2 = "5a1b838c8e3440a8bf6a2d302170a6ed"
@@ -35,16 +35,18 @@ class App extends React.Component {
 		// 			dailyData,
 		// 		} )
 		// 	} )
-		// const currentWeather = await fetchCurrent( `https://api.weatherbit.io/v2.0/current?lon=${ latlng.lng }&lat=${ latlng.lat }&key=${ key2 }` )
+		// const currentWeather = fetchCurrent( `https://api.weatherbit.io/v2.0/current?lon=${ latlng.lng }&lat=${ latlng.lat }&key=${ key2 }` )
 		const currentWeather = { "hour": 20, "hour_english": "7bm", "timepoint": 0, "prec_amount": 5, "temp2m": 22, "wind10m": { "direction": "S", "speed": 8 }, "rh2m": 49, "icon": "c02d", "weather": "Scattered clouds", "origin": "weatherbit" }
 
-		const hourlyData = await fetchHourly( `http://www.7timer.info/bin/api.pl?lon=${ latlng.lng }&lat=${ latlng.lat }&product=civil&output=json` )
-		const day1_index = getDay1Index( currentWeather.hour );
+		const hourlyData = fetchHourly( `http://www.7timer.info/bin/api.pl?lon=${ latlng.lng }&lat=${ latlng.lat }&product=civil&output=json` )
+
 
 		Promise.all( [ currentWeather, hourlyData ] )
 			.then( resp => {
 				const current = resp[ 0 ];
 				const hourly = resp[ 1 ];
+
+				const day1_index = getDay1Index( current.hour );
 
 				return {
 					0: [ current, ...hourly.slice( 0, 7 ) ],
@@ -62,9 +64,6 @@ class App extends React.Component {
 					hourlyData,
 				} )
 			} )
-
-		history.push( '/Result' )
-		clearSearchField()
 	}
 
 	render () {

@@ -89,8 +89,8 @@ class Caroussel extends React.Component {
 			>
 
 				<button className="chevron-left" onClick={ () => this.setScrollCount( -1, scrollCount, items ) } >
-					<svg width="24" height="44" viewBox="0 0 24 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M22 42L2 22L22 2" stroke="currentColor" strokeWidth="4" strokeLinejoin="round" />
+					<svg width="24" height="44" viewBox="0 0 24 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M22 42L2 22L22 2" stroke="currentColor" strokeWidth="5" strokeLinejoin="round" />
 					</svg>
 				</button>
 
@@ -101,8 +101,8 @@ class Caroussel extends React.Component {
 				</div>
 
 				<button className="chevron-right" onClick={ () => this.setScrollCount( 1, scrollCount, items ) }>
-					<svg width="24" height="44" viewBox="0 0 24 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M2 2L22 22L2 42" stroke="currentColor" strokeWidth="4" strokeLinejoin="round" />
+					<svg width="24" height="44" viewBox="0 0 24 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M2 2L22 22L2 42" stroke="currentColor" strokeWidth="5" strokeLinejoin="round" />
 					</svg>
 				</button>
 
@@ -113,7 +113,7 @@ class Caroussel extends React.Component {
 
 const CarousselStyled = styled.div`
 	display: grid;
-	grid-template-columns: 50px auto 50px;
+	grid-template-columns: 40px auto 40px;
 	width: 100%;
 	align-items: center;
 
@@ -128,7 +128,7 @@ const CarousselStyled = styled.div`
 		place-items: center;
 		list-style: none;
 		transform: translateX(${props => - props.scrollCount * props.itemWidth }px);
-		transition: transform 200ms;
+		transition: transform 350ms;
 
 		.icon {
 			width: 40px;
@@ -185,6 +185,7 @@ const CarousselStyled = styled.div`
 		background: none;
 		border: none;
 		color: ${global.fontColor.primary };
+		text-align: left;
 
 		&:hover,
 		&:focus {
@@ -193,10 +194,9 @@ const CarousselStyled = styled.div`
 		}
 	}
 	.chevron-left {
-		color: ${props => props.scrollCount <= 0 && ( `${ global.fontColor.disabled }; pointer-events: none; user-select: none;` ) }
+		color: ${props => props.scrollCount <= 0 && ( `${ global.fontColor.disabled }; pointer-events: none; user-select: none;` ) };
 	}
 	.chevron-right {
-		text-align: left;
 		color: ${props => props.scrollCount + props.items >= 16 && ( `${ global.fontColor.disabled }; pointer-events: none; user-select: none;` ) }
 	}
 `
