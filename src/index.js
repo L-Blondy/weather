@@ -14,7 +14,6 @@ class App extends React.Component {
 		fullISO: null,
 		dailyData: null,
 		hourlyData: null,
-		currentWeather: null,
 		query: null,
 	}
 
@@ -24,7 +23,6 @@ class App extends React.Component {
 			placeFullName,
 			hourlyData: null,
 			dailyData: null,
-			currentWeather: null,
 		} )
 		const clearSearchField = () => { document.querySelector( ".ap-nostyle-icon-clear" ).click() }
 

@@ -8,8 +8,8 @@ export default function Result ( { place, dailyData, hourlyData } ) {
 	const [ activeDay, setActiveDay ] = React.useState( 0 );
 	const [ graphType, setGraphType ] = React.useState( "classic" );
 
-	const setCurrentActive = ( index ) => {
-		setActiveDay( index )
+	const setCurrentActive = ( e ) => {
+		setActiveDay( parseInt( e.target.dataset.index ) )
 	}
 
 	const getTime = () => {

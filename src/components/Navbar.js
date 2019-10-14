@@ -4,7 +4,6 @@ import { global } from "../styles/globalStyles";
 import { NavLink } from "react-router-dom";
 import { SearchField, Share } from ".";
 
-
 function Navbar ( { handleSearch } ) {
 	return (
 		<NavbarStyled className="navbar">

@@ -35,8 +35,7 @@ class Caroussel extends React.Component {
 		} );
 	}
 
-	scrollCount = ( dir ) => {
-		const { scrollCount, items } = this.state;
+	setScrollCount = ( dir, scrollCount, items ) => {
 		if ( scrollCount <= 0 && dir < 0 ) return;
 		if ( scrollCount + items >= 16 && dir > 0 ) return;
 		this.setState( {
@@ -44,8 +43,7 @@ class Caroussel extends React.Component {
 		} );
 	}
 
-	renderDailyData = () => {
-		let { dailyData, activeDay } = this.props;
+	renderDailyData = ( dailyData, activeDay ) => {
 		// if ( !dailyData ) {
 		// 	history.push( '/' )
 		// 	return;
@@ -56,7 +54,12 @@ class Caroussel extends React.Component {
 				dailyData.map( ( day, index ) => {
 					const Icon = getIcon( day )
 					return (
-						<button className={ "grid-item " + ( activeDay === index && "active" ) } key={ "day" + index } onClick={ () => this.props.setCurrentActive( index ) }>
+						<button
+							className={ "grid-item " + ( activeDay === index && "active" ) }
+							key={ "day" + index }
+							data-index={ index }
+							onClick={ this.props.setCurrentActive }
+						>
 							<div className="date">{ day.date }</div>
 							<Icon className="dailyIcon" />
 							<div className="temperature">{ day.temperature + "°c" }</div>
@@ -75,6 +78,7 @@ class Caroussel extends React.Component {
 
 	render () {
 		const { itemWidth, scrollCount, items } = this.state;
+		const { dailyData, activeDay } = this.props;
 
 		return (
 			<CarousselStyled
@@ -84,7 +88,7 @@ class Caroussel extends React.Component {
 				items={ items }
 			>
 
-				<button className="chevron-left" onClick={ () => this.scrollCount( -1 ) } >
+				<button className="chevron-left" onClick={ () => this.setScrollCount( -1, scrollCount, items ) } >
 					<svg width="24" height="44" viewBox="0 0 24 44" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M22 42L2 22L22 2" stroke="currentColor" strokeWidth="4" strokeLinejoin="round" />
 					</svg>
@@ -92,11 +96,11 @@ class Caroussel extends React.Component {
 
 				<div className="grid-container">
 					<ul className="grid" ref={ this.grid }>
-						{ this.renderDailyData() }
+						{ this.renderDailyData( dailyData, activeDay ) }
 					</ul>
 				</div>
 
-				<button className="chevron-right" onClick={ () => this.scrollCount( 1 ) }>
+				<button className="chevron-right" onClick={ () => this.setScrollCount( 1, scrollCount, items ) }>
 					<svg width="24" height="44" viewBox="0 0 24 44" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M2 2L22 22L2 42" stroke="currentColor" strokeWidth="4" strokeLinejoin="round" />
 					</svg>

@@ -7,9 +7,9 @@ class Share extends Component {
 		active: false
 	}
 
-	toggleShare = () => {
+	toggleShare = ( active ) => {
 		this.setState( {
-			active: !this.state.active
+			active: !active
 		} )
 	}
 
@@ -22,7 +22,7 @@ class Share extends Component {
 	render () {
 		return (
 			<li className="share-link">
-				<button className={ "navlink  share " + ( this.state.active ? "active " : "" ) } onClick={ this.toggleShare }>Share</button>
+				<button className={ "navlink  share " + ( this.state.active ? "active " : "" ) } onClick={ () => this.toggleShare( this.state.active ) }>Share</button>
 				<ul className="float">
 					<li><a href="https://www.google.com">Facebook</a></li>
 					<li><a href="https://www.google.com">Twitter</a></li>
