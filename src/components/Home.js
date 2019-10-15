@@ -40,7 +40,7 @@ const HomeStyled = styled.div`
 	flex-grow: 1;
 	display: flex;
 	font-family: ${global.fontFamily.primary };
-	color: ${global.fontColor.primary };
+	color: ${global.fontColor.dark };
 	letter-spacing: 1px;
 
 	.side {
@@ -70,12 +70,13 @@ const HomeStyled = styled.div`
 			font-family: ${global.fontFamily.primary };
 			font-size: 1.2rem;
 			letter-spacing: 1px;
-			color: ${global.fontColor.secondary };
+			color: white;
 			border: none;
 			background: ${global.btnClr.primary };
 			padding: 0.5rem 1.3rem;
 			border-radius: 7px;
 			transition: background 200ms 40ms;
+			outline:none;
 
 			span {
 				padding-right: 0.7rem;
@@ -84,7 +85,8 @@ const HomeStyled = styled.div`
 				position: relative;
 				top: 0.2rem;
 			}
-			&:hover {
+			&:hover,
+			&:focus {
 				background: ${global.btnClr.secondary };
 
 				svg {

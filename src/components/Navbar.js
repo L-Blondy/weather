@@ -22,7 +22,7 @@ function Navbar ( { handleSearch } ) {
 }
 
 const NavbarStyled = styled.div`
-	color: ${global.fontColor.primary };
+	color: ${global.fontColor.dark };
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -66,6 +66,7 @@ const NavbarStyled = styled.div`
 			font-family: ${global.fontFamily.primary };
 			font-size: 1.1rem;		
 			letter-spacing: 2px;
+			outline: none;
 
 			@media (max-width:1024px) {
 				margin: 0vw;
@@ -82,44 +83,27 @@ const NavbarStyled = styled.div`
 				transform: scaleX(0);
 				transition: transform 200ms 40ms;
 			}
-			&:hover::before {
+			&:hover::before,
+			&:focus::before {
 				transform: scaleX(1);
 			}
 			&.share {
-				color: ${global.fontColor.secondary };
+				color: white;
 				background: ${global.btnClr.primary };
 				border-radius: 7px;
 				border: none;
 				transition: background 250ms 40ms;
 			}
-			&.share:hover {
+			&.share:hover,
+			&.share:focus {
 				background:${global.btnClr.secondary };
 			}
 		}
 		.share-link {
 			position: relative;
-
-			.share + .float {
-				display: none;
-				background: #00000020;
-				position: absolute;
-				bottom: 0;
-				left: 50%;
-				transform: translate(-50%, calc(100% + 1rem));
-
-				&::before, &::after {
-					position: absolute;
-					content: "";
-					top: 0;
-					left: 50%;
-					transform: translate(-50%, -100%);
-					border-left: 1rem solid transparent;
-					border-right: 1rem solid transparent;
-					border-bottom: 1rem solid #c0c4c5;
-				}
-			}
+			
 			.active + .float {
-				display: initial;
+				display: grid;
 			}
 		}
 		.ap-nostyle-input,

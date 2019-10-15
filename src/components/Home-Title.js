@@ -24,7 +24,7 @@ export default function Title () {
 const TitleStyled = styled.svg`
 	path {
 		color: transparent;
-		fill: ${global.fontColor.primary };
+		fill: ${global.fontColor.dark };
 		opacity: 1;	
 	}
 `

@@ -140,7 +140,7 @@ const CarousselStyled = styled.div`
 			height: 95%;
 			width: 95%;
 			font-family: ${global.fontFamily.primary };
-			color: ${global.fontColor.primary };
+			color: ${global.fontColor.dark };
 			font-size: 0.9rem;
 			padding-left: 0.5rem;
 			display: flex;
@@ -154,7 +154,7 @@ const CarousselStyled = styled.div`
 
 			.loading-img {
 				height: 25%;
-				color: ${global.fontColor.primary };
+				color: ${global.fontColor.dark };
 			}
 
 			&.active {
@@ -184,7 +184,7 @@ const CarousselStyled = styled.div`
 	.chevron-right {
 		background: none;
 		border: none;
-		color: ${global.fontColor.primary };
+		color: ${global.fontColor.dark };
 		text-align: left;
 
 		&:hover,

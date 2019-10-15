@@ -54,7 +54,7 @@ function SearchForm ( { handleSearch, history, animated } ) {
 	} )
 
 	const resetInput = () => {
-		searchInput.current.querySelector( ".ap-nostyle-icon-clear" ).click()
+		searchInput.current && searchInput.current.querySelector( ".ap-nostyle-icon-clear" ).click()
 		setInputVal( "" );
 	}
 
@@ -115,13 +115,13 @@ const SearchFieldStyled = styled.div`
 		background: none;
 		font-size: 1.2rem;
 		letter-spacing: 1px;
-		color: ${global.fontColor.primary };;
+		color: ${global.fontColor.dark };;
 		font-family: ${global.fontFamily.secondary };
 		text-transform: capitalize;
 		border-radius: 2px;
 
 		&::placeholder {
-			color: ${global.fontColor.primary };;
+			color: ${global.fontColor.dark };;
 			opacity: 0.4;
 			letter-spacing: 1px;
 			user-select: none;
@@ -168,7 +168,7 @@ const SearchFieldStyled = styled.div`
 		right: 7px;
 		cursor: pointer;
 		transition: transform 300ms, filter 300ms;
-		color: ${global.fontColor.primary };
+		color: ${global.fontColor.dark };
 
 		&:hover {
 			transform: scale(1.15);
@@ -180,7 +180,7 @@ const SearchFieldStyled = styled.div`
 		font-family: ${global.fontFamily.secondary };
 		width: 100%;
 		padding: 0.5rem;
-		color: ${global.fontColor.primary };
+		color: ${global.fontColor.dark };
 		font-size: 1.1rem;
 		letter-spacing: 1px;
 		background: #00000007;

@@ -67,7 +67,7 @@ export default function Result ( { place, dailyData, hourlyData } ) {
 const ResultStyled = styled.div`
 	height: 100%;
 	font-family: ${ global.fontFamily.ternary };
-	color: ${ global.fontColor.primary };
+	color: ${ global.fontColor.dark };
 	padding: 2rem 20vw 0 20vw;
 		
 	@media (max-width: 1280px){
@@ -113,7 +113,7 @@ const ResultStyled = styled.div`
 			padding: 0.2rem 1rem;
 			cursor: pointer;
 			font-family:${ global.fontFamily.secondary };
-			color: ${ global.fontColor.primary + "bb" };
+			color: ${ global.fontColor.dark + "bb" };
 			font-size: 0.9rem;
 			border-radius: 4px;
 			margin: 0 0.2rem;
@@ -121,12 +121,12 @@ const ResultStyled = styled.div`
 			outline: none;
 
 			&:hover, &:focus {
-				color: ${ global.fontColor.primary };
+				color: ${ global.fontColor.dark };
 				background: #ffffff40;
 			}
 
 			&.active {
-				color: ${ global.fontColor.primary + "dd" };
+				color: ${ global.fontColor.dark + "dd" };
 				background: #ffffffcc;
 				box-shadow: 0 0 5px 0 #00000020;
 			}

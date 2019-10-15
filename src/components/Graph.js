@@ -9,7 +9,6 @@ export default function Graph ( { hourlyData, activeDay, graphType } ) {
 
 	if ( hourlyData ) {
 		if ( activeDay <= 7 ) {
-			console.log( hourlyData[ activeDay ] )
 			const offset = 30 - hourlyData[ activeDay ][ 0 ].temp2m
 			hourlyData[ activeDay ].map( hourData => hourData.tempOffset = hourData.temp2m + offset )
 		}
@@ -41,7 +40,7 @@ export default function Graph ( { hourlyData, activeDay, graphType } ) {
 								yAxisId="temp"
 								type="monotone"
 								dataKey="tempOffset"
-								stroke={ global.fontColor.primary }
+								stroke={ global.fontColor.dark }
 								strokeWidth="1.5"
 								fill="url(#areaGrad)"
 								fillOpacity={ 1 }
@@ -50,7 +49,7 @@ export default function Graph ( { hourlyData, activeDay, graphType } ) {
 								<LabelList
 									dataKey="temp2m"
 									position="top"
-									fill={ global.fontColor.primary }
+									fill={ global.fontColor.dark }
 									formatter={ ( val ) => val + "°" }
 									offset={ 10 }
 								/>
@@ -61,7 +60,7 @@ export default function Graph ( { hourlyData, activeDay, graphType } ) {
 								dataKey="hour_english"
 								scale="point"
 								tickLine={ false }
-								stroke={ global.fontColor.primary }
+								stroke={ global.fontColor.dark }
 								strokeOpacity={ 1 }
 								interval={ "preserveStartEnd" }
 								minTickGap={ 5 }

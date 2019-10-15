@@ -5,8 +5,8 @@ export const global = {
 		ternary: "Open sans",
 	},
 	fontColor: {
-		primary: "#26374F",
-		secondary: "white",
+		dark: "#26374F",
+		light: "#eaeaea",
 		hover: "#ff0066",
 		disabled: "#dadada",
 	},
@@ -18,5 +18,6 @@ export const global = {
 		cloud: "grey",
 		sun: "orange",
 		rain: "blue",
-	}
+	},
+	bckClr: "#323d4c",
 }
