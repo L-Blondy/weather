@@ -138,7 +138,7 @@ const SearchFieldStyled = styled.div`
 		width: 100%;
 		bottom: 0;
 		left: 0;
-		background: #777;
+		background: ${global.fontColor.dark };
 		z-index: 2;
 		transform-origin: left;
 		transform: scaleX( 0 );

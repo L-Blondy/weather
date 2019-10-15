@@ -5,7 +5,7 @@ export const global = {
 		ternary: "Open sans",
 	},
 	fontColor: {
-		dark: "#26374F",
+		dark: "#4f545d",
 		light: "#eaeaea",
 		hover: "#ff0066",
 		disabled: "#dadada",
