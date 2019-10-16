@@ -5,7 +5,7 @@
 		top: 50%;
 		left: 50%;
 		animation: rotateSelf 2000ms infinite linear;
-		opacity: 0.7;
+		opacity: 0.9;
 	}
 
 	@keyframes rotateSelf {

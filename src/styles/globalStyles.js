@@ -19,5 +19,8 @@ export const global = {
 		sun: "orange",
 		rain: "blue",
 	},
-	bckClr: "#323d4c",
+	bckClr: {
+		dark: "#47505d",
+	},
+	chartHeight: "12rem"
 }

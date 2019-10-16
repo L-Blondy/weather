@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { global } from "../styles/globalStyles";
-import { Caroussel, Graph } from "./";
+import { Caroussel, Graph, SunSet } from "./";
+import { ReactComponent as LoadingGraph } from "../assets/loading-graph.svg"
+import { ReactComponent as Loading } from "../assets/loading.svg"
 
-export default function Result ( { place, dailyData, hourlyData } ) {
+export default function Result ( { place, dailyData, hourlyData, currentData, localTime, offsetTime } ) {
 
 	const [ activeDay, setActiveDay ] = React.useState( 0 );
 	const [ graphType, setGraphType ] = React.useState( "classic" );
@@ -13,22 +15,31 @@ export default function Result ( { place, dailyData, hourlyData } ) {
 	}
 
 	const getTime = () => {
-		const d = new Date(); // for now
-		const hour = d.getHours();
-		const minutes = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes()
-		return hour + ":" + minutes;
+		const hour = localTime.hours < 10 ? "0" + localTime.hours : localTime.hours;
+		const minutes = localTime.minutes < 10 ? "0" + localTime.minutes : localTime.minutes;
+		return hour + ":" + minutes
 	}
 
 	return (
 		<ResultStyled>
 
 			<div className="place-time">
-				<p className="place">{ place ? place : "Naples, Italy" }</p>
-				<p className="time">{ getTime() }</p>
+				{ localTime ?
+					( <>
+						<p className="place">{ place }</p>
+						<p className="time">{ getTime() }</p>
+					</>
+					) : ( <>
+						<LoadingGraph />
+						<p className="place inactive">s</p>
+						<p className="time inactive">s</p>
+					</>
+					) }
+
 			</div>
 
-			<div className="daily" >
-				<div className="daily-header-wrapper header-wrapper" >
+			<div className="daily section" >
+				<div className="section-title-wrapper">
 					<h4 className="h4-daily">DAILY</h4>
 				</div>
 
@@ -39,24 +50,71 @@ export default function Result ( { place, dailyData, hourlyData } ) {
 				/>
 			</div >
 
-			<div className="hourly">
-				<div className="hourly-header-wrapper header-wrapper" >
+			<div className="hourly section">
+				<div className="section-title-wrapper section-title-wrapper__hourly" >
 					<h4 className="h4-hourly">HOURLY</h4>
 					<div className="hourly-header-wrapper__buttons" >
 						<button className={ graphType === "classic" ? "active" : "" } data-type="classic" onClick={ ( e ) => setGraphType( e.target.dataset.type ) } >Classic</button>
 						<button className={ graphType === "precip" ? "active" : "" } data-type="precip" onClick={ ( e ) => setGraphType( e.target.dataset.type ) }  >Precipitation</button>
 					</div>
 				</div>
-				<Graph
-					hourlyData={ hourlyData }
-					activeDay={ activeDay }
-					graphType={ graphType }
-				/>
+				{ !hourlyData && !activeDay ?
+					(
+						<div className="loading-chart">
+							<LoadingGraph />
+						</div>
+
+					) : (
+						<Graph
+							hourlyData={ hourlyData }
+							activeDay={ activeDay }
+							graphType={ graphType }
+						/>
+					) }
 			</div>
 
-			<div className="details">
-				<div className="details-header-wrapper header-wrapper" >
+			<div className="details section">
+				<div className="section-title-wrapper section-title-wrapper__details">
 					<h4>DAY DETAILS</h4>
+				</div>
+				<div className="details-container">
+					{ dailyData && hourlyData && currentData ?
+						( <>
+							<SunSet
+								dailyData={ dailyData }
+								hourlyData={ hourlyData }
+								currentData={ currentData }
+								activeDay={ activeDay }
+								offsetTime={ offsetTime }
+							/>
+							<SunSet
+								dailyData={ dailyData }
+								hourlyData={ hourlyData }
+								currentData={ currentData }
+								activeDay={ activeDay }
+								offsetTime={ offsetTime }
+							/>
+							<SunSet
+								dailyData={ dailyData }
+								hourlyData={ hourlyData }
+								currentData={ currentData }
+								activeDay={ activeDay }
+								offsetTime={ offsetTime }
+							/>
+						</>
+						) : ( <>
+							<div className="loading-container details-sub-section">
+								<Loading />
+							</div>
+							<div className="loading-container details-sub-section">
+								<Loading />
+							</div>
+							<div className="loading-container details-sub-section">
+								<Loading />
+							</div>
+						</>
+						) }
+
 				</div>
 			</div>
 
@@ -79,9 +137,14 @@ const ResultStyled = styled.div`
 	}
 	
 	.place-time {
+		position: relative;
 		text-align: center;
 		font-weight: normal;
 		font-family: ${ global.fontFamily.secondary };
+
+		.loading-img {
+			height: 40px;
+		}
 	
 		.place {
 			font-size: 2rem;
@@ -89,23 +152,31 @@ const ResultStyled = styled.div`
 		.time {
 			font-size: 3rem;
 		}
+		.inactive{
+			opacity: 0;
+		}
 	}
 
-	.header-wrapper {
-		margin: 2rem 0 0.5rem 0;
+	.section {
+		margin-top: 1.5rem;
+	}
+
+	.section-title-wrapper {
+		margin-bottom: 0.5rem;
+
+		h4 {
+			font-family: ${ global.fontFamily.secondary };
+			font-size: 1.3rem;
+			font-weight: bold;
+		}
 	}
 	
-	h4 {
-		font-family: ${ global.fontFamily.secondary };
-		font-size: 1.3rem;
-		font-weight: bold;
-	}
-	
-	.hourly-header-wrapper {
+	.section-title-wrapper__hourly {
 		width: 100%;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		padding-right: 2rem;
 	
 		button {
 			background: none;
@@ -138,7 +209,12 @@ const ResultStyled = styled.div`
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		padding-right: 2rem;
+
+		.loading-chart {
+			position: relative;
+			height:  ${global.chartHeight };
+			width: 100%;
+		}
 	
 		@media (max-width: 600px) {
 			padding-right: 0;
@@ -146,11 +222,26 @@ const ResultStyled = styled.div`
 	}
 
 	.details {
-		box-shadow: 0 0 0 1px black;
-		min-height: 12rem;
+		.loading-container {
+			position: relative;
+			color: ${global.fontFamily.primary };
+
+			.loading-img {
+				height: 40px;
+			}
+		}
+
+		.details-container {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			grid-template-rows: 12rem;
+			column-gap: 1rem;
+
+			.details-sub-section {
+				border-top: 1px solid ${global.fontColor.dark + "70" };
+			}
+		}
 	}
-	.details-header-wrapper {
-		box-shadow: 0 0 0 1px black;
-	}
+	
 
 `

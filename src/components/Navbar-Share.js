@@ -19,8 +19,6 @@ class Share extends Component {
 		}
 	}
 
-
-
 	toggleShare = ( active ) => {
 		this.setState( {
 			active: !active
@@ -35,10 +33,10 @@ class Share extends Component {
 
 	render () {
 		return (
-			<li className="share-link">
+			<ShareStyled>
 				<button className={ "navlink  share " + ( this.state.active ? "active " : "" ) } onClick={ () => this.toggleShare( this.state.active ) }>Share</button>
 
-				<FloatStyled className="float" links={ 3 }>
+				<div className="float" links={ 3 }>
 					<li><a target="_blank" href={ this.URL_facebook }>
 						<Facebook className="share-link-icon" />Facebook
 					</a></li>
@@ -48,58 +46,86 @@ class Share extends Component {
 					<li><a target="_blank" href={ this.URL_linkedin }>
 						<Linkedin className="share-link-icon" />LinkedIn
 					</a></li>
-				</FloatStyled>
-			</li>
+				</div>
+			</ShareStyled>
 		)
 	}
 }
 
-const FloatStyled = styled.ul`
-	position: absolute;
-	display: none;
-	bottom: 0;
-	left: 50%;
-	transform: translate(-50%, 100%);
-	grid-template-rows: repeat( ${ props => props.links }, 1fr);
-	background: ${global.bckClr };
-	color: ${global.fontColor.light };
-	row-gap: 1rem;
-	padding: 0.7rem;
-	border-radius: 5px;
+const ShareStyled = styled.div`
+	position: relative;
 
-	&::before { 
+	.navlink.share {
+		color: white;
+		margin: 0;
+		background: ${global.btnClr.primary };
+		border-radius: 7px;
+		border: none;
+		transition: background 250ms 40ms;
+	}
+	.share:hover,
+	.share:focus {
+		background:${global.btnClr.secondary };
+	}
+	.share.active + .float {
+		transform: translate(-50%, calc(100% + 2rem)) scale(1, 1);
+		opacity: 1;
+	}
+
+	.float {
 		position: absolute;
-		content: "";
-		top: 0;
+		display: grid;
+		bottom: 0;
 		left: 50%;
-		transform: translate(-50%, -65%);
-		border-left: 1rem solid transparent;
-		border-right: 1rem solid transparent;
-		border-bottom: 1rem solid ${global.bckClr };
-	}
+		grid-template-rows: repeat( ${ props => props.links }, 1fr);
+		background: ${ global.bckClr.dark };
+		color: ${ global.fontColor.light };
+		row-gap: 1rem;
+		padding: 0.7rem;
+		border-radius: 5px;
+		transform: translate(-50%, calc(100% + 1rem)) scale(0, 0);
+		opacity: 0;
+		transform-origin: top;
+		transition: transform 300ms, opacity 300ms;
 
-	a {
-		text-decoration: none;
-		display: flex;
-		justify-content: flex-start;
-		align-items: center;
-		color: inherit;
-		font-family: ${global.fontFamily.ternary };
-		height: 100%;
-		padding-right: 1.5rem;
-
-		.share-link-icon {
-			height: 1.5rem;
-			width: 1.5rem;
-			margin-right: 0.5rem;
+		&::before { 
+			position: absolute;
+			content: "";
+			top: 0;
+			left: 50%;
+			transform: translate(-50%, -65%);
+			border-left: 1rem solid transparent;
+			border-right: 1rem solid transparent;
+			border-bottom: 1rem solid ${global.bckClr.dark };
 		}
 
-		&:hover,
-		&:focus {
-			filter: brightness(70%);
+		a {
+			text-decoration: none;
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			color: inherit;
+			font-family: ${global.fontFamily.ternary };
+			height: 100%;
+			padding-right: 1.5rem;
+
+			.share-link-icon {
+				height: 1.5rem;
+				width: 1.5rem;
+				margin-right: 0.5rem;
+			}
+
+			&:hover,
+			&:focus {
+				filter: brightness(70%);
+			}
 		}
 	}
 
+	
+`
+
+const FloatStyled = styled.ul`
 	
 `
 

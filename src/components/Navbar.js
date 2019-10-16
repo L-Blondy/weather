@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { global } from "../styles/globalStyles";
 import { NavLink } from "react-router-dom";
 import { SearchField, Share } from ".";
+import { fadeIn } from "../styles/keyframes.js"
 
 function Navbar ( { handleSearch } ) {
 	return (
@@ -12,9 +13,9 @@ function Navbar ( { handleSearch } ) {
 
 			<ul className="navlinks">
 				<SearchField handleSearch={ handleSearch } />
-				<li><NavLink className=" navlink home" to="/" >Home</NavLink></li>
+				<li><NavLink className="navlink home" to="/" >Home</NavLink></li>
 				<li><NavLink className="navlink  settings" to="/Settings">Settings</NavLink></li>
-				<Share />
+				<Share className="share-link" />
 			</ul>
 
 		</NavbarStyled>
@@ -87,25 +88,8 @@ const NavbarStyled = styled.div`
 			&:focus::before {
 				transform: scaleX(1);
 			}
-			&.share {
-				color: white;
-				background: ${global.btnClr.primary };
-				border-radius: 7px;
-				border: none;
-				transition: background 250ms 40ms;
-			}
-			&.share:hover,
-			&.share:focus {
-				background:${global.btnClr.secondary };
-			}
 		}
-		.share-link {
-			position: relative;
-			
-			.active + .float {
-				display: grid;
-			}
-		}
+
 		.ap-nostyle-input,
 		.ap-nostyle-dropdown-menu {
 			max-width: 300px;

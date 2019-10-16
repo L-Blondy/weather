@@ -1,13 +1,21 @@
 import Axios from 'axios';
 import { AversesDay, AversesNight, ClearDay, ClearNight, Cloud, CloudyDay, CloudyNight, FewCloudsDay, FewCloudsNight, Foggy, Mixed, Rain, Snow, SnowLittle, Storm } from "../assets/weather";
+const { listTimeZones, findTimeZone, getZonedTime, getUnixTime } = require( 'timezone-support' )
 
 export function convertRemToPixels ( rem ) {
 	return rem * parseFloat( getComputedStyle( document.documentElement ).fontSize );
 }
 
-const getCurrentHour = () => {
-	const d = new Date();
-	return d.getMinutes() <= 30 ? d.getHours() : d.getHours() + 1;
+export function convertTS_toDate ( ts, offset ) {
+	const dateObj = new Date( ( ts - 3600 * offset ) * 1000 );
+	const utcString = dateObj.toUTCString();
+	return utcString
+}
+
+export const getLocalTime = ( timezone ) => {
+	const zone = findTimeZone( timezone )
+	const localTime_raw = getZonedTime( new Date(), zone )
+	return localTime_raw;
 }
 
 const getPrecip = ( precip_lvl ) => {
@@ -52,6 +60,10 @@ export const reduceDailyData = ( data ) => {
 		let weather = cur.weather.description === "Thunderstorm with heavy rain" || cur.weather.description === "Thunderstorm with rain" ? "Thunderstorm" : cur.weather.description
 
 		const data = {
+			sunrise: cur.sunrise_ts,
+			sunset: cur.sunset_ts,
+			moonrise: cur.moonrise_ts,
+			moonset: cur.moonset_ts,
 			date: months[ month - 1 ] + " " + day,
 			temperature: Math.round( cur.max_temp ),
 			icon: cur.weather.icon,
@@ -65,47 +77,62 @@ export const reduceDailyData = ( data ) => {
 
 export const fetchHourly = async ( url ) => {
 	const raw = await Axios.get( url );
-	const rawData = await raw.data.dataseries;
-	return reduceHourlyData( rawData );
+	const rawData = await raw.data;
+	return rawData;
 }
 
-export const reduceHourlyData = ( data ) => {
-	const currentHour = getCurrentHour();
+export const reduceHourly = ( rawData, offset ) => {
+	const data = rawData.dataseries;
+	const startingHour = parseInt( rawData.init.slice( 8 ) );
+	const day1_index = getDay1Index( startingHour - offset );
+
 	const result = data.reduce( ( res, cur ) => {
-		cur.hour = ( currentHour + cur.timepoint ) % 24;
+		cur.hour = ( startingHour + cur.timepoint - offset ) % 24;
 		cur.hour_english = cur.hour > 12 ? cur.hour - 12 + "pm" : cur.hour + "am";
 		cur.origin = "7timer";
 		cur.prec_amount = getPrecip( cur.prec_amount );
 		return [ ...res, cur ];
 	}, [] )
-	return result;
+
+	return {
+		0: [ ...result.slice( 0, 8 ) ],
+		1: result.slice( day1_index, day1_index + 8 ),
+		2: result.slice( day1_index + 8, day1_index + 16 ),
+		3: result.slice( day1_index + 16, day1_index + 24 ),
+		4: result.slice( day1_index + 24, day1_index + 32 ),
+		5: result.slice( day1_index + 32, day1_index + 40 ),
+		6: result.slice( day1_index + 40, day1_index + 48 ),
+		7: result.slice( day1_index + 48, day1_index + 56 ),
+	}
 }
 
 export const fetchCurrent = async ( url ) => {
 	const raw = await Axios.get( url );
 	const currentData = await raw.data.data[ 0 ]
-	console.log( currentData )
+	return currentData;
+}
 
-	const currentHour = getCurrentHour();
-
-	const currentWeather = await {
-		hour: currentHour,
-		hour_english: currentHour > 12 ? currentHour - 12 + "pm" : currentHour + "am",
-		prec_amount: currentData.precip,
+export const reduceCurrent = ( rawData, startingHour ) => {
+	startingHour = 1;
+	const currentWeather = {
+		hour: startingHour,
+		hour_english: startingHour > 12 ? startingHour - 12 + "pm" : startingHour + "am",
+		prec_amount: rawData.precip,
 		timepoint: 0,
-		temp2m: Math.round( currentData.temp ),
+		timezone: rawData.timezone,
+		timestamp: rawData.ts,
+		temp2m: Math.round( rawData.temp ),
 		wind10m: {
-			direction: currentData.wind_cdir,
-			speed: Math.round( currentData.wind_spd ),
+			direction: rawData.wind_cdir,
+			speed: Math.round( rawData.wind_spd ),
 		},
-		rh2m: currentData.rh,
-		icon: currentData.weather.icon,
-		weather: currentData.weather.description,
+		rh2m: rawData.rh,
+		icon: rawData.weather.icon,
+		weather: rawData.weather.description,
 		origin: "weatherbit",
 	}
 	return currentWeather;
 }
-
 
 export const getDay1Index = ( currentHour ) => {
 	return Math.floor( ( 24 - currentHour ) / 3 );
@@ -138,6 +165,10 @@ export const getIcon = ( data ) => {
 			case "snownight": return Snow;
 			case "rainsnowday": return Mixed;
 			case "rainsnownight": return Mixed;
+			case "tsday": return Storm;
+			case "tsnight": return Storm;
+			case "tsrainday": return Storm;
+			case "tsrainnight": return Storm;
 			default: return "dsg";
 		}
 	}
