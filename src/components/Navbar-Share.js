@@ -57,7 +57,6 @@ const ShareStyled = styled.div`
 
 	.navlink.share {
 		color: white;
-		margin: 0;
 		background: ${global.btnClr.primary };
 		border-radius: 7px;
 		border: none;

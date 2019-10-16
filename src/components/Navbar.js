@@ -63,7 +63,7 @@ const NavbarStyled = styled.div`
 			justify-content: center;
 			align-items: center;
 			user-select: none;
-			margin: 1.5vw;
+			margin: 0 1vw;
 			font-family: ${global.fontFamily.primary };
 			font-size: 1.1rem;		
 			letter-spacing: 2px;

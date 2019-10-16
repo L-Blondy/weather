@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { global } from "../styles/globalStyles"
+import { global } from "../styles/globalStyles";
 import { convertTS_toDate } from "../helpers/helpers";
-import { ReactComponent as Sun } from "../assets/weather/ClearDay.svg"
-import { ReactComponent as Moon } from "../assets/weather/ClearNight.svg"
+import { ReactComponent as Sun } from "../assets/weather/ClearDay.svg";
+import { ReactComponent as Moon } from "../assets/weather/ClearNight.svg";
 
-export default function SunSet ( { dailyData, hourlyData, currentData, activeDay, offsetTime } ) {
+export default function SunSet ( { dailyData, activeDay, offsetTime } ) {
 
 	const daily = dailyData[ activeDay ]
 	const sunrise = convertTS_toDate( daily.sunrise, offsetTime ).slice( 17, 22 );
@@ -13,47 +13,39 @@ export default function SunSet ( { dailyData, hourlyData, currentData, activeDay
 	const moonrise = convertTS_toDate( daily.moonrise, offsetTime ).slice( 17, 22 );
 	const moonset = convertTS_toDate( daily.moonset, offsetTime ).slice( 17, 22 );
 
-	if ( dailyData && hourlyData && currentData ) {
+	if ( dailyData ) {
 
 	}
 
 	return (
 		<SunSetStyled >
 			<div className="sm-section sunrise">
-				<span>
-					<div className="sm-section__description">Sunrise</div>
-					<div className="sm-section__content">
-						<Sun className="sm-icon sun-icon" />
-						<span>{ sunrise }</span>
-					</div>
-				</span>
+				<div className="sm-section__description">Sunrise</div>
+				<div className="sm-section__content">
+					<Sun className="sm-icon sun-icon" />
+					<span>{ sunrise }</span>
+				</div>
 			</div>
 			<div className="sm-section moonrise">
-				<span>
-					<div className="sm-section__description">Moonrise</div>
-					<div className="sm-section__content">
-						<Moon className="sm-icon moon-icon" />
-						<span>{ moonrise }</span>
-					</div>
-				</span>
+				<div className="sm-section__description">Moonrise</div>
+				<div className="sm-section__content">
+					<Moon className="sm-icon moon-icon" />
+					<span>{ moonrise }</span>
+				</div>
 			</div>
 			<div className="sm-section sunset">
-				<span>
-					<div className="sm-section__description">Sunset</div>
-					<div className="sm-section__content">
-						<Sun className="sm-icon sun-icon" />
-						<span>{ sunset }</span>
-					</div>
-				</span>
+				<div className="sm-section__description">Sunset</div>
+				<div className="sm-section__content">
+					<Sun className="sm-icon sun-icon" />
+					<span>{ sunset }</span>
+				</div>
 			</div>
 			<div className="sm-section moonset">
-				<span>
-					<div className="sm-section__description">Moonset</div>
-					<div className="sm-section__content">
-						<Moon className="sm-icon moon-icon" />
-						<span>{ moonset }</span>
-					</div>
-				</span>
+				<div className="sm-section__description">Moonset</div>
+				<div className="sm-section__content">
+					<Moon className="sm-icon moon-icon" />
+					<span>{ moonset }</span>
+				</div>
 			</div>
 		</SunSetStyled>
 	)
@@ -61,16 +53,16 @@ export default function SunSet ( { dailyData, hourlyData, currentData, activeDay
 
 const SunSetStyled = styled.div`
 	position: relative;
-	border-top: 1px solid ${ global.fontColor.dark + "70" };
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	grid-template-rows: 1fr 1fr;
+	place-items: center;
 
 	.sm-section {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		align-items: center;
+		align-items: flex-start;
 
 		.sm-section__description {
 			font-size: 0.9rem;

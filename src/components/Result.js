@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { global } from "../styles/globalStyles";
-import { Caroussel, Graph, SunSet } from "./";
+import { Caroussel, Graph, SunSet, Wind, Humidity } from "./";
 import { ReactComponent as LoadingGraph } from "../assets/loading-graph.svg"
 import { ReactComponent as Loading } from "../assets/loading.svg"
 
@@ -58,7 +58,7 @@ export default function Result ( { place, dailyData, hourlyData, currentData, lo
 						<button className={ graphType === "precip" ? "active" : "" } data-type="precip" onClick={ ( e ) => setGraphType( e.target.dataset.type ) }  >Precipitation</button>
 					</div>
 				</div>
-				{ !( hourlyData && activeDay ) ?
+				{ !hourlyData ?
 					(
 						<div className="loading-chart">
 							<LoadingGraph />
@@ -78,42 +78,48 @@ export default function Result ( { place, dailyData, hourlyData, currentData, lo
 					<h4>DAY DETAILS</h4>
 				</div>
 				<div className="details-container">
-					{ dailyData && hourlyData && currentData ?
-						( <>
+					{ dailyData ?
+						(
 							<SunSet
+								className="details-sub-section"
 								dailyData={ dailyData }
-								hourlyData={ hourlyData }
-								currentData={ currentData }
 								activeDay={ activeDay }
 								offsetTime={ offsetTime }
 							/>
-							<SunSet
+						) : (
+							<div className="loading-container details-sub-section">
+								<Loading />
+							</div>
+						)
+					}
+					{ dailyData ?
+						(
+							<Wind
+								className="details-sub-section"
 								dailyData={ dailyData }
-								hourlyData={ hourlyData }
-								currentData={ currentData }
 								activeDay={ activeDay }
 								offsetTime={ offsetTime }
 							/>
-							<SunSet
+						) : (
+							<div className="loading-container details-sub-section">
+								<Loading />
+							</div>
+						)
+					}
+					{ dailyData ?
+						(
+							<Humidity
+								className="details-sub-section"
 								dailyData={ dailyData }
-								hourlyData={ hourlyData }
-								currentData={ currentData }
 								activeDay={ activeDay }
 								offsetTime={ offsetTime }
 							/>
-						</>
-						) : ( <>
+						) : (
 							<div className="loading-container details-sub-section">
 								<Loading />
 							</div>
-							<div className="loading-container details-sub-section">
-								<Loading />
-							</div>
-							<div className="loading-container details-sub-section">
-								<Loading />
-							</div>
-						</>
-						) }
+						)
+					}
 
 				</div>
 			</div>
@@ -222,23 +228,22 @@ const ResultStyled = styled.div`
 	}
 
 	.details {
-		.loading-container {
-			position: relative;
-			color: ${global.fontFamily.primary };
-
-			.loading-img {
-				height: 40px;
-			}
-		}
-
 		.details-container {
 			display: grid;
 			grid-template-columns: 1fr 1fr 1fr;
 			grid-template-rows: 12rem;
 			column-gap: 1rem;
 
-			.details-sub-section {
+			& > div {
 				border-top: 1px solid ${global.fontColor.dark + "70" };
+			}
+
+			.loading-container {
+				position: relative;
+
+				.loading-img {
+					height: 40px;
+				}
 			}
 		}
 	}
