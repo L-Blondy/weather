@@ -68,7 +68,7 @@ class Caroussel extends React.Component {
 					)
 				} )
 			) : (
-				Array( 16 ).fill( "qesad" ).map( ( val, ind ) => (
+				Array( 16 ).fill( "CI" ).map( ( val, ind ) => (
 					<button className={ "grid-item " } key={ val + ind }>
 						<Loading />
 					</button>
@@ -89,7 +89,7 @@ class Caroussel extends React.Component {
 			>
 
 				<button className="chevron-left" onClick={ () => this.setScrollCount( -1, scrollCount, items ) } >
-					<svg width="24" height="44" viewBox="0 0 24 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<svg width="24" height="44" viewBox="0 0 24 44" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M22 42L2 22L22 2" stroke="currentColor" strokeWidth="5" strokeLinejoin="round" />
 					</svg>
 				</button>
@@ -101,7 +101,7 @@ class Caroussel extends React.Component {
 				</div>
 
 				<button className="chevron-right" onClick={ () => this.setScrollCount( 1, scrollCount, items ) }>
-					<svg width="24" height="44" viewBox="0 0 24 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<svg width="24" height="44" viewBox="0 0 24 44" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M2 2L22 22L2 42" stroke="currentColor" strokeWidth="5" strokeLinejoin="round" />
 					</svg>
 				</button>
@@ -186,6 +186,7 @@ const CarousselStyled = styled.div`
 		border: none;
 		color: ${global.fontColor.dark };
 		text-align: left;
+		font-size: 0;
 
 		&:hover,
 		&:focus {

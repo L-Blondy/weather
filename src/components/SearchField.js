@@ -50,7 +50,9 @@ function SearchForm ( { handleSearch, history, animated } ) {
 			}
 			frameID = window.requestAnimationFrame( animPlaceholder )
 		}
-		return () => window.cancelAnimationFrame( frameID )
+		return () => {
+			window.cancelAnimationFrame( frameID )
+		}
 	} )
 
 	const resetInput = () => {
@@ -72,8 +74,8 @@ function SearchForm ( { handleSearch, history, animated } ) {
 				placeholder=""
 				onChange={ ( { suggestion } ) => {
 					const PlaceFullName = suggestion.name + "," + suggestion.country;
-					handleSearch( PlaceFullName, history, suggestion.latlng );
 					resetInput()
+					handleSearch( PlaceFullName, history, suggestion.latlng );
 				} }
 				options={ {
 					appId: "pl8X2ZGNUAZU",

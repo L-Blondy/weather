@@ -119,7 +119,6 @@ const AppStyled = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	overflow: hidden;
 
 	.LazyLoad {
 		position: absolute;
@@ -129,6 +128,7 @@ const AppStyled = styled.div`
 	}
 
 	.background-image {
+		position: fixed;
 		height: 100%;
 		width: 100%;
 		opacity: 0.4;

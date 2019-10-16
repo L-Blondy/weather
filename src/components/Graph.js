@@ -68,7 +68,6 @@ export default function Graph ( { hourlyData, activeDay, graphType } ) {
 						/>
 
 						<YAxis
-							hide={ graphType !== "precip" }
 							yAxisId="precip"
 							dataKey="prec_amount"
 							hide={ true }
@@ -78,9 +77,8 @@ export default function Graph ( { hourlyData, activeDay, graphType } ) {
 							hide={ graphType !== "precip" }
 							yAxisId="precip"
 							dataKey="prec_amount"
-							fill="#82ca9d"
 							barSize={ 7 }
-							fill={ "#265E92aa" }
+							fill="#265E92aa"
 							minPointSize={ 3 }
 						/>
 						{ graphType === "precip" && (

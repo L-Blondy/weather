@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import { AversesDay, AversesNight, ClearDay, ClearNight, Cloud, CloudyDay, CloudyNight, FewCloudsDay, FewCloudsNight, Foggy, Mixed, Rain, Snow, SnowLittle, Storm } from "../assets/weather";
-const { listTimeZones, findTimeZone, getZonedTime, getUnixTime } = require( 'timezone-support' )
+const { findTimeZone, getZonedTime } = require( 'timezone-support' )
 
 export function convertRemToPixels ( rem ) {
 	return rem * parseFloat( getComputedStyle( document.documentElement ).fontSize );
@@ -48,11 +48,11 @@ const getPrecip = ( precip_lvl ) => {
 export const fetchDaily = async ( url ) => {
 	return Axios.get( url )
 		.then( resp => resp.data.data )
-		.then( data => reduceDailyData( data ) )
+		.then( data => reduceDaily( data ) )
 		.catch( error => console.log( "DAILY : PLACE NOT FOUND", error ) );
 }
 
-export const reduceDailyData = ( data ) => {
+export const reduceDaily = ( data ) => {
 	const months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 	return data.reduce( ( res, cur ) => {
 		const day = cur.datetime.slice( 8 )
@@ -60,6 +60,7 @@ export const reduceDailyData = ( data ) => {
 		let weather = cur.weather.description === "Thunderstorm with heavy rain" || cur.weather.description === "Thunderstorm with rain" ? "Thunderstorm" : cur.weather.description
 
 		const data = {
+			origin: "weatherbit",
 			sunrise: cur.sunrise_ts,
 			sunset: cur.sunset_ts,
 			moonrise: cur.moonrise_ts,
@@ -68,7 +69,10 @@ export const reduceDailyData = ( data ) => {
 			temperature: Math.round( cur.max_temp ),
 			icon: cur.weather.icon,
 			weather: weather,
-			origin: "weatherbit",
+			rh: cur.rh,
+			precip: Math.round( cur.precip ),
+			max_temp: Math.round( cur.max_temp ),
+			min_temp: Math.round( cur.min_temp ),
 		}
 		res = [ ...res, data ]
 		return res;
@@ -85,25 +89,27 @@ export const reduceHourly = ( rawData, offset ) => {
 	const data = rawData.dataseries;
 	const startingHour = parseInt( rawData.init.slice( 8 ) );
 	const day1_index = getDay1Index( startingHour - offset );
+	let currentDay_index = 0;
 
-	const result = data.reduce( ( res, cur ) => {
+	const result = data.reduce( ( res, cur, ind ) => {
+		if ( ( ind - day1_index ) % 8 === 0 )
+			currentDay_index++
+		if ( currentDay_index > 7 )
+			return res;
+
 		cur.hour = ( startingHour + cur.timepoint - offset ) % 24;
 		cur.hour_english = cur.hour > 12 ? cur.hour - 12 + "pm" : cur.hour + "am";
 		cur.origin = "7timer";
 		cur.prec_amount = getPrecip( cur.prec_amount );
-		return [ ...res, cur ];
-	}, [] )
 
-	return {
-		0: [ ...result.slice( 0, 8 ) ],
-		1: result.slice( day1_index, day1_index + 8 ),
-		2: result.slice( day1_index + 8, day1_index + 16 ),
-		3: result.slice( day1_index + 16, day1_index + 24 ),
-		4: result.slice( day1_index + 24, day1_index + 32 ),
-		5: result.slice( day1_index + 32, day1_index + 40 ),
-		6: result.slice( day1_index + 40, day1_index + 48 ),
-		7: result.slice( day1_index + 48, day1_index + 56 ),
-	}
+		if ( currentDay_index === 1 && res[ 0 ].length < 8 )
+			res[ 0 ] = [ ...res[ 0 ], cur ]
+		res[ currentDay_index ] = [ ...res[ currentDay_index ], cur ]
+
+		return res;
+	}, Array( 8 ).fill( [] ) )
+
+	return result;
 }
 
 export const fetchCurrent = async ( url ) => {

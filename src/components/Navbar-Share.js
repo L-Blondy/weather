@@ -37,13 +37,13 @@ class Share extends Component {
 				<button className={ "navlink  share " + ( this.state.active ? "active " : "" ) } onClick={ () => this.toggleShare( this.state.active ) }>Share</button>
 
 				<div className="float" links={ 3 }>
-					<li><a target="_blank" href={ this.URL_facebook }>
+					<li><a target="_blank" rel="external noreferrer noopener" href={ this.URL_facebook }>
 						<Facebook className="share-link-icon" />Facebook
 					</a></li>
-					<li><a target="_blank" href={ this.URL_twitter }>
+					<li><a target="_blank" rel="externa noreferrer noopener" href={ this.URL_twitter }>
 						<Twitter className="share-link-icon" />Twitter
 					</a></li>
-					<li><a target="_blank" href={ this.URL_linkedin }>
+					<li><a target="_blank" rel="external noreferrer noopener" href={ this.URL_linkedin }>
 						<Linkedin className="share-link-icon" />LinkedIn
 					</a></li>
 				</div>
@@ -120,12 +120,6 @@ const ShareStyled = styled.div`
 			}
 		}
 	}
-
-	
-`
-
-const FloatStyled = styled.ul`
-	
 `
 
 export default enhanceWithClickOutside( Share )

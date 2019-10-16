@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { global } from "../styles/globalStyles";
 import { NavLink } from "react-router-dom";
 import { SearchField, Share } from ".";
-import { fadeIn } from "../styles/keyframes.js"
 
 function Navbar ( { handleSearch } ) {
 	return (

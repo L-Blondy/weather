@@ -23,7 +23,7 @@ export default function Result ( { place, dailyData, hourlyData, currentData, lo
 	return (
 		<ResultStyled>
 
-			<div className="place-time">
+			<section className="place-time">
 				{ localTime ?
 					( <>
 						<p className="place">{ place }</p>
@@ -36,9 +36,9 @@ export default function Result ( { place, dailyData, hourlyData, currentData, lo
 					</>
 					) }
 
-			</div>
+			</section>
 
-			<div className="daily section" >
+			<section className="daily section" >
 				<div className="section-title-wrapper">
 					<h4 className="h4-daily">DAILY</h4>
 				</div>
@@ -48,9 +48,9 @@ export default function Result ( { place, dailyData, hourlyData, currentData, lo
 					setCurrentActive={ setCurrentActive }
 					activeDay={ activeDay }
 				/>
-			</div >
+			</section >
 
-			<div className="hourly section">
+			<section className="hourly section">
 				<div className="section-title-wrapper section-title-wrapper__hourly" >
 					<h4 className="h4-hourly">HOURLY</h4>
 					<div className="hourly-header-wrapper__buttons" >
@@ -71,13 +71,39 @@ export default function Result ( { place, dailyData, hourlyData, currentData, lo
 							graphType={ graphType }
 						/>
 					) }
-			</div>
+			</section>
 
-			<div className="details section">
+			<section className="details section">
 				<div className="section-title-wrapper section-title-wrapper__details">
 					<h4>DAY DETAILS</h4>
 				</div>
 				<div className="details-container">
+					{ dailyData ?
+						(
+							<Humidity
+								className="details-sub-section"
+								dailyData={ dailyData }
+								activeDay={ activeDay }
+							/>
+						) : (
+							<div className="loading-container details-sub-section">
+								<Loading />
+							</div>
+						)
+					}
+					{ dailyData ?
+						(
+							<Wind
+								className="details-sub-section"
+								dailyData={ dailyData }
+								activeDay={ activeDay }
+							/>
+						) : (
+							<div className="loading-container details-sub-section">
+								<Loading />
+							</div>
+						)
+					}
 					{ dailyData ?
 						(
 							<SunSet
@@ -92,44 +118,14 @@ export default function Result ( { place, dailyData, hourlyData, currentData, lo
 							</div>
 						)
 					}
-					{ dailyData ?
-						(
-							<Wind
-								className="details-sub-section"
-								dailyData={ dailyData }
-								activeDay={ activeDay }
-								offsetTime={ offsetTime }
-							/>
-						) : (
-							<div className="loading-container details-sub-section">
-								<Loading />
-							</div>
-						)
-					}
-					{ dailyData ?
-						(
-							<Humidity
-								className="details-sub-section"
-								dailyData={ dailyData }
-								activeDay={ activeDay }
-								offsetTime={ offsetTime }
-							/>
-						) : (
-							<div className="loading-container details-sub-section">
-								<Loading />
-							</div>
-						)
-					}
-
 				</div>
-			</div>
+			</section>
 
 		</ResultStyled >
 	)
 }
 
 const ResultStyled = styled.div`
-	height: 100%;
 	font-family: ${ global.fontFamily.ternary };
 	color: ${ global.fontColor.dark };
 	padding: 2rem 20vw 0 20vw;
