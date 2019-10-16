@@ -6,7 +6,6 @@ import { Icon } from "./";
 
 export default function Graph ( { hourlyData, activeDay, graphType } ) {
 
-	console.log( hourlyData )
 	if ( activeDay <= 7 ) {
 		const offset = 25 - hourlyData[ activeDay ][ 0 ].temp2m
 		hourlyData[ activeDay ].map( hourData => hourData.tempOffset = hourData.temp2m + offset )

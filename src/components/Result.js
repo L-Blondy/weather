@@ -58,7 +58,7 @@ export default function Result ( { place, dailyData, hourlyData, currentData, lo
 						<button className={ graphType === "precip" ? "active" : "" } data-type="precip" onClick={ ( e ) => setGraphType( e.target.dataset.type ) }  >Precipitation</button>
 					</div>
 				</div>
-				{ !hourlyData && !activeDay ?
+				{ !( hourlyData && activeDay ) ?
 					(
 						<div className="loading-chart">
 							<LoadingGraph />
