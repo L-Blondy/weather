@@ -11,10 +11,10 @@ function Navbar ( { handleSearch } ) {
 			<span className="logo">AccuWeather</span>
 
 			<ul className="navlinks">
-				<SearchField handleSearch={ handleSearch } />
-				<li><NavLink className="navlink home" to="/" >Home</NavLink></li>
-				<li><NavLink className="navlink  settings" to="/Settings">Settings</NavLink></li>
-				<Share className="share-link" />
+				<SearchField className="search-field" handleSearch={ handleSearch } />
+				<li><NavLink className="navlink navlink-normal" to="/" >Home</NavLink></li>
+				<li><NavLink className="navlink navlink-normal" to="/Settings">Settings</NavLink></li>
+				<Share className="navlink navlink-share" />
 			</ul>
 
 		</NavbarStyled>
@@ -26,7 +26,7 @@ const NavbarStyled = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	height: 50px;
+	height: ${global.navbar_height };
 	box-shadow: 0 0 20px 0 #26374f20;
 	flex-shrink: 0;
 
@@ -55,14 +55,7 @@ const NavbarStyled = styled.div`
 			position: relative;
 			cursor: pointer;
 			padding: 5px 20px;
-			display: flex;
 			text-decoration: none;
-			color: inherit;
-			height: 100%;
-			justify-content: center;
-			align-items: center;
-			user-select: none;
-			margin: 0 1vw;
 			font-family: ${global.fontFamily.primary };
 			font-size: 1.1rem;		
 			letter-spacing: 2px;
@@ -72,8 +65,17 @@ const NavbarStyled = styled.div`
 				margin: 0vw;
 				font-size: 1rem;		
 			}
+		}
 
-			&:not(.share)::before{
+		.navlink-normal {
+			color: inherit;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			user-select: none;
+			margin: 0 1vw;
+
+			&::before{
 				position: absolute;
 				content: "";
 				height: 1px;
@@ -94,10 +96,12 @@ const NavbarStyled = styled.div`
 			max-width: 300px;
 		}
 		.ap-nostyle-input:focus{
-			background: linear-gradient(#bfc1c3, #f2f6f9)
+			background: linear-gradient(#bfc1c3, #f2f6f9aa)
 		}
 		.ap-nostyle-dropdown-menu {
 			background: #f2f6f9;
+			filter: brightness(95%);
+			color: black;
 		}
 
 		.search-field {

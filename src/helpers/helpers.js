@@ -18,37 +18,41 @@ export const getLocalTime = ( timezone ) => {
 	return localTime_raw;
 }
 
-const getPrecip = ( precip_lvl ) => {
+export const getPrecip = ( precip_lvl ) => {
 	switch ( precip_lvl ) {
-		case 0:
-			return 0;
-		case 1:
-			return 0;
-		case 2:
-			return 1;
-		case 3:
-			return 3;
-		case 4:
-			return 8;
-		case 5:
-			return 15;
-		case 6:
-			return 25;
-		case 7:
-			return 40;
-		case 8:
-			return 60;
-		case 9:
-			return 75;
-		default:
-			return 0;
+		case 0: return 0;
+		case 1: return 0;
+		case 2: return 1;
+		case 3: return 3;
+		case 4: return 8;
+		case 5: return 15;
+		case 6: return 25;
+		case 7: return 40;
+		case 8: return 60;
+		case 9: return 75;
+		default: return 0;
 	}
+}
+
+const getPrecipLvl = ( precip ) => {
+	if ( precip === 0 ) return 0;
+	else if ( precip < 2 ) return 1;
+	else if ( precip < 5 ) return 2;
+	else if ( precip < 10 ) return 3;
+	else if ( precip < 20 ) return 4;
+	else if ( precip < 40 ) return 5;
+	else if ( precip < 60 ) return 6;
+	else return 7;
 }
 
 export const fetchDaily = async ( url ) => {
 	return Axios.get( url )
-		.then( resp => resp.data.data )
-		.then( data => reduceDaily( data ) )
+		.then( resp => {
+			return {
+				data: resp.data.data,
+				timezone: resp.data.timezone,
+			}
+		} )
 		.catch( error => console.log( "DAILY : PLACE NOT FOUND", error ) );
 }
 
@@ -71,6 +75,7 @@ export const reduceDaily = ( data ) => {
 			weather: weather,
 			rh: cur.rh,
 			precip: Math.round( cur.precip ),
+			precip_lvl: getPrecipLvl( Math.round( cur.precip ) ),
 			max_temp: Math.round( cur.max_temp ),
 			min_temp: Math.round( cur.min_temp ),
 		}
@@ -90,14 +95,28 @@ export const reduceHourly = ( rawData, offset ) => {
 	const startingHour = parseInt( rawData.init.slice( 8 ) );
 	const day1_index = getDay1Index( startingHour - offset );
 	let currentDay_index = 0;
+	let dailyMax = -200;
+	let dailyMin = 200;
 
 	const result = data.reduce( ( res, cur, ind ) => {
-		if ( ( ind - day1_index ) % 8 === 0 )
-			currentDay_index++
+		if ( ( ind - day1_index ) % 8 === 0 ) {
+			currentDay_index++;
+			dailyMax = -200;
+			dailyMin = 200;
+		}
 		if ( currentDay_index > 7 )
 			return res;
+		if ( cur.temp2m > dailyMax ) {
+			dailyMax = cur.temp2m
+		}
+		if ( cur.temp2m < dailyMin ) {
+			dailyMin = cur.temp2m
+		}
 
+		cur.dailyMax = dailyMax;
+		cur.dailyMin = dailyMin;
 		cur.hour = ( startingHour + cur.timepoint - offset ) % 24;
+		cur.hour = ( cur.hour < 0 ) ? cur.hour + 24 : cur.hour;
 		cur.hour_english = cur.hour > 12 ? cur.hour - 12 + "pm" : cur.hour + "am";
 		cur.origin = "7timer";
 		cur.prec_amount = getPrecip( cur.prec_amount );
@@ -110,34 +129,6 @@ export const reduceHourly = ( rawData, offset ) => {
 	}, Array( 8 ).fill( [] ) )
 
 	return result;
-}
-
-export const fetchCurrent = async ( url ) => {
-	const raw = await Axios.get( url );
-	const currentData = await raw.data.data[ 0 ]
-	return currentData;
-}
-
-export const reduceCurrent = ( rawData, startingHour ) => {
-	startingHour = 1;
-	const currentWeather = {
-		hour: startingHour,
-		hour_english: startingHour > 12 ? startingHour - 12 + "pm" : startingHour + "am",
-		prec_amount: rawData.precip,
-		timepoint: 0,
-		timezone: rawData.timezone,
-		timestamp: rawData.ts,
-		temp2m: Math.round( rawData.temp ),
-		wind10m: {
-			direction: rawData.wind_cdir,
-			speed: Math.round( rawData.wind_spd ),
-		},
-		rh2m: rawData.rh,
-		icon: rawData.weather.icon,
-		weather: rawData.weather.description,
-		origin: "weatherbit",
-	}
-	return currentWeather;
 }
 
 export const getDay1Index = ( currentHour ) => {
@@ -192,18 +183,6 @@ export const getIcon = ( data ) => {
 			case "c03": {
 				return code === "c03d" ? CloudyDay : CloudyNight;
 			}
-			case "c04":
-				return Cloud;
-			case "t01":
-				return Storm;
-			case "t02":
-				return Storm;
-			case "t03":
-				return Storm;
-			case "t04":
-				return Storm;
-			case "t05":
-				return Storm;
 			case "d01": {
 				return code === "d01d" ? AversesDay : AversesNight;
 			}
@@ -228,38 +207,28 @@ export const getIcon = ( data ) => {
 			case "r05": {
 				return code === "r05d" ? AversesDay : AversesNight
 			}
-			case "f01":
-				return Rain;
-			case "r06":
-				return Rain;
-			case "u00":
-				return Rain;
-			case "s01":
-				return SnowLittle;
-			case "s02":
-				return Snow;
-			case "s03":
-				return Snow;
-			case "s04":
-				return Mixed;
-			case "s05":
-				return Snow;
-			case "s06":
-				return SnowLittle;
-			case "a01":
-				return Foggy;
-			case "a02":
-				return Foggy;
-			case "a03":
-				return Foggy;
-			case "a04":
-				return Foggy;
-			case "a05":
-				return Foggy;
-			case "a06":
-				return Foggy;
-			default:
-				return Cloud;
+			case "c04": return Cloud;
+			case "t01": return Storm;
+			case "t02": return Storm;
+			case "t03": return Storm;
+			case "t04": return Storm;
+			case "t05": return Storm;
+			case "f01": return Rain;
+			case "r06": return Rain;
+			case "u00": return Rain;
+			case "s01": return SnowLittle;
+			case "s02": return Snow;
+			case "s03": return Snow;
+			case "s04": return Mixed;
+			case "s05": return Snow;
+			case "s06": return SnowLittle;
+			case "a01": return Foggy;
+			case "a02": return Foggy;
+			case "a03": return Foggy;
+			case "a04": return Foggy;
+			case "a05": return Foggy;
+			case "a06": return Foggy;
+			default: return Cloud;
 		}
 	}
 }

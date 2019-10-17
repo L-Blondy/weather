@@ -7,7 +7,7 @@ import { fadeIn, scaleX } from "../styles/keyframes";
 import { global } from "../styles/globalStyles";
 import { withRouter } from 'react-router-dom'
 
-function SearchForm ( { handleSearch, history, animated } ) {
+function SearchForm ( { className, handleSearch, history, animated } ) {
 
 	const sentences = [
 		"Florence, Toscana, Italy".split( "" ),
@@ -62,7 +62,7 @@ function SearchForm ( { handleSearch, history, animated } ) {
 
 	return (
 		<SearchFieldStyled
-			className="search-field"
+			className={ className }
 			ref={ searchInput }
 			animated={ animated }
 			inputVal={ inputVal }
@@ -187,6 +187,7 @@ const SearchFieldStyled = styled.div`
 		letter-spacing: 1px;
 		background: #00000007;
 		line-height: 1.2rem;
+		z-index: 10;
 
 		.ap-footer {
 			display: none;
@@ -215,6 +216,6 @@ const SearchFieldStyled = styled.div`
 	@media (max-width: 1024px) {
 		display: none;
 	}
-`;
+`
 
 export default withRouter( SearchForm );

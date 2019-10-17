@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import styled from 'styled-components';
 import { convertRemToPixels, getIcon } from "../helpers/helpers";
 import { global } from "../styles/globalStyles";
-import { ReactComponent as Loading } from "../assets/loading.svg"
+import { ReactComponent as LoadingCircle } from "../assets/loading-circle.svg"
 
 class Caroussel extends React.Component {
 	constructor ( props ) {
@@ -70,7 +70,7 @@ class Caroussel extends React.Component {
 			) : (
 				Array( 16 ).fill( "CI" ).map( ( val, ind ) => (
 					<button className={ "grid-item " } key={ val + ind }>
-						<Loading />
+						<LoadingCircle />
 					</button>
 				) )
 			)
@@ -78,11 +78,11 @@ class Caroussel extends React.Component {
 
 	render () {
 		const { itemWidth, scrollCount, items } = this.state;
-		const { dailyData, activeDay } = this.props;
+		const { dailyData, activeDay, className } = this.props;
 
 		return (
 			<CarousselStyled
-				className="caroussel"
+				className={ className }
 				itemWidth={ itemWidth }
 				scrollCount={ scrollCount }
 				items={ items }

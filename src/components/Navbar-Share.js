@@ -33,7 +33,7 @@ class Share extends Component {
 
 	render () {
 		return (
-			<ShareStyled>
+			<ShareStyled className={ this.props.className }>
 				<button className={ "navlink  share " + ( this.state.active ? "active " : "" ) } onClick={ () => this.toggleShare( this.state.active ) }>Share</button>
 
 				<div className="float" links={ 3 }>
@@ -55,18 +55,18 @@ class Share extends Component {
 const ShareStyled = styled.div`
 	position: relative;
 
-	.navlink.share {
+	& > button {
 		color: white;
 		background: ${global.btnClr.primary };
 		border-radius: 7px;
 		border: none;
 		transition: background 250ms 40ms;
 	}
-	.share:hover,
-	.share:focus {
+	& > button:hover,
+	& > button:focus {
 		background:${global.btnClr.secondary };
 	}
-	.share.active + .float {
+	& > button.active + .float {
 		transform: translate(-50%, calc(100% + 2rem)) scale(1, 1);
 		opacity: 1;
 	}

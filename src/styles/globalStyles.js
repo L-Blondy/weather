@@ -22,5 +22,6 @@ export const global = {
 	bckClr: {
 		dark: "#47505d",
 	},
-	chartHeight: "12rem"
+	chartHeight: "12rem",
+	navbar_height: "50px",
 }
