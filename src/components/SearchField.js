@@ -110,9 +110,9 @@ const SearchFieldStyled = styled.div`
 		position: relative;
 		border: none;
 		height: 2.5rem;
-		min-width: 300px;
 		width: 32vw;	
-		max-width: 500px;
+		min-width: 300px;
+		max-width: 450px;
 		padding: 0 2.5rem 0 7px;
 		background: none;
 		font-size: 1.2rem;

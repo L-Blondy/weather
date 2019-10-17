@@ -13,9 +13,9 @@ export default function Home ( { handleSearch } ) {
 	}
 
 	return (
-		<HomeStyled startNowDuration="1000" startNow={ startNow } className="home">
+		<HomeStyled startNowDuration="1000" className="home">
 
-			<div className={ "side left-side " + ( startNow && "fadeout " ) }>
+			<div className={ "side left-side " + ( startNow ? "fadeout " : "fadein" ) }>
 				<Title></Title>
 
 				<div className="moto">
@@ -59,7 +59,7 @@ const HomeStyled = styled.div`
 
 	.side {
 		position: absolute;
-		top: 0
+		top: 0;
 		width: 45%;
 		height: 100%;
 
@@ -70,7 +70,6 @@ const HomeStyled = styled.div`
 			left: 0;
 			align-items: flex-end;
 			text-align: right;
-			transition: opacity ${props => props.startNowDuration / 2 + "ms " } ${ props => !props.startNow ? " 1000ms" : " 0ms" };
 
 			.moto {
 				font-size: 1.2rem;
@@ -111,10 +110,20 @@ const HomeStyled = styled.div`
 		}
 		&.fadeout {
 			opacity: 0;
+			transition-property: opacity;
+			transition-duration: ${props => props.startNowDuration / 2 + "ms " };
+			
+		}
+		&.fadein {
+			opacity: 1;
+			transition-property: opacity;
+			transition-duration: ${props => props.startNowDuration + "ms " };
+			transition-delay: 500ms;
 		}
 		&.right-side {
 			right: 0;
-			transition: transform ${props => props.startNowDuration + "ms" }, width ${ props => props.startNowDuration + "ms" };
+			transition-property: transform, width;
+			transition-duration: ${props => props.startNowDuration + "ms" };
 
 			.wrapper-right {
 				position: relative;
@@ -126,7 +135,8 @@ const HomeStyled = styled.div`
 					top: 50%;
 					left: 0;
 					transform: translate(0, -50%);
-					transition: transform ${props => props.startNowDuration + "ms" }, left ${ props => props.startNowDuration + "ms" };
+					transition-property: transform, left;
+					transition-duration: ${props => props.startNowDuration + "ms" };
 				}
 			}
 		}
