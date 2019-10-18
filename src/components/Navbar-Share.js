@@ -52,7 +52,7 @@ class Share extends Component {
 	}
 }
 
-const ShareStyled = styled.div`
+const ShareStyled = styled.li`
 	position: relative;
 
 	& > button {
@@ -86,6 +86,8 @@ const ShareStyled = styled.div`
 		opacity: 0;
 		transform-origin: top;
 		transition: transform 300ms, opacity 300ms;
+		letter-spacing: 0.5px;
+		font-size: 0.9rem;
 
 		&::before { 
 			position: absolute;

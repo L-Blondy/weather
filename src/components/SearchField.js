@@ -169,13 +169,11 @@ const SearchFieldStyled = styled.div`
 		bottom: 7px;
 		right: 7px;
 		cursor: pointer;
-		transition: transform 300ms, filter 300ms;
+		transition: color 200ms;
 		color: ${global.fontColor.dark };
-
-		&:hover {
-			transform: scale(1.15);
-			filter: brightness(15%);
-		}
+	}
+	.clear-icon:hover {
+		color: red;
 	}
 
 	.ap-nostyle-dropdown-menu {
@@ -199,6 +197,7 @@ const SearchFieldStyled = styled.div`
 	.ap-nostyle-suggestion {
 		padding: 5px 10px;
 		cursor: pointer;
+		text-align: left;
 		
 		.ap-suggestion-icon {
 			display: none;

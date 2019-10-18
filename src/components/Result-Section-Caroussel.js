@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { convertRemToPixels, getIcon } from "../helpers/helpers";
 import { global } from "../styles/globalStyles";
 import { ReactComponent as LoadingCircle } from "../assets/loading-circle.svg"
+import { ReactComponent as Left } from "../assets/chevron-left.svg"
+import { ReactComponent as Right } from "../assets/chevron-right.svg"
 
 class Caroussel extends React.Component {
 	constructor ( props ) {
@@ -89,9 +91,7 @@ class Caroussel extends React.Component {
 			>
 
 				<button className="chevron-left" onClick={ () => this.setScrollCount( -1, scrollCount, items ) } >
-					<svg width="24" height="44" viewBox="0 0 24 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M22 42L2 22L22 2" stroke="currentColor" strokeWidth="5" strokeLinejoin="round" />
-					</svg>
+					<Left />
 				</button>
 
 				<div className="grid-container">
@@ -100,10 +100,8 @@ class Caroussel extends React.Component {
 					</ul>
 				</div>
 
-				<button className="chevron-right" onClick={ () => this.setScrollCount( 1, scrollCount, items ) }>
-					<svg width="24" height="44" viewBox="0 0 24 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M2 2L22 22L2 42" stroke="currentColor" strokeWidth="5" strokeLinejoin="round" />
-					</svg>
+				<button className="chevron-right" onClick={ () => this.setScrollCount( 1, scrollCount, items ) } >
+					<Right />
 				</button>
 
 			</CarousselStyled>

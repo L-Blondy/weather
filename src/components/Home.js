@@ -2,7 +2,8 @@ import React from 'react';
 import styled from "styled-components";
 import { global } from "../styles/globalStyles";
 import { SearchField, Title } from "./";
-import { pokeRight } from "../styles/keyframes";
+import { pokeRight, fadeIn } from "../styles/keyframes";
+import { ReactComponent as Right } from "../assets/chevron-right.svg"
 
 export default function Home ( { handleSearch } ) {
 
@@ -13,7 +14,7 @@ export default function Home ( { handleSearch } ) {
 	}
 
 	return (
-		<HomeStyled startNowDuration="1000" className="home">
+		<HomeStyled startNowDuration={ 1000 } className="home">
 
 			<div className={ "side left-side " + ( startNow ? "fadeout " : "fadein" ) }>
 				<Title></Title>
@@ -37,7 +38,9 @@ export default function Home ( { handleSearch } ) {
 
 			<div className={ "side right-side " + ( startNow && "full-width " ) }>
 				{ startNow && (
-					<button onClick={ () => setStartNow( false ) }>back</button>
+					<button className="startnow__close" onClick={ () => setStartNow( false ) }>
+						<Right />
+					</button>
 				) }
 				<div className="wrapper-right">
 					<SearchField
@@ -125,6 +128,17 @@ const HomeStyled = styled.div`
 			transition-property: transform, width;
 			transition-duration: ${props => props.startNowDuration + "ms" };
 
+			.startnow__close {
+				position: absolute;
+				opacity: 0;
+				z-index: 1;
+				animation: ${fadeIn( 1 ) } 2000ms forwards 1000ms;
+				border: none;
+				background: none;
+				top: 30px;
+				left: 30px;
+				color: inherit;
+			}
 			.wrapper-right {
 				position: relative;
 				height: 100%;

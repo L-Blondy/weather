@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from "react-dom";
 import styled from "styled-components";
 import "./styles/styles.css"
-import { Navbar, Home, Footer, Result } from "./components";
+import { Navbar, Home, Footer, Result, Settings } from "./components";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import LazyLoad from 'react-lazy-load';
 import { fadeIn } from "./styles/keyframes";
@@ -17,6 +17,10 @@ class App extends React.Component {
 		dailyData: null,
 		query: null,
 		offsetTime: null,
+	}
+
+	switchTheme = ( e ) => {
+		console.log( e )
 	}
 
 	handleSearch = async ( placeFullName, history, latlng ) => {

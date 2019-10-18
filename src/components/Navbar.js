@@ -2,24 +2,74 @@ import React from 'react';
 import styled from "styled-components";
 import { global } from "../styles/globalStyles";
 import { NavLink } from "react-router-dom";
-import { SearchField, Share } from ".";
+import { SearchField, Share } from "./";
+import { ReactComponent as HomeIcon } from "../assets/home.svg";
+import { ReactComponent as ShareIcon } from "../assets/share.svg";
 
-function Navbar ( { handleSearch } ) {
+export default function Navbar ( { handleSearch } ) {
+
+	const [enabled, setEnabled] = React.useState("disabled")
+
+	const enableSearch =(e)=> {
+		if(enabled === "disabled") {
+			window.addEventListener("click", cb);
+		}
+		if ( e.target !== document.querySelector(".ap-nostyle-icon-clear")) {
+			document.querySelector( ".ap-nostyle-input" ).focus();
+		}
+		if ( e.target !== document.querySelector( ".ap-nostyle-input" ) ) {
+			document.querySelector( ".ap-nostyle-icon-clear" ).click()
+		}
+		setEnabled("enabled");
+
+		function cb(e) {
+			if( !document.querySelector(".search-button").contains(e.target) ) {
+				setEnabled("disabled");
+				window.removeEventListener("click", cb)
+			}
+		}
+	}
+
 	return (
-		<NavbarStyled className="navbar">
-
+		<NavbarStyled >
 			<span className="logo">AccuWeather</span>
+		
+			<NavLinks className="navlinks">
+				<li >
+					<button className="navlink search-button" onClick={ enableSearch }>
+						<HomeIcon height={ iconSize } width={ iconSize } />
+						<SearchField className={"searchField " + enabled} handleSearch={ handleSearch } />
+						<span>Search</span>
+					</button>
+				</li>
 
-			<ul className="navlinks">
-				<SearchField className="search-field" handleSearch={ handleSearch } />
-				<li><NavLink className="navlink navlink-normal" to="/" >Home</NavLink></li>
-				<li><NavLink className="navlink navlink-normal" to="/Settings">Settings</NavLink></li>
-				<Share className="navlink navlink-share" />
-			</ul>
+				<li>
+					<NavLink className="navlink" to="/">
+						<HomeIcon height={iconSize} width={iconSize} />
+						<span>Home</span>
+					</NavLink>
+				</li>
 
+				<li>
+					<button className="navlink">
+						<HomeIcon height={iconSize} width={iconSize} />
+						<span>Theme</span>
+					</button>
+				</li>
+
+				<li>
+					<button className="navlink share-button">
+						<ShareIcon height={iconSize} width={iconSize} />
+						<span>Share</span>
+					</button>
+				</li>
+
+			</NavLinks>
 		</NavbarStyled>
 	)
 }
+
+const iconSize="1.3rem";
 
 const NavbarStyled = styled.div`
 	color: ${global.fontColor.dark };
@@ -28,91 +78,124 @@ const NavbarStyled = styled.div`
 	justify-content: space-between;
 	height: ${global.navbar_height };
 	box-shadow: 0 0 20px 0 #26374f20;
-	flex-shrink: 0;
-
-	ul {
-		list-style: none;
-	}
 
 	.logo {
+		margin-left: calc(20px + 5%);
 		font-family: Quantico;
 		font-style: italic;
 		font-size: 1.8rem;
-		margin-left: calc(20px + 5%);
 		user-select: none;
 		color: inherit;
 	}
 	.navlinks {
-		width: 60%;
-		height: 100%;
-		margin-right: calc(20px + 2%);
-		display: flex;
-		justify-content: flex-end;
-		align-items: center;
-		list-style: none;
-
-		.navlink {
-			position: relative;
-			cursor: pointer;
-			padding: 5px 20px;
-			text-decoration: none;
-			font-family: ${global.fontFamily.primary };
-			font-size: 1.1rem;		
-			letter-spacing: 2px;
-			outline: none;
-
-			@media (max-width:1024px) {
-				margin: 0vw;
-				font-size: 1rem;		
-			}
-		}
-
-		.navlink-normal {
-			color: inherit;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			user-select: none;
-			margin: 0 1vw;
-
-			&::before{
-				position: absolute;
-				content: "";
-				height: 1px;
-				width: 70%;
-				background: currentColor;
-				bottom: 0;
-				transform: scaleX(0);
-				transition: transform 200ms 40ms;
-			}
-			&:hover::before,
-			&:focus::before {
-				transform: scaleX(1);
-			}
-		}
-
-		.ap-nostyle-input,
-		.ap-nostyle-dropdown-menu {
-			max-width: 300px;
-		}
-		.ap-nostyle-input:focus{
-			background: linear-gradient(#bfc1c3, #f2f6f9aa)
-		}
-		.ap-nostyle-dropdown-menu {
-			background: #f2f6f9;
-			filter: brightness(95%);
-			color: black;
-		}
-
-		.search-field {
-			transform: scale(0.8);
-		}
-
-		@media (max-width: 1024px) {
-			.search-field {
-				display: inline-block;
-			}
-		}	
+		margin-right: calc(20px + 5%);
 	}
 `
-export default Navbar;
+
+const NavLinks = styled.ul`
+	list-style: none;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 40%;
+
+	.navlink {
+		position: relative;
+		border: none;
+		text-decoration: none;
+		color: inherit;
+		font-family: ${global.fontFamily.primary};
+		font-size: 1rem;
+		padding : 0.4rem 1rem;
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+		background: none;
+
+		&:focus, 
+		&:hover,
+		&:hover .search-icon {
+			outline: none;
+			color: #a5a5a5;
+			transition: color 150ms;
+		}
+
+		& > span {
+			margin: 0 0.4rem;
+		}
+
+		&.share-button {
+			color: white;
+			background: ${global.btnClr.primary };
+			border-radius: 7px;
+			transition: background 250ms 40ms;
+
+			&:hover {
+				background: ${global.btnClr.secondary };
+			}
+		}
+		&.search-button svg:first-of-type {
+			opacity: 0;
+		}
+	}
+
+	.searchField {
+		position: absolute;
+		left: 0;
+		transform-origin: left;
+		transform: scale(0.8) translateX(calc( -100% + 3.3rem));
+		transition: transform 500ms 100ms;
+		pointer-events: none;
+
+		@media (max-width: 1024px){
+			display: inline-block;
+		}
+		.clear-icon {
+			z-index: 500;
+		}
+
+		.algolia-places-nostyle {
+			transform-origin: right;
+			transition: transform 500ms 100ms;
+
+			&::before {
+				animation: none;
+				transform-origin: right;
+				transform: scaleX(0);
+				transition: transform 500ms 100ms;
+			}
+		}
+		.ap-nostyle-input {
+			max-width: 300px;
+			opacity: 0;
+			transition: opacity 500ms 100ms;
+		}
+		.ap-nostyle-input:focus {
+			background: none;
+		}
+	}
+	.search-button:focus-within { 
+		.searchField {
+			transform: scale(0.8) translateX(calc( -115% + 3.3rem));
+			pointer-events: initial;
+		}
+		
+		.ap-nostyle-input {
+			opacity: 1;
+		}
+
+		.algolia-places-nostyle::before {
+			transition: transform 500ms 100ms;
+			transform: scaleX(1);
+		}
+	}
+	.searchField.disabled:not(:focus-within) { 
+		.search-icon {
+			visibility: visible;
+		}
+		.clear-icon {
+			visibility: hidden;
+		}
+	}
+`
