@@ -126,11 +126,10 @@ const AppStyled = styled.div`
 		height: 100%;
 		width: 100%;
 		opacity: 0;
-		animation: ${fadeIn( 0.3 ) } 2000ms forwards;
-		background-image: url("../assets/sun2.png" );
+		animation: ${fadeIn( 0.4 ) } 2000ms forwards;
+		background-image: url("../assets/sun.jpg" );
 		background-position: center;
 		background-size: cover;
-		filter: grayscale(0);
 	}
 `
 

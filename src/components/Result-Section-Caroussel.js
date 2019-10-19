@@ -157,7 +157,7 @@ const CarousselStyled = styled.div`
 
 			&.active {
 				background: #ffffffaa;
-				box-shadow: 0 0 10px 0 #00000020;
+				box-shadow: 0 0 5px 0 #00000020;
 				outline: none;
 			}
 			&:active {

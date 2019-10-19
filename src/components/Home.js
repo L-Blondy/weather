@@ -76,7 +76,7 @@ const HomeStyled = styled.div`
 
 			.moto {
 				font-size: 1.2rem;
-				margin: 2.5rem 0 2rem 0;
+				margin: 2rem 0 1.5rem 0;
 			}
 			.description {
 				line-height: 2.2rem;

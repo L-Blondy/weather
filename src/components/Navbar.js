@@ -72,12 +72,13 @@ export default function Navbar ( { handleSearch } ) {
 const iconSize = "1.3rem";
 
 const NavbarStyled = styled.div`
+	background-image: linear-gradient(transparent, #ffffff20);
 	color: ${global.fontColor.dark };
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	height: ${global.navbar_height };
-	box-shadow: 0 0 20px 0 #26374f20;
+	box-shadow: 0 0 50px 0 #26374f15;
 
 	.logo {
 		margin-left: calc(20px + 5%);
@@ -105,8 +106,10 @@ const NavLinks = styled.ul`
 		border: none;
 		text-decoration: none;
 		color: inherit;
-		font-family: ${global.fontFamily.primary };
+		font-family: ${global.fontFamily.secondary };
 		font-size: 1rem;
+		font-weight: bold;
+		letter-spacing: 0.7px;
 		padding : 0.4rem 1rem;
 		display: flex;
 		align-items: center;
