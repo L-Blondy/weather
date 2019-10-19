@@ -1,8 +1,7 @@
 export const global = {
 	fontFamily: {
-		primary: "Coda",
+		primary: "Roboto",
 		secondary: "raleway",
-		ternary: "Open sans",
 	},
 	fontColor: {
 		dark: "#4f545d",

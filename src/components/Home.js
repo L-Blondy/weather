@@ -138,6 +138,10 @@ const HomeStyled = styled.div`
 				top: 30px;
 				left: 30px;
 				color: inherit;
+
+				&:hover {
+					color: ${global.btnClr.secondary };
+				}
 			}
 			.wrapper-right {
 				position: relative;

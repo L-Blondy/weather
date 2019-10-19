@@ -86,7 +86,7 @@ export default function Result ( { place, dailyData, hourlyData, localTime, offs
 }
 
 const ResultStyled = styled.div`
-	font-family: ${ global.fontFamily.ternary };
+	font-family: ${ global.fontFamily.primary };
 	color: ${ global.fontColor.dark };
 	padding: 2rem 20vw 0 20vw;
 	flex-grow: 1;

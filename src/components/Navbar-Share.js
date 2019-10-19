@@ -20,6 +20,7 @@ class Share extends Component {
 	}
 
 	toggleShare = ( active ) => {
+		console.log( "shatre" )
 		this.setState( {
 			active: !active
 		} )
@@ -106,7 +107,7 @@ const ShareStyled = styled.li`
 			justify-content: flex-start;
 			align-items: center;
 			color: inherit;
-			font-family: ${global.fontFamily.ternary };
+			font-family: ${global.fontFamily.primary };
 			height: 100%;
 			padding-right: 1.5rem;
 

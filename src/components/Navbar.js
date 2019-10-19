@@ -8,24 +8,24 @@ import { ReactComponent as ShareIcon } from "../assets/share.svg";
 
 export default function Navbar ( { handleSearch } ) {
 
-	const [enabled, setEnabled] = React.useState("disabled")
+	const [ enabled, setEnabled ] = React.useState( "disabled" )
 
-	const enableSearch =(e)=> {
-		if(enabled === "disabled") {
-			window.addEventListener("click", cb);
+	const enableSearch = ( e ) => {
+		if ( enabled === "disabled" ) {
+			window.addEventListener( "click", cb );
 		}
-		if ( e.target !== document.querySelector(".ap-nostyle-icon-clear")) {
+		if ( e.target !== document.querySelector( ".ap-nostyle-icon-clear" ) ) {
 			document.querySelector( ".ap-nostyle-input" ).focus();
 		}
 		if ( e.target !== document.querySelector( ".ap-nostyle-input" ) ) {
 			document.querySelector( ".ap-nostyle-icon-clear" ).click()
 		}
-		setEnabled("enabled");
+		setEnabled( "enabled" );
 
-		function cb(e) {
-			if( !document.querySelector(".search-button").contains(e.target) ) {
-				setEnabled("disabled");
-				window.removeEventListener("click", cb)
+		function cb ( e ) {
+			if ( !document.querySelector( ".search-button" ).contains( e.target ) ) {
+				setEnabled( "disabled" );
+				window.removeEventListener( "click", cb )
 			}
 		}
 	}
@@ -33,33 +33,33 @@ export default function Navbar ( { handleSearch } ) {
 	return (
 		<NavbarStyled >
 			<span className="logo">AccuWeather</span>
-		
+
 			<NavLinks className="navlinks">
 				<li >
 					<button className="navlink search-button" onClick={ enableSearch }>
 						<HomeIcon height={ iconSize } width={ iconSize } />
-						<SearchField className={"searchField " + enabled} handleSearch={ handleSearch } />
+						<SearchField className={ "searchField " + enabled } handleSearch={ handleSearch } />
 						<span>Search</span>
 					</button>
 				</li>
 
 				<li>
 					<NavLink className="navlink" to="/">
-						<HomeIcon height={iconSize} width={iconSize} />
+						<HomeIcon height={ iconSize } width={ iconSize } />
 						<span>Home</span>
 					</NavLink>
 				</li>
 
 				<li>
 					<button className="navlink">
-						<HomeIcon height={iconSize} width={iconSize} />
+						<HomeIcon height={ iconSize } width={ iconSize } />
 						<span>Theme</span>
 					</button>
 				</li>
 
 				<li>
 					<button className="navlink share-button">
-						<ShareIcon height={iconSize} width={iconSize} />
+						<ShareIcon height={ iconSize } width={ iconSize } />
 						<span>Share</span>
 					</button>
 				</li>
@@ -69,7 +69,7 @@ export default function Navbar ( { handleSearch } ) {
 	)
 }
 
-const iconSize="1.3rem";
+const iconSize = "1.3rem";
 
 const NavbarStyled = styled.div`
 	color: ${global.fontColor.dark };
@@ -81,8 +81,7 @@ const NavbarStyled = styled.div`
 
 	.logo {
 		margin-left: calc(20px + 5%);
-		font-family: Quantico;
-		font-style: italic;
+		font-family: Coda;
 		font-size: 1.8rem;
 		user-select: none;
 		color: inherit;
@@ -99,13 +98,14 @@ const NavLinks = styled.ul`
 	align-items: center;
 	justify-content: space-between;
 	width: 40%;
+	max-width: 550px;
 
 	.navlink {
 		position: relative;
 		border: none;
 		text-decoration: none;
 		color: inherit;
-		font-family: ${global.fontFamily.primary};
+		font-family: ${global.fontFamily.primary };
 		font-size: 1rem;
 		padding : 0.4rem 1rem;
 		display: flex;

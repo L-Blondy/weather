@@ -167,7 +167,6 @@ const CarousselStyled = styled.div`
 				font-family: ${global.fontFamily.primary };
 				font-size: 1.2rem;
 				padding: 2px 0;
-				letter-spacing: 1px;
 			}
 			.dailyIcon {
 				height: auto;
