@@ -7,7 +7,7 @@ import { PieChart, Pie } from 'recharts';
 
 export default function Humidity ( { dailyData, activeDay, className } ) {
 
-	const pieSize = 65;
+	const pieSize = 70;
 	let data_daily;
 	let data_humidity;
 	let data_precip;

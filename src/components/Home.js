@@ -138,6 +138,7 @@ const HomeStyled = styled.div`
 				top: 30px;
 				left: 30px;
 				color: inherit;
+				padding: 1rem;
 
 				&:hover {
 					color: ${global.btnClr.secondary };

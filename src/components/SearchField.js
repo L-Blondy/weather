@@ -23,26 +23,31 @@ function SearchForm ( { className, handleSearch, history, animated } ) {
 	];
 
 	const [ inputVal, setInputVal ] = React.useState();
-	const anim = React.useRef( { letter: 0, sentence: 0, timeout: 170, frameID: 0 } );
+	const anim = React.useRef();
 	const searchInput = React.useRef();
 
 	React.useEffect( () => {
 		if ( !animated ) return;
 
 		const input = searchInput.current.querySelector( ".ap-nostyle-input" )
-		anim.current = { letter: 0, sentence: 0, timeout: 170 };
 		input.placeholder = "";
-		let { letter, sentence, timeout, frameID } = anim.current;
-		frameID = window.requestAnimationFrame( animPlaceholder )
-		const restartID = frameID + timeout;
+		anim.current = { letter: 0, sentence: 0, timeout: 250, countID: 0, restartID: 0 };
+		let { letter, sentence, timeout, countID, restartID } = anim.current;
+		let frameID = window.requestAnimationFrame( animPlaceholder );
+		countID = frameID;
+		const startID = countID + timeout;
 
 		function animPlaceholder () {
-			if ( frameID >= restartID ) {
-				if ( frameID % 5 === 0 && letter < sentences[ sentence ].length ) {
+			countID++;
+			if ( countID >= startID ) {
+				if ( countID % 5 === 0 && letter < sentences[ sentence ].length ) {
 					input.placeholder += sentences[ sentence ][ letter ];
 					letter++
 				}
-				if ( ( frameID + timeout ) % 300 === 0 ) {
+				if ( letter === sentences[ sentence ].length - 1 && countID > restartID ) {
+					restartID = countID + timeout;
+				}
+				if ( countID === restartID ) {
 					input.placeholder = "";
 					letter = 0;
 					sentence < sentences.length - 1 ? sentence++ : sentence = 0;
@@ -210,10 +215,6 @@ const SearchFieldStyled = styled.div`
 		&.selected {
 			background: #00000040
 		}
-	}
-	
-	@media (max-width: 1024px) {
-		display: none;
 	}
 `
 

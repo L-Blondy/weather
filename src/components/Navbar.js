@@ -2,45 +2,97 @@ import React from 'react';
 import styled from "styled-components";
 import { global } from "../styles/globalStyles";
 import { NavLink } from "react-router-dom";
-import { SearchField, Share } from "./";
+import { SearchField, FloatShare, Burger } from "./";
 import { ReactComponent as HomeIcon } from "../assets/home.svg";
 import { ReactComponent as ShareIcon } from "../assets/share.svg";
 
 export default function Navbar ( { handleSearch } ) {
 
-	const [ enabled, setEnabled ] = React.useState( "disabled" )
+	const [ showShare, setShowShare ] = React.useState( "hide-float" );
+	const [ enabled, setEnabled ] = React.useState( "disabled" );
+	const [ menu, setMenu ] = React.useState( false );
+
+	const toggleMenu = () => {
+		if ( !menu ) {
+			window.addEventListener( "click", cb )
+		}
+		if ( menu ) {
+			window.removeEventListener( "click", cb )
+		}
+
+		function cb ( e ) {
+			if ( !document.querySelector( ".navbar" ).contains( e.target ) ) {
+				console.log( "out" )
+				setMenu( false )
+				window.removeEventListener( "click", cb )
+			}
+		}
+		setMenu( !menu )
+	}
 
 	const enableSearch = ( e ) => {
+		console.log( e.target )
 		if ( enabled === "disabled" ) {
 			window.addEventListener( "click", cb );
 		}
 		if ( e.target !== document.querySelector( ".ap-nostyle-icon-clear" ) ) {
 			document.querySelector( ".ap-nostyle-input" ).focus();
 		}
-		if ( e.target !== document.querySelector( ".ap-nostyle-input" ) ) {
-			document.querySelector( ".ap-nostyle-icon-clear" ).click()
-		}
 		setEnabled( "enabled" );
 
 		function cb ( e ) {
-			if ( !document.querySelector( ".search-button" ).contains( e.target ) ) {
+			if ( !document.querySelector( ".search-button" ).contains( e.target ) && window.innerWidth > 1024 ) {
 				setEnabled( "disabled" );
 				window.removeEventListener( "click", cb )
 			}
 		}
 	}
 
+	const toggleShare = ( e ) => {
+		const floatPane = document.querySelector( ".show-float" ) || document.querySelector( ".hide-float" );
+		if ( floatPane.contains( e.target ) ) {
+			return;
+		}
+		if ( showShare === "hide-float" ) {
+			window.addEventListener( "click", cb )
+		}
+		else {
+			window.removeEventListener( "click", cb )
+		}
+		setShowShare( showShare === "hide-float" ? "show-float" : "hide-float" );
+
+		function cb ( e ) {
+			const btn = document.querySelector( ".share-button" );
+
+			if ( btn && !btn.contains( e.target ) ) {
+				window.removeEventListener( "click", cb )
+				setShowShare( "hide-float" );
+			}
+		}
+	}
+
 	return (
-		<NavbarStyled >
+		<NavbarStyled className="navbar">
 			<span className="logo">AccuWeather</span>
 
-			<NavLinks className="navlinks">
+			{ ( window.innerWidth <= 1024 ) && <Burger className={ menu } onClick={ toggleMenu } /> }
+
+			<NavLinks className={ "navlinks " + ( menu ? "navlinks-enabled" : "navlinks-disabled" ) }>
 				<li >
-					<button className="navlink search-button" onClick={ enableSearch }>
-						<HomeIcon height={ iconSize } width={ iconSize } />
-						<SearchField className={ "searchField " + enabled } handleSearch={ handleSearch } />
-						<span>Search</span>
-					</button>
+					{ window.innerWidth > 1024 ?
+						(
+							<button className="navlink search-button" onClick={ enableSearch }>
+								<SearchField className={ "searchField searchField-desktop " + enabled } handleSearch={ handleSearch } />
+								<span>Search</span>
+							</button>
+						) : (
+							<button className="navlink search-button" onClick={ enableSearch }>
+								<span>
+									<SearchField className={ "searchField searchField-phone " + enabled } handleSearch={ handleSearch } />
+								</span>
+							</button>
+						)
+					}
 				</li>
 
 				<li>
@@ -58,9 +110,13 @@ export default function Navbar ( { handleSearch } ) {
 				</li>
 
 				<li>
-					<button className="navlink share-button">
+					<button
+						className={ "navlink " + ( window.innerWidth > 1024 && "share-button" ) }
+						onClick={ toggleShare }
+					>
 						<ShareIcon height={ iconSize } width={ iconSize } />
 						<span>Share</span>
+						<FloatShare className={ showShare } />
 					</button>
 				</li>
 
@@ -87,8 +143,17 @@ const NavbarStyled = styled.div`
 		user-select: none;
 		color: inherit;
 	}
-	.navlinks {
+	.navlinks, 
+	.burger-menu {
 		margin-right: calc(20px + 5%);
+	}
+
+	@media (max-width: 1024px) {
+		background: ${global.bckClr.light };
+
+		.navlinks {
+			margin-right: 0;
+		}
 	}
 `
 
@@ -98,7 +163,6 @@ const NavLinks = styled.ul`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	width: 40%;
 	max-width: 550px;
 
 	.navlink {
@@ -124,8 +188,18 @@ const NavLinks = styled.ul`
 			transition: color 150ms;
 		}
 
-		& > span {
+		& span:first-of-type {
 			margin: 0 0.4rem;
+			pointer-events: none;
+		}
+
+		svg {
+			pointer-events: none;
+		}
+		.clear-icon,
+		.search-icon {
+			transform: translateX(-5px);
+			pointer-events: initial;
 		}
 
 		&.share-button {
@@ -143,24 +217,22 @@ const NavLinks = styled.ul`
 		}
 	}
 
-	.searchField {
+	.searchField-desktop {
 		position: absolute;
 		left: 0;
 		transform-origin: left;
-		transform: scale(0.8) translateX(calc( -100% + 3.3rem));
+		transform: scale(0.8) translateX(calc( -100% + 1.7rem));
 		transition: transform 500ms 100ms;
 		pointer-events: none;
 
 		@media (max-width: 1024px){
 			display: inline-block;
 		}
-		.clear-icon {
-			z-index: 500;
-		}
 
 		.algolia-places-nostyle {
 			transform-origin: right;
 			transition: transform 500ms 100ms;
+			margin: 0;
 
 			&::before {
 				animation: none;
@@ -173,22 +245,24 @@ const NavLinks = styled.ul`
 			max-width: 300px;
 			opacity: 0;
 			transition: opacity 500ms 100ms;
+			font-family: inherit;
+			font-weight: bold;
 		}
 		.ap-nostyle-input:focus {
 			background: none;
 		}
 	}
 	.search-button:focus-within { 
-		.searchField {
-			transform: scale(0.8) translateX(calc( -115% + 3.3rem));
+		.searchField-desktop {
+			transform: scale(0.8) translateX(calc( -105% + 1.7rem));
 			pointer-events: initial;
 		}
 		
-		.ap-nostyle-input {
+		.searchField-desktop .ap-nostyle-input {
 			opacity: 1;
 		}
 
-		.algolia-places-nostyle::before {
+		.searchField-desktop .algolia-places-nostyle::before {
 			transition: transform 500ms 100ms;
 			transform: scaleX(1);
 		}
@@ -199,6 +273,42 @@ const NavLinks = styled.ul`
 		}
 		.clear-icon {
 			visibility: hidden;
+		}
+	}
+
+	@media (max-width:1024px) {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		flex-direction: column;
+		background: ${global.bckClr.light };
+		height: calc(100% - ${global.navbar_height });
+		margin-top: 50px;
+		justify-content: flex-start;
+		align-items: flex-end;
+		z-index: 501;
+		transition: transform 500ms;
+
+		&.navlinks-disabled {
+			transform: translateX(100%);
+		}
+
+		.navlink {
+			margin: 10px 0;
+			flex-direction: row-reverse;
+
+			&:not(.search-button) {
+				margin-right: 2rem;
+			}
+		}
+
+		.search-button {
+			transform: scale(0.8);
+			padding: 0;
+		}
+
+		.burger {
+			
 		}
 	}
 `

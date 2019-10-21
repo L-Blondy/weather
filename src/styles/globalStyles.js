@@ -20,6 +20,7 @@ export const global = {
 	},
 	bckClr: {
 		dark: "#47505d",
+		light: "#cfd7da",
 	},
 	chartHeight: "12rem",
 	navbar_height: "50px",

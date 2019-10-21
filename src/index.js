@@ -17,10 +17,19 @@ class App extends React.Component {
 		dailyData: null,
 		query: null,
 		offsetTime: null,
+		resize: 0,
 	}
 
-	switchTheme = ( e ) => {
-		console.log( e )
+	componentDidMount = () => {
+		window.addEventListener( "resize", this.resizeCB )
+	}
+
+	componentWillUnmount = () => {
+		window.removeEventListener( "resize", this.resizeCB )
+	}
+
+	resizeCB = () => {
+		this.setState( { resize: this.state.resize + 1 } );
 	}
 
 	handleSearch = async ( placeFullName, history, latlng ) => {
@@ -73,7 +82,7 @@ class App extends React.Component {
 			<Router >
 				<AppStyled className="app">
 
-					<Navbar handleSearch={ this.handleSearch } />
+					<Navbar handleSearch={ this.handleSearch } resize={ this.state.resize } />
 
 					<LazyLoad>
 						<div className="background-image" ></div>
@@ -96,6 +105,7 @@ class App extends React.Component {
 								dailyData={ this.state.dailyData }
 								hourlyData={ this.state.hourlyData }
 								offsetTime={ this.state.offsetTime }
+								resize={ this.state.resize }
 							/>
 						) }
 					/>
@@ -108,11 +118,12 @@ class App extends React.Component {
 
 const AppStyled = styled.div`
 	position: relative;
-	height: 100%;
-	width: 100%;
+	height: 100vh;
+	width: 100vw;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	overflow-x: hidden;
 
 	.LazyLoad {
 		position: absolute;
@@ -126,24 +137,11 @@ const AppStyled = styled.div`
 		height: 100%;
 		width: 100%;
 		opacity: 0;
-		animation: ${fadeIn( 0.4 ) } 2000ms forwards;
+		animation: ${fadeIn( 0.30 ) } 2000ms forwards;
 		background-image: url("../assets/sun.jpg" );
-		background-position: center;
+		background-position: right top;
 		background-size: cover;
 	}
 `
 
 ReactDOM.render( <App />, document.getElementById( "root" ) );
-
-
-{/* 
-		position: fixed;
-		height: 100%;
-		width: 100%;
-		opacity: 0;
-		animation: ${fadeIn( 0.4 ) } 2000ms forwards;
-		background-image: url("../assets/sun2.png" );
-		background-position: center;
-		background-size: cover;
-		filter: grayscale(0);
-*/}

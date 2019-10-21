@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { global } from "../styles/globalStyles";
 import { Graph, SunSet, Wind, Humidity, PlaceTime, Caroussel, Section } from "./";
 
-export default function Result ( { place, dailyData, hourlyData, localTime, offsetTime } ) {
+export default function Result ( { place, dailyData, hourlyData, localTime, offsetTime, resize } ) {
 
 	const [ activeDay, setActiveDay ] = React.useState( 0 );
 	const [ graphType, setGraphType ] = React.useState( "classic" );
@@ -30,6 +30,7 @@ export default function Result ( { place, dailyData, hourlyData, localTime, offs
 						dailyData={ dailyData }
 						setCurrentActive={ setCurrentActive }
 						activeDay={ activeDay }
+						resize={ resize }
 					/>
 				}
 			/>
@@ -104,7 +105,7 @@ const ResultStyled = styled.div`
 		border: none;
 		padding: 0.2rem 1rem;
 		cursor: pointer;
-		font-family:${ global.fontFamily.secondary };
+		font-family:${ global.fontFamily.primary };
 		color: ${ global.fontColor.dark + "bb" };
 		font-size: 0.9rem;
 		border-radius: 4px;

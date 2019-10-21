@@ -10,7 +10,7 @@ import { ReactComponent as Right } from "../assets/chevron-right.svg"
 class Caroussel extends React.Component {
 	constructor ( props ) {
 		super( props );
-		this.grid = React.createRef()
+		this.grid = React.createRef();
 
 		this.state = {
 			itemWidth: null,
@@ -20,12 +20,11 @@ class Caroussel extends React.Component {
 	}
 
 	componentDidMount = () => {
-		window.addEventListener( "resize", this.resize );
 		this.resize();
 	}
 
-	componentWillUnmount = () => {
-		window.removeEventListener( "resize", this.resize )
+	componentWillReceiveProps = () => {
+		this.resize();
 	}
 
 	resize = () => {
@@ -46,11 +45,6 @@ class Caroussel extends React.Component {
 	}
 
 	renderDailyData = ( dailyData, activeDay ) => {
-		// if ( !dailyData ) {
-		// 	history.push( '/' )
-		// 	return;
-		// }
-
 		return dailyData ?
 			(
 				dailyData.map( ( day, index ) => {
