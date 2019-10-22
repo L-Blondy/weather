@@ -29,6 +29,10 @@ const SectionStyled = styled.section`
 		padding-right: 2rem;
 		margin-bottom: 0.5rem;
 
+		@media (max-width: 768px) {
+			padding-right: 0;
+		}
+
 		h4 {
 			font-family: ${ global.fontFamily.secondary };
 			font-size: 1.3rem;

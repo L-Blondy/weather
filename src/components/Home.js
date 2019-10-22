@@ -4,6 +4,7 @@ import { global } from "../styles/globalStyles";
 import { SearchField, Title } from "./";
 import { pokeRight, fadeIn } from "../styles/keyframes";
 import { ReactComponent as Right } from "../assets/chevron-right.svg"
+import { brotliDecompress } from 'zlib';
 
 export default function Home ( { handleSearch } ) {
 
@@ -17,7 +18,7 @@ export default function Home ( { handleSearch } ) {
 		<HomeStyled startNowDuration={ 1000 } className="home">
 
 			<div className={ "side left-side " + ( startNow ? "fadeout " : "fadein" ) }>
-				<Title></Title>
+				<Title className="title"></Title>
 
 				<div className="moto">
 					Check the weather anywhere in just one click
@@ -84,8 +85,9 @@ const HomeStyled = styled.div`
 			.start-btn {
 				margin-top: 2rem;
 				font-family: ${global.fontFamily.primary };
+				font-variant: small-caps;
 				font-size: 1.2rem;
-				letter-spacing: 1px;
+				letter-spacing: 0.5px;
 				color: white;
 				border: none;
 				background: ${global.btnClr.primary };
@@ -93,6 +95,7 @@ const HomeStyled = styled.div`
 				border-radius: 7px;
 				transition: background 200ms 40ms;
 				outline:none;
+				cursor: pointer;
 
 				span {
 					padding-right: 0.7rem;
@@ -120,7 +123,7 @@ const HomeStyled = styled.div`
 		&.fadein {
 			opacity: 1;
 			transition-property: opacity;
-			transition-duration: ${props => props.startNowDuration + "ms " };
+			transition-duration: ${props => props.startNowDuration * 2 + "ms " };
 			transition-delay: 500ms;
 		}
 		&.right-side {
@@ -132,7 +135,7 @@ const HomeStyled = styled.div`
 				position: absolute;
 				opacity: 0;
 				z-index: 1;
-				animation: ${fadeIn( 1 ) } 2000ms forwards 1000ms;
+				animation: ${fadeIn( 1 ) } 2000ms forwards 700ms;
 				border: none;
 				background: none;
 				top: 30px;
@@ -140,8 +143,10 @@ const HomeStyled = styled.div`
 				color: inherit;
 				padding: 1rem;
 
-				&:hover {
-					color: ${global.btnClr.secondary };
+				&:hover,
+				&:focus {
+					outline: none;
+					color: ${global.btnClr.primary };
 				}
 			}
 			.wrapper-right {
@@ -167,6 +172,48 @@ const HomeStyled = styled.div`
 				transform: translate(-50%, -50%) scale(1.1);
 			}
 		}
+	}
+
+	@media (max-width: 1024px) {
+		.side.left-side,
+		.side.right-side {
+			width: 100%;
+			align-items: center;
+
+			.search-field {
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+		}
+		.side.right-side {
+			transform: translateX(100%);
+
+			&.full-width {
+				transform: translateX(0%);
+			}
+		}
+		.description, 
+		.moto {
+			text-align: center;
+		}
+	}
+
+	@media (max-width: 480px) {
+		letter-spacing: 0;
+
+		.title {
+			transform: scale(0.8);
+		}
+		.side.left-side .moto {
+			font-size: 1.1rem;
+			/* margin: 3rem 0; */
+		}
+		/* .side.left-side .description {
+			margin-bottom: 3rem;
+		}
+		.side.left-side .start-btn {
+			margin: 0;
+		} */
 	}
 `
 

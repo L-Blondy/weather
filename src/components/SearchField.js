@@ -122,13 +122,13 @@ const SearchFieldStyled = styled.div`
 		background: none;
 		font-size: 1.2rem;
 		letter-spacing: 1px;
-		color: ${global.fontColor.dark };;
+		color: currentColor;
 		font-family: ${global.fontFamily.secondary };
 		text-transform: capitalize;
 		border-radius: 2px;
 
 		&::placeholder {
-			color: ${global.fontColor.dark };;
+			color: currentColor;
 			opacity: 0.4;
 			letter-spacing: 1px;
 			user-select: none;
@@ -145,7 +145,7 @@ const SearchFieldStyled = styled.div`
 		width: 100%;
 		bottom: 0;
 		left: 0;
-		background: ${global.fontColor.dark };
+		background: currentColor;
 		z-index: 2;
 		transform-origin: left;
 		transform: scaleX( 0 );
@@ -175,7 +175,7 @@ const SearchFieldStyled = styled.div`
 		right: 7px;
 		cursor: pointer;
 		transition: color 200ms;
-		color: ${global.fontColor.dark };
+		color: currentColor;
 	}
 	.clear-icon:hover {
 		color: red;
@@ -214,6 +214,16 @@ const SearchFieldStyled = styled.div`
 		}
 		&.selected {
 			background: #00000040
+		}
+	}
+	@media (max-width: 1024px){
+		.ap-nostyle-dropdown-menu {
+			letter-spacing: 0;
+		}
+	}
+	@media (max-width: 480px){
+		.ap-nostyle-input {
+			max-width: 200px;
 		}
 	}
 `

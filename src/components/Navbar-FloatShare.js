@@ -12,7 +12,7 @@ export default function FloatShare ( { className } ) {
 	const URL_linkedin = "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.google.com"
 
 	return (
-		<FloarShareStyled
+		<FloatShareStyled
 			className={ className }
 			links={ 3 }
 		>
@@ -31,11 +31,11 @@ export default function FloatShare ( { className } ) {
 					<Linkedin className="share-link-icon" />LinkedIn
 				</a>
 			</li>
-		</FloarShareStyled>
+		</FloatShareStyled>
 	)
 }
 
-const FloarShareStyled = styled.div`
+const FloatShareStyled = styled.div`
 	position: absolute;
 	display: grid;
 	bottom: 0;
@@ -90,6 +90,33 @@ const FloarShareStyled = styled.div`
 		&:hover,
 		&:focus {
 			filter: brightness(70%);
+		}
+	}
+
+	@media (max-width:1024px) {
+		right: 0;
+		left: -100px;
+		transform: translate(0, calc(100% + 1rem)) scale(0);
+		border-right: 1px dashed currentColor;
+		border-radius: 0;
+		background: none;
+		padding-right: 0;
+
+		a {
+			flex-direction: row-reverse;
+			justify-content: flex-start;
+			padding-right: 1rem;
+
+			.share-link-icon {
+				margin-left: 0.5rem;
+				margin-right: 0;
+			}
+		}
+		&.show-float {
+			transform: translate(0, calc(100% + 1rem)) scale(1, 1);
+		}
+		.name {
+			padding-right: 0.5rem;
 		}
 	}
 `

@@ -4,7 +4,6 @@ import styled from "styled-components";
 import "./styles/styles.css"
 import { Navbar, Home, Footer, Result, Settings } from "./components";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import LazyLoad from 'react-lazy-load';
 import { fadeIn } from "./styles/keyframes";
 import { fetchDaily, fetchHourly, reduceDaily, reduceHourly, getLocalTime } from "./helpers/helpers";
 
@@ -18,6 +17,7 @@ class App extends React.Component {
 		query: null,
 		offsetTime: null,
 		resize: 0,
+		searchCount: 0,
 	}
 
 	componentDidMount = () => {
@@ -41,6 +41,7 @@ class App extends React.Component {
 			dailyData: null,
 			query: null,
 			offsetTime: null,
+			searchCount: this.state.searchCount + 1,
 		} )
 		history.push( '/Result' )
 
@@ -82,11 +83,9 @@ class App extends React.Component {
 			<Router >
 				<AppStyled className="app">
 
-					<Navbar handleSearch={ this.handleSearch } resize={ this.state.resize } />
+					<Navbar handleSearch={ this.handleSearch } searchCount={ this.state.searchCount } />
 
-					<LazyLoad>
-						<div className="background-image" ></div>
-					</LazyLoad>
+					<div className="background-image" ></div>
 
 					<Route
 						path="/"
@@ -134,6 +133,7 @@ const AppStyled = styled.div`
 
 	.background-image {
 		position: fixed;
+		z-index: -1;
 		height: 100%;
 		width: 100%;
 		opacity: 0;

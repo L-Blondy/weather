@@ -19,7 +19,7 @@ export const global = {
 		rain: "blue",
 	},
 	bckClr: {
-		dark: "#47505d",
+		dark: "#3f4958",
 		light: "#cfd7da",
 	},
 	chartHeight: "12rem",

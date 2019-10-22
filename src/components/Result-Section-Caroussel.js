@@ -20,16 +20,17 @@ class Caroussel extends React.Component {
 	}
 
 	componentDidMount = () => {
+		window.addEventListener( "resize", this.resize );
 		this.resize();
 	}
 
-	componentWillReceiveProps = () => {
-		this.resize();
+	componentWillUnmount = () => {
+		window.removeEventListener( "resize", this.resize )
 	}
 
 	resize = () => {
 		const gridWidth = this.grid.current.getBoundingClientRect().width;
-		const items = Math.floor( gridWidth / convertRemToPixels( 7.65 ) );
+		const items = Math.floor( gridWidth / convertRemToPixels( window.innerWidth > 768 ? 7.65 : 5.5 ) );
 		this.setState( {
 			itemWidth: gridWidth / items,
 			items
@@ -59,7 +60,7 @@ class Caroussel extends React.Component {
 							<div className="date">{ day.date }</div>
 							<Icon className="dailyIcon" />
 							<div className="temperature">{ day.temperature + "°c" }</div>
-							<div className="weather">{ day.weather }</div>
+							{ window.innerWidth > 768 && <div className="weather">{ day.weather }</div> }
 						</button>
 					)
 				} )
@@ -144,6 +145,11 @@ const CarousselStyled = styled.div`
 			white-space: nowrap;
 			user-select: none;
 
+			@media (max-width: 768px) {
+				padding: 0;
+				align-items: center;
+			}
+
 			.loading-img {
 				height: 25%;
 				color: ${global.fontColor.dark };
@@ -189,7 +195,11 @@ const CarousselStyled = styled.div`
 		color: ${props => props.scrollCount <= 0 && ( `${ global.fontColor.disabled }; pointer-events: none; user-select: none;` ) };
 	}
 	.chevron-right {
-		color: ${props => props.scrollCount + props.items >= 16 && ( `${ global.fontColor.disabled }; pointer-events: none; user-select: none;` ) }
+		color: ${props => props.scrollCount + props.items >= 16 && ( `${ global.fontColor.disabled }; pointer-events: none; user-select: none;` ) };
+
+		@media (max-width: 768px){
+			text-align: right;
+		}
 	}
 `
 

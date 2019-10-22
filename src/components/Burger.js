@@ -4,7 +4,7 @@ import { global } from "../styles/globalStyles";
 
 export default function Burger ( { onClick, className } ) {
 	return (
-		<BurgerStyled className={ "burger-menu " + className } onClick={ onClick } >
+		<BurgerStyled className={ className } onClick={ onClick } >
 			<div className="line line1"></div>
 			<div className="line line2"></div>
 			<div className="line line3"></div>
@@ -14,18 +14,25 @@ export default function Burger ( { onClick, className } ) {
 
 const BurgerStyled = styled.button`
 	position: relative;
-	height: 30px;
+	height: 28px;
 	width: 35px;
 	border: none;
 	background: none;
-	color: ${global.fontColor.primary };
+	color: currentColor;
+	cursor: pointer;
+	transition: color 200ms;
+
+	&:hover {
+		color: ${global.btnClr.primary };
+	}
 	
 	.line {
 		left: 0;
 		position: absolute;
 		height: 4px;
 		width: 100%;
-		background: ${global.fontColor.dark };
+		color: inherit;
+		background: currentColor;
 		border-radius: 5px;
 	}
 	.line1 {

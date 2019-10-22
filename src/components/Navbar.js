@@ -6,49 +6,60 @@ import { SearchField, FloatShare, Burger } from "./";
 import { ReactComponent as HomeIcon } from "../assets/home.svg";
 import { ReactComponent as ShareIcon } from "../assets/share.svg";
 
-export default function Navbar ( { handleSearch } ) {
+export default function Navbar ( { handleSearch, searchCount } ) {
 
 	const [ showShare, setShowShare ] = React.useState( "hide-float" );
-	const [ enabled, setEnabled ] = React.useState( "disabled" );
-	const [ menu, setMenu ] = React.useState( false );
+	const [ isSearchEnabled, toggleSearch ] = React.useState( "disabled" );
+	const [ isMenuOpened, toggleMenu ] = React.useState( false );
+	const [ prevSearchCount, setSearchCount ] = React.useState( 0 );
+	const navbar = React.useRef();
 
-	const toggleMenu = () => {
-		if ( !menu ) {
-			window.addEventListener( "click", cb )
+	React.useEffect( () => {
+		if ( prevSearchCount !== searchCount ) {
+			toggleMenu( false )
 		}
-		if ( menu ) {
-			window.removeEventListener( "click", cb )
-		}
+		setSearchCount( searchCount )
+		console.log( document.querySelector( ".searchField-phone .ap-nostyle-input" ) )
+	} )
 
+	const handleClickBurgerOut = () => {
 		function cb ( e ) {
-			if ( !document.querySelector( ".navbar" ).contains( e.target ) ) {
-				console.log( "out" )
-				setMenu( false )
+			if ( !navbar.current.contains( e.target ) ) {
+				toggleMenu( false )
 				window.removeEventListener( "click", cb )
 			}
 		}
-		setMenu( !menu )
+		toggleMenu( !isMenuOpened )
+
+		if ( !isMenuOpened ) {
+			window.addEventListener( "click", cb )
+			// setTimeout( () => document.querySelector( ".searchField-phone .ap-nostyle-input" ).focus(), 500 )
+		}
+		if ( isMenuOpened ) {
+			window.removeEventListener( "click", cb )
+		}
+
 	}
 
 	const enableSearch = ( e ) => {
-		console.log( e.target )
-		if ( enabled === "disabled" ) {
+		if ( isSearchEnabled === "disabled" ) {
 			window.addEventListener( "click", cb );
 		}
 		if ( e.target !== document.querySelector( ".ap-nostyle-icon-clear" ) ) {
 			document.querySelector( ".ap-nostyle-input" ).focus();
 		}
-		setEnabled( "enabled" );
+		toggleSearch( "enabled" );
 
 		function cb ( e ) {
 			if ( !document.querySelector( ".search-button" ).contains( e.target ) && window.innerWidth > 1024 ) {
-				setEnabled( "disabled" );
+				toggleSearch( "disabled" );
 				window.removeEventListener( "click", cb )
 			}
 		}
 	}
 
 	const toggleShare = ( e ) => {
+		console.log( "toggle share event" )
 		const floatPane = document.querySelector( ".show-float" ) || document.querySelector( ".hide-float" );
 		if ( floatPane.contains( e.target ) ) {
 			return;
@@ -62,7 +73,8 @@ export default function Navbar ( { handleSearch } ) {
 		setShowShare( showShare === "hide-float" ? "show-float" : "hide-float" );
 
 		function cb ( e ) {
-			const btn = document.querySelector( ".share-button" );
+			const btn = document.querySelector( ".share-button" ) || document.querySelector( ".share-button-phone" );
+			console.log( btn )
 
 			if ( btn && !btn.contains( e.target ) ) {
 				window.removeEventListener( "click", cb )
@@ -72,23 +84,29 @@ export default function Navbar ( { handleSearch } ) {
 	}
 
 	return (
-		<NavbarStyled className="navbar">
+		<NavbarStyled className="navbar" ref={ navbar } >
 			<span className="logo">AccuWeather</span>
 
-			{ ( window.innerWidth <= 1024 ) && <Burger className={ menu } onClick={ toggleMenu } /> }
+			{ ( window.innerWidth <= 1024 ) && <Burger className={ "burger-menu " + isMenuOpened } onClick={ handleClickBurgerOut } /> }
 
-			<NavLinks className={ "navlinks " + ( menu ? "navlinks-enabled" : "navlinks-disabled" ) }>
+			<NavLinks className={ "navlinks " + ( isMenuOpened ? "navlinks-enabled" : "navlinks-disabled" ) }>
 				<li >
 					{ window.innerWidth > 1024 ?
 						(
 							<button className="navlink search-button" onClick={ enableSearch }>
-								<SearchField className={ "searchField searchField-desktop " + enabled } handleSearch={ handleSearch } />
-								<span>Search</span>
+								<SearchField
+									className={ "searchField searchField-desktop " + isSearchEnabled }
+									handleSearch={ handleSearch }
+								/>
+								<span className="name" >Search</span>
 							</button>
 						) : (
 							<button className="navlink search-button" onClick={ enableSearch }>
 								<span>
-									<SearchField className={ "searchField searchField-phone " + enabled } handleSearch={ handleSearch } />
+									<SearchField
+										className={ "searchField searchField-phone " + isSearchEnabled }
+										handleSearch={ handleSearch }
+									/>
 								</span>
 							</button>
 						)
@@ -96,26 +114,26 @@ export default function Navbar ( { handleSearch } ) {
 				</li>
 
 				<li>
-					<NavLink className="navlink" to="/">
+					<NavLink className="navlink" to="/" onClick={ () => toggleMenu( false ) } >
 						<HomeIcon height={ iconSize } width={ iconSize } />
-						<span>Home</span>
+						<span className="name" >Home</span>
 					</NavLink>
 				</li>
 
 				<li>
-					<button className="navlink">
+					<button className="navlink" onClick={ () => toggleMenu( false ) }>
 						<HomeIcon height={ iconSize } width={ iconSize } />
-						<span>Theme</span>
+						<span className="name" >Theme</span>
 					</button>
 				</li>
 
 				<li>
 					<button
-						className={ "navlink " + ( window.innerWidth > 1024 && "share-button" ) }
+						className={ "navlink " + ( window.innerWidth > 1024 ? "share-button" : "share-button-phone" ) }
 						onClick={ toggleShare }
 					>
 						<ShareIcon height={ iconSize } width={ iconSize } />
-						<span>Share</span>
+						<span className="name" >Share</span>
 						<FloatShare className={ showShare } />
 					</button>
 				</li>
@@ -135,6 +153,7 @@ const NavbarStyled = styled.div`
 	justify-content: space-between;
 	height: ${global.navbar_height };
 	box-shadow: 0 0 50px 0 #26374f15;
+	flex-shrink: 0;
 
 	.logo {
 		margin-left: calc(20px + 5%);
@@ -149,7 +168,8 @@ const NavbarStyled = styled.div`
 	}
 
 	@media (max-width: 1024px) {
-		background: ${global.bckClr.light };
+		background: ${global.bckClr.dark };
+		color: ${global.fontColor.light };
 
 		.navlinks {
 			margin-right: 0;
@@ -181,14 +201,14 @@ const NavLinks = styled.ul`
 		background: none;
 
 		&:focus, 
-		&:hover,
-		&:hover .search-icon {
+		&:hover:not(:focus-within):not(.share-button) ,
+		&:hover:not(:focus-within) .search-icon {
 			outline: none;
-			color: #a5a5a5;
-			transition: color 150ms;
+			color: ${global.btnClr.primary };
+			transition: color 200ms;
 		}
 
-		& span:first-of-type {
+		& .name {
 			margin: 0 0.4rem;
 			pointer-events: none;
 		}
@@ -198,7 +218,6 @@ const NavLinks = styled.ul`
 		}
 		.clear-icon,
 		.search-icon {
-			transform: translateX(-5px);
 			pointer-events: initial;
 		}
 
@@ -252,6 +271,7 @@ const NavLinks = styled.ul`
 			background: none;
 		}
 	}
+	
 	.search-button:focus-within { 
 		.searchField-desktop {
 			transform: scale(0.8) translateX(calc( -105% + 1.7rem));
@@ -276,39 +296,74 @@ const NavLinks = styled.ul`
 		}
 	}
 
+	.search-button { 
+		z-index: 2;
+
+		.ap-nostyle-dropdown-menu {
+			pointer-events: auto;
+
+			.ap-nostyle-suggestion {
+				pointer-events: auto;
+			}
+		}
+	}
+
 	@media (max-width:1024px) {
 		position: absolute;
 		bottom: 0;
 		right: 0;
 		flex-direction: column;
-		background: ${global.bckClr.light };
-		height: calc(100% - ${global.navbar_height });
+		background: ${global.bckClr.dark };
+		height: calc(100vh - 50px);
 		margin-top: 50px;
 		justify-content: flex-start;
 		align-items: flex-end;
-		z-index: 501;
+		z-index: 1;
 		transition: transform 500ms;
+		color: ${global.fontColor.light };
+
+		.burger-menu {
+			color: currentColor;
+		}
 
 		&.navlinks-disabled {
 			transform: translateX(100%);
 		}
 
 		.navlink {
-			margin: 10px 0;
 			flex-direction: row-reverse;
-
-			&:not(.search-button) {
-				margin-right: 2rem;
-			}
+			font-size: 1.2rem;
+			padding: 0.5rem 0;
 		}
 
 		.search-button {
-			transform: scale(0.8);
 			padding: 0;
+			cursor: text;
+			color: ${global.fontColor.light };
+
+			.ap-nostyle-dropdown-menu {
+				pointer-events: auto;
+				background:  ${global.bckClr.light };
+				box-shadow: 0 0 5px 0 #00000020;
+				color: ${global.fontColor.dark };
+				font-size: 1rem;
+			}
 		}
 
-		.burger {
-			
+		.navlink {
+			margin: 0.5rem calc(20px + 5vw);
+		}
+		.search-button {
+			margin: 1rem calc(20px + 5vw);
+		}
+		.share-button-phone .hide-float,
+		.share-button-phone .show-float {
+			transform-origin: top right;
+		}
+	}
+	@media (max-width: 480px) {
+		.navlink {
+			font-size: 1.5rem;
 		}
 	}
 `

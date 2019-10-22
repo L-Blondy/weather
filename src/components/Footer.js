@@ -18,4 +18,5 @@ const FooterStyled = styled.div`
 	justify-content: center;
 	font-style: italic;
 	font-size: 0.7rem;
+	flex-shrink: 0;
 `

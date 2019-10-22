@@ -91,14 +91,6 @@ const ResultStyled = styled.div`
 	color: ${ global.fontColor.dark };
 	padding: 2rem 20vw 0 20vw;
 	flex-grow: 1;
-		
-	@media (max-width: 1280px){
-		padding: 2rem 15vw 0 15vw;
-	}
-	
-	@media (max-width: 1024px){
-		padding: 2rem 8vw 0 8vw;
-	}
 
 	.hourly-title-content button {
 		background: none;
@@ -142,6 +134,22 @@ const ResultStyled = styled.div`
 			.loading-img {
 				height: 40px;
 			}
+		}
+	}
+
+	@media (max-width: 1280px){
+		padding: 2rem 15vw 0 15vw;
+	}
+	
+	@media (max-width: 1024px){
+		padding: 2rem 8vw 0 8vw;
+	}
+
+	@media (max-width: 768px) {
+		.section.details .details-container{
+			grid-template-columns: 1fr;
+			grid-template-rows: repeat(3, minmax(10rem, 1fr));
+			row-gap: 20px;
 		}
 	}
 `
