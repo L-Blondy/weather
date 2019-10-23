@@ -8,18 +8,21 @@ import { fadeIn } from "./styles/keyframes";
 import { fetchDaily, fetchHourly, reduceDaily, reduceHourly, getLocalTime } from "./helpers/helpers";
 import ThemeContext, { theme } from "./ThemeContext";
 
+const LS = window.localStorage;
+
 class App extends React.Component {
 
 	state = {
-		theme: 3,
-		placeFullName: null,
-		localTime: null,
-		hourlyData: null,
-		dailyData: null,
-		query: null,
-		offsetTime: null,
+		theme: parseInt( LS.getItem( "local_theme" ) ) || 1,
+		placeFullName: window.sessionStorage.getItem( "place" ) || null,
+		localTime: JSON.parse( window.sessionStorage.getItem( "localTime" ) ) || null,
+		hourlyData: JSON.parse( window.sessionStorage.getItem( "hourlyData" ) ) || null,
+		timezone: window.sessionStorage.getItem( "timezone" ) || null,
+		dailyData: JSON.parse( window.sessionStorage.getItem( "dailyData" ) ) || null,
+		offsetTime: window.sessionStorage.getItem( "offsetTime" ) || null,
 		resize: 0,
 		searchCount: 0,
+		themeIconRotation: 0,
 	}
 
 	componentDidMount = () => {
@@ -35,19 +38,35 @@ class App extends React.Component {
 	}
 
 	switchTheme = () => {
+		LS.setItem( "local_theme", this.state.theme < theme.length - 1 ? this.state.theme + 1 : 0 )
 		this.setState( {
-			theme: this.state.theme < theme.length - 1 ? this.state.theme + 1 : 0
+			theme: this.state.theme < theme.length - 1 ? this.state.theme + 1 : 0,
+			themeIconRotation: this.state.themeIconRotation + 360,
 		} )
 	}
 
 	handleSearch = async ( placeFullName, history, latlng ) => {
+		const prevPlace = window.sessionStorage.getItem( "place" ) || null;
+		console.log( prevPlace, placeFullName )
+		if ( prevPlace === placeFullName ) {
+			this.setState( {
+				offsetTime: window.sessionStorage.getItem( "offsetTime" ),
+				localTime: JSON.parse( window.sessionStorage.getItem( "localTime" ) ),
+				hourlyData: JSON.parse( window.sessionStorage.getItem( "hourlyData" ) ),
+				timezone: window.sessionStorage.getItem( "timezone" ),
+				dailyData: JSON.parse( window.sessionStorage.getItem( "dailyData" ) ),
+				searchCount: this.state.searchCount + 1,
+			} )
+			history.push( '/Result' )
+			return;
+		}
 
+		window.sessionStorage.setItem( "place", placeFullName );
 		this.setState( {
 			placeFullName,
 			localTime: null,
 			hourlyData: null,
 			dailyData: null,
-			query: null,
 			offsetTime: null,
 			searchCount: this.state.searchCount + 1,
 		} )
@@ -69,6 +88,8 @@ class App extends React.Component {
 					timezone: resp.timezone,
 					dailyData: reduceDaily( resp.data ),
 				} )
+				window.sessionStorage.setItem( "timezone", resp.timezone )
+				window.sessionStorage.setItem( "dailyData", JSON.stringify( reduceDaily( resp.data ) ) )
 			} )
 		}
 
@@ -83,6 +104,9 @@ class App extends React.Component {
 					localTime,
 					hourlyData
 				} )
+				window.sessionStorage.setItem( "offsetTime", offsetTime )
+				window.sessionStorage.setItem( "localTime", JSON.stringify( localTime ) )
+				window.sessionStorage.setItem( "hourlyData", JSON.stringify( hourlyData ) )
 			} )
 	}
 
@@ -96,6 +120,7 @@ class App extends React.Component {
 							handleSearch={ this.handleSearch }
 							searchCount={ this.state.searchCount }
 							switchTheme={ this.switchTheme }
+							themeIconRotation={ this.state.themeIconRotation }
 						/>
 
 						<div className="background-image" ></div>
@@ -152,7 +177,7 @@ const AppStyled = styled.div`
 		width: 100%;
 		opacity: 0;
 		filter: ${props => props.theme.bkgIMG.filter };
-		animation: ${props => fadeIn( props.theme.bkgIMG.opacity ) } 2000ms forwards;
+		animation: ${props => fadeIn( props.theme.bkgIMG.opacity ) } 0ms forwards;
 		background-image: ${props => props.theme.bkgIMG.url };
 		background-position: right top;
 		background-size: cover;
@@ -173,15 +198,3 @@ const AppStyled = styled.div`
 `
 
 ReactDOM.render( <App />, document.getElementById( "root" ) );
-
-{/* .background-image {
-		position: fixed;
-		z-index: -1;
-		height: 100%;
-		width: 100%;
-		opacity: 0;
-		animation: ${fadeIn( 0.30 ) } 2000ms forwards;
-		background-image: ${props => props.bkgIMG };
-		background-position: right top;
-		background-size: cover;
-	} */}

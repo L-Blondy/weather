@@ -91,7 +91,7 @@ function GraphLoaded ( { hourlyData, activeDay, graphType } ) {
 						yAxisId="precip"
 						dataKey="prec_amount"
 						barSize={ 7 }
-						fill="#265E92aa"
+						fill="#265E92dd"
 						minPointSize={ 3 }
 					/>
 					{ graphType === "precip" && (

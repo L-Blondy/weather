@@ -46,8 +46,8 @@ export const theme = [
 			secondary: "raleway",
 		},
 		fontClr: {
-			primary: "#4f545d",
-			secondary: "#eaeaea",
+			primary: "#3a3e44",
+			secondary: "#e8e6e1",
 			hover: "#ff0066",
 			disabled: "#dadada",
 		},
@@ -57,12 +57,12 @@ export const theme = [
 		},
 		bkgClr: {
 			primary: "#3f4958",
-			secondary: "#cfd7da",
+			secondary: "#e6e4df",
 		},
 		icons: {
 			st0: "#ff9000",
 			st1: "#5b7388",
-			st2: "#888a8c",
+			st2: "#545454",
 			st3: "#00aebd",
 		},
 		bkgIMG: {
@@ -72,7 +72,7 @@ export const theme = [
 		},
 		hourlyBtnClr: "#ffffffcc",
 		activeBtn: "#ffffffaa",
-		windClr: "#5d6467",
+		windClr: "#333638",
 		chartHeight: "12rem",
 		navbar_height: "50px",
 	},
@@ -94,7 +94,7 @@ export const theme = [
 		},
 		bkgClr: {
 			primary: "#1f1f1f",
-			secondary: "#cfd7da",
+			secondary: "#768187",
 		},
 		icons: {
 			st0: "#ffa900",
@@ -132,7 +132,7 @@ export const theme = [
 		},
 		bkgClr: {
 			primary: "#1f1f1f",
-			secondary: "#cfd7da",
+			secondary: "#768187",
 		},
 		icons: {
 			st0: "#ffa900",

@@ -4,9 +4,10 @@ import { NavLink } from "react-router-dom";
 import { SearchField, FloatShare, Burger } from "./";
 import { ReactComponent as HomeIcon } from "../assets/home.svg";
 import { ReactComponent as ShareIcon } from "../assets/share.svg";
+import { ReactComponent as ThemeIcon } from "../assets/theme.svg";
 import ThemeContext from "../ThemeContext";
 
-export default function Navbar ( { handleSearch, searchCount, switchTheme } ) {
+export default function Navbar ( { handleSearch, searchCount, switchTheme, themeIconRotation } ) {
 
 	const [ showShare, setShowShare ] = React.useState( "hide-float" );
 	const [ isSearchEnabled, toggleSearch ] = React.useState( "disabled" );
@@ -58,8 +59,8 @@ export default function Navbar ( { handleSearch, searchCount, switchTheme } ) {
 	}
 
 	const toggleShare = ( e ) => {
-		console.log( "toggle share event" )
 		const floatPane = document.querySelector( ".show-float" ) || document.querySelector( ".hide-float" );
+
 		if ( floatPane.contains( e.target ) ) {
 			return;
 		}
@@ -73,7 +74,6 @@ export default function Navbar ( { handleSearch, searchCount, switchTheme } ) {
 
 		function cb ( e ) {
 			const btn = document.querySelector( ".share-button" ) || document.querySelector( ".share-button-phone" );
-			console.log( btn )
 
 			if ( btn && !btn.contains( e.target ) ) {
 				window.removeEventListener( "click", cb )
@@ -83,14 +83,14 @@ export default function Navbar ( { handleSearch, searchCount, switchTheme } ) {
 	}
 
 	return (
-		<NavbarStyled className="navbar" ref={ navbar } theme={ theme } >
+		<NavbarStyled className="navbar" ref={ navbar } theme={ theme }>
 			<span className="logo">AccuWeather</span>
 
 			{ ( window.innerWidth <= 1024 ) && (
 				<Burger className={ "burger-menu " + isMenuOpened } onClick={ handleClickBurgerOut } />
 			) }
 
-			<NavLinks className={ "navlinks " + ( isMenuOpened ? "navlinks-enabled" : "navlinks-disabled" ) } theme={ theme }>
+			<NavLinks className={ "navlinks " + ( isMenuOpened ? "navlinks-enabled" : "navlinks-disabled" ) } theme={ theme }  themeIconRotation={ themeIconRotation }>
 				<li >
 					{ window.innerWidth > 1024 ?
 						(
@@ -122,8 +122,8 @@ export default function Navbar ( { handleSearch, searchCount, switchTheme } ) {
 				</li>
 
 				<li>
-					<button className="navlink" onClick={ switchTheme }>
-						<HomeIcon height={ iconSize } width={ iconSize } />
+					<button className="navlink" onClick={ switchTheme}>
+						<ThemeIcon className="theme-icon" height={ `calc(${iconSize} * 1.1` } width={ `calc(${iconSize} * 1.1`  } />
 						<span className="name" >Theme</span>
 					</button>
 				</li>
@@ -228,12 +228,17 @@ const NavLinks = styled.ul`
 			border-radius: 7px;
 			transition: background 250ms 40ms;
 
-			&:hover {
+			&:hover, 
+			&:focus {
 				background: ${props => props.theme.btnClr.secondary };
 			}
 		}
 		&.search-button svg:first-of-type {
 			opacity: 0;
+		}
+		.theme-icon {
+			transition: transform 1000ms;
+			transform: rotate(${props => props.themeIconRotation + "deg"});
 		}
 	}
 
@@ -302,6 +307,7 @@ const NavLinks = styled.ul`
 
 		.ap-nostyle-dropdown-menu {
 			pointer-events: auto;
+			background:  ${props => props.theme.bkgClr.secondary };
 
 			.ap-nostyle-suggestion {
 				pointer-events: auto;
