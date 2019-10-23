@@ -3,9 +3,10 @@ import { ReactComponent as Facebook } from "../assets/share/facebook.svg";
 import { ReactComponent as Twitter } from "../assets/share/twitter.svg";
 import { ReactComponent as Linkedin } from "../assets/share/linkedin.svg";
 import styled from "styled-components";
-import { global } from "../styles/globalStyles";
+import ThemeContext from "../ThemeContext";
 
 export default function FloatShare ( { className } ) {
+	const theme = React.useContext( ThemeContext )
 
 	const URL_facebook = "https://www.facebook.com/v4.0/dialog/share?app_id=444477226186005&quote=Accuweater%20website&hashtag=%23Accuweather&href=https%3A%2F%2Fwww.google.com&redirect_uri=https%3A%2F%2Fwww.google.com"
 	const URL_twitter = "https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.google.com&text=This%20is%20my%20custom%20text.­%0A&original_referer=https%3A%2F%2Fwww.google.com"
@@ -15,6 +16,7 @@ export default function FloatShare ( { className } ) {
 		<FloatShareStyled
 			className={ className }
 			links={ 3 }
+			theme={ theme }
 		>
 			<li>
 				<a target="_blank" rel="external noreferrer noopener" href={ URL_facebook }>
@@ -41,8 +43,8 @@ const FloatShareStyled = styled.div`
 	bottom: 0;
 	left: 50%;
 	grid-template-rows: repeat( ${ props => props.links }, 1fr);
-	background: ${ global.bckClr.dark };
-	color: ${ global.fontColor.light };
+	background: ${ props => props.theme.bkgClr.primary };
+	color: ${ props => props.theme.fontClr.secondary };
 	row-gap: 1rem;
 	padding: 0.7rem;
 	border-radius: 5px;
@@ -67,7 +69,7 @@ const FloatShareStyled = styled.div`
 		transform: translate(-50%, -65%);
 		border-left: 1rem solid transparent;
 		border-right: 1rem solid transparent;
-		border-bottom: 1rem solid ${global.bckClr.dark };
+		border-bottom: 1rem solid ${props => props.theme.bkgClr.primary };
 	}
 
 	a {
@@ -76,7 +78,7 @@ const FloatShareStyled = styled.div`
 		justify-content: flex-start;
 		align-items: center;
 		color: inherit;
-		font-family: ${global.fontFamily.primary };
+		font-family: ${props => props.theme.fontFam.primary };
 		font-weight: normal;
 		height: 100%;
 		padding-right: 1.5rem;

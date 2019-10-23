@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { global } from "../styles/globalStyles";
 import { convertTS_toDate } from "../helpers/helpers";
 import { ReactComponent as Sun } from "../assets/weather/ClearDay.svg";
 import { ReactComponent as Moon } from "../assets/weather/ClearNight.svg";
-import { ReactComponent as LoadingCircle } from "../assets/loading-circle.svg"
+import { ReactComponent as LoadingCircle } from "../assets/loading-circle.svg";
+import ThemeContext from "../ThemeContext";
 
 export default function SunSet ( { className, dailyData, activeDay, offsetTime } ) {
+	const theme = React.useContext( ThemeContext )
 
 	const daily = dailyData && dailyData[ activeDay ]
 	const sunrise = dailyData && convertTS_toDate( daily.sunrise, offsetTime ).slice( 17, 22 );
@@ -20,7 +21,7 @@ export default function SunSet ( { className, dailyData, activeDay, offsetTime }
 				<LoadingCircle />
 			</div>
 		) : (
-			<SunSetStyled className={ className } >
+			<SunSetStyled className={ className } theme={ theme } >
 				<div className="sun-grid">
 					<div className="sm-section sunrise">
 						<div className="sm-section__description">Sunrise</div>
@@ -59,7 +60,7 @@ const SunSetStyled = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: flex-start;
-	font-family: ${global.fontFamily.primary };
+	font-family: ${props => props.theme.fontFam.primary };
 
 	.sun-grid {
 		position: relative;

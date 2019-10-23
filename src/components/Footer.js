@@ -1,18 +1,20 @@
 import React from 'react';
 import styled from "styled-components";
-import { global } from "../styles/globalStyles";
+import ThemeContext from "../ThemeContext";
 
 export default function Footer () {
+	const theme = React.useContext( ThemeContext )
+
 	return (
-		<FooterStyled>
+		<FooterStyled theme={ theme } >
 			Powered by WeatherBit, 7Timer and Algolia.
 		</FooterStyled>
 	)
 }
 
 const FooterStyled = styled.div`
-	font-family: ${global.fontFamily.secondary };
-	height: ${global.navbar_height };
+	font-family: ${props => props.theme.fontFam.secondary };
+	height: ${props => props.theme.navbar_height };
 	display: flex;
 	align-items: center;
 	justify-content: center;

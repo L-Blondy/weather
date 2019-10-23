@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as WindDir } from "../assets/wind.svg"
-import { global } from "../styles/globalStyles";
+import ThemeContext from "../ThemeContext";
 import { ReactComponent as LoadingCircle } from "../assets/loading-circle.svg"
 
 export default function Wind ( { hourlyData, activeDay, className } ) {
-
+	const theme = React.useContext( ThemeContext )
 	const data = hourlyData && hourlyData[ activeDay ];
 
 	const getAngle = ( hour ) => {
@@ -66,7 +66,7 @@ export default function Wind ( { hourlyData, activeDay, className } ) {
 				<span>Wind data is available for the next 7 days only</span>
 			</NoData>
 		) : (
-				<WindStyled className={ className }>
+				<WindStyled className={ className } theme={ theme }>
 					<span>Wind (m/s)</span>
 					<div className="wind-grid">
 						{ renderSpeed( data ) }
@@ -82,7 +82,7 @@ const WindStyled = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: flex-start;
-	font-family: ${global.fontFamily.primary };
+	font-family: ${props => props.theme.fontFam.primary };
 
 	span {
 		margin: 1rem 0 0.5rem 0;

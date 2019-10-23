@@ -1,9 +1,10 @@
 import React from 'react';
 import { ReactComponent as LoadingLine } from "../assets/loading-line.svg";
 import styled from 'styled-components';
-import { global } from "../styles/globalStyles";
+import ThemeContext from "../ThemeContext";
 
 export default function PlaceTime ( { place, localTime, className } ) {
+	const theme = React.useContext( ThemeContext )
 
 	const getTime = () => {
 		const hour = localTime.hours < 10 ? "0" + localTime.hours : localTime.hours;
@@ -12,7 +13,7 @@ export default function PlaceTime ( { place, localTime, className } ) {
 	}
 
 	return (
-		<PlaceTimeStyled className={ className }>
+		<PlaceTimeStyled className={ className } theme={ theme } >
 			{ localTime ?
 				( <>
 					<p className="place">{ place }</p>
@@ -32,7 +33,7 @@ const PlaceTimeStyled = styled.section`
 	position: relative;
 	text-align: center;
 	font-weight: normal;
-	font-family: ${ global.fontFamily.secondary };
+	font-family: ${ props => props.theme.fontFam.secondary };
 	z-index: -1;
 
 	.loading-img {

@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { global } from "../styles/globalStyles";
+import ThemeContext from "../ThemeContext";
 
 export default function Section ( { className, title, content, titleContent } ) {
+	const theme = React.useContext( ThemeContext )
+
 	return (
-		<SectionStyled className={ className } >
+		<SectionStyled className={ className } theme={ theme } >
 			<div className="section-title-wrapper">
 				<h4>{ title }</h4>
 				{ titleContent && titleContent }
@@ -34,7 +36,7 @@ const SectionStyled = styled.section`
 		}
 
 		h4 {
-			font-family: ${ global.fontFamily.secondary };
+			font-family: ${ props => props.theme.fontFam.secondary };
 			font-size: 1.3rem;
 			font-weight: bold;
 		}

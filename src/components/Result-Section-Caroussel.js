@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from "react-router-dom";
 import styled from 'styled-components';
 import { convertRemToPixels, getIcon } from "../helpers/helpers";
-import { global } from "../styles/globalStyles";
+import ThemeContext from "../ThemeContext";
 import { ReactComponent as LoadingCircle } from "../assets/loading-circle.svg"
 import { ReactComponent as Left } from "../assets/chevron-left.svg"
 import { ReactComponent as Right } from "../assets/chevron-right.svg"
@@ -78,28 +78,33 @@ class Caroussel extends React.Component {
 		const { dailyData, activeDay, className } = this.props;
 
 		return (
-			<CarousselStyled
-				className={ className }
-				itemWidth={ itemWidth }
-				scrollCount={ scrollCount }
-				items={ items }
-			>
+			<ThemeContext.Consumer >
+				{ props => (
+					<CarousselStyled
+						className={ className }
+						itemWidth={ itemWidth }
+						scrollCount={ scrollCount }
+						items={ items }
+						theme={ props }
+					>
 
-				<button className="chevron-left" onClick={ () => this.setScrollCount( -1, scrollCount, items ) } >
-					<Left />
-				</button>
+						<button className="chevron-left" onClick={ () => this.setScrollCount( -1, scrollCount, items ) } >
+							<Left />
+						</button>
 
-				<div className="grid-container">
-					<ul className="grid" ref={ this.grid }>
-						{ this.renderDailyData( dailyData, activeDay ) }
-					</ul>
-				</div>
+						<div className="grid-container">
+							<ul className="grid" ref={ this.grid }>
+								{ this.renderDailyData( dailyData, activeDay ) }
+							</ul>
+						</div>
 
-				<button className="chevron-right" onClick={ () => this.setScrollCount( 1, scrollCount, items ) } >
-					<Right />
-				</button>
+						<button className="chevron-right" onClick={ () => this.setScrollCount( 1, scrollCount, items ) } >
+							<Right />
+						</button>
 
-			</CarousselStyled>
+					</CarousselStyled>
+				) }
+			</ThemeContext.Consumer>
 		)
 	}
 }
@@ -132,8 +137,8 @@ const CarousselStyled = styled.div`
 			position: relative;
 			height: 95%;
 			width: 95%;
-			font-family: ${global.fontFamily.primary };
-			color: ${global.fontColor.dark };
+			font-family: ${props => props.theme.fontFam.primary };
+			color: ${props => props.theme.fontClr.primary };
 			font-size: 0.9rem;
 			padding-left: 0.5rem;
 			display: flex;
@@ -152,7 +157,7 @@ const CarousselStyled = styled.div`
 
 			.loading-img {
 				height: 25%;
-				color: ${global.fontColor.dark };
+				color: ${props => props.theme.fontClr.primary };
 			}
 
 			&.active {
@@ -164,7 +169,7 @@ const CarousselStyled = styled.div`
 				outline: none;
 			}
 			.temperature {
-				font-family: ${global.fontFamily.primary };
+				font-family: ${props => props.theme.fontFam.primary };
 				font-size: 1.2rem;
 				padding: 2px 0;
 			}
@@ -181,21 +186,21 @@ const CarousselStyled = styled.div`
 	.chevron-right {
 		background: none;
 		border: none;
-		color: ${global.fontColor.dark };
+		color: ${props => props.theme.fontClr.primary };
 		text-align: left;
 		font-size: 0;
 
 		&:hover,
 		&:focus {
-			color: ${global.btnClr.secondary };
+			color: ${props => props.theme.btnClr.secondary };
 			outline: none;
 		}
 	}
 	.chevron-left {
-		color: ${props => props.scrollCount <= 0 && ( `${ global.fontColor.disabled }; pointer-events: none; user-select: none;` ) };
+		color: ${props => props.scrollCount <= 0 && ( `${ props => props.theme.fontClr.disabled }; pointer-events: none; user-select: none;` ) };
 	}
 	.chevron-right {
-		color: ${props => props.scrollCount + props.items >= 16 && ( `${ global.fontColor.disabled }; pointer-events: none; user-select: none;` ) };
+		color: ${props => props.scrollCount + props.items >= 16 && ( `${ props => props.theme.fontClr.disabled }; pointer-events: none; user-select: none;` ) };
 
 		@media (max-width: 768px){
 			text-align: right;

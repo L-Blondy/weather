@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { global } from "../styles/globalStyles";
+import ThemeContext from "../ThemeContext";
 import { ReactComponent as LoadingCircle } from "../assets/loading-circle.svg";
 import { PieChart, Pie } from 'recharts';
 
 export default function Humidity ( { dailyData, activeDay, className } ) {
-
+	const theme = React.useContext( ThemeContext )
 	const pieSize = 70;
 	let data_daily;
 	let data_humidity;
@@ -29,7 +29,7 @@ export default function Humidity ( { dailyData, activeDay, className } ) {
 				<LoadingCircle />
 			</div>
 		) : (
-			<HumidityStyled className={ className } >
+			<HumidityStyled className={ className } theme={ theme } >
 
 				<div className="another-grid">
 
@@ -72,12 +72,12 @@ export default function Humidity ( { dailyData, activeDay, className } ) {
 					</div>
 				</div>
 
-			</HumidityStyled >
+			</HumidityStyled>
 		)
 }
 
 const HumidityStyled = styled.div`
-	font-family: ${ global.fontFamily.primary };
+	font-family: ${ props => props.theme.fontFam.primary };
 	display: flex;
 	justify-content: center;
 

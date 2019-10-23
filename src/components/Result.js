@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { global } from "../styles/globalStyles";
+import ThemeContext from "../ThemeContext";
 import { Graph, SunSet, Wind, Humidity, PlaceTime, Caroussel, Section } from "./";
 
 export default function Result ( { place, dailyData, hourlyData, localTime, offsetTime, resize } ) {
-
+	const theme = React.useContext( ThemeContext )
 	const [ activeDay, setActiveDay ] = React.useState( 0 );
 	const [ graphType, setGraphType ] = React.useState( "classic" );
 
@@ -13,7 +13,7 @@ export default function Result ( { place, dailyData, hourlyData, localTime, offs
 	}
 
 	return (
-		<ResultStyled>
+		<ResultStyled theme={ theme } >
 
 			<PlaceTime
 				className="place-time"
@@ -82,13 +82,13 @@ export default function Result ( { place, dailyData, hourlyData, localTime, offs
 				}
 			/>
 
-		</ResultStyled >
+		</ResultStyled>
 	)
 }
 
 const ResultStyled = styled.div`
-	font-family: ${ global.fontFamily.primary };
-	color: ${ global.fontColor.dark };
+	font-family: ${ props => props.theme.fontFam.primary };
+	color: ${ props => props.theme.fontClr.primary };
 	padding: 2rem 20vw 0 20vw;
 	flex-grow: 1;
 
@@ -97,8 +97,8 @@ const ResultStyled = styled.div`
 		border: none;
 		padding: 0.2rem 1rem;
 		cursor: pointer;
-		font-family:${ global.fontFamily.primary };
-		color: ${ global.fontColor.dark + "bb" };
+		font-family:${ props => props.theme.fontFam.primary };
+		color: ${ props => props.theme.fontClr.primary + "bb" };
 		font-size: 0.9rem;
 		border-radius: 4px;
 		margin: 0 0.2rem;
@@ -106,12 +106,12 @@ const ResultStyled = styled.div`
 		outline: none;
 
 		&:hover, &:focus {
-			color: ${ global.fontColor.dark };
+			color: ${ props => props.theme.fontClr.primary };
 			background: #ffffff40;
 		}
 
 		&.active {
-			color: ${ global.fontColor.dark + "dd" };
+			color: ${ props => props.theme.fontClr.primary + "dd" };
 			background: #ffffffcc;
 			box-shadow: 0 0 5px 0 #00000020;
 		}
@@ -125,7 +125,7 @@ const ResultStyled = styled.div`
 		min-height: 9rem;
 
 		& > .details-sub-section {
-			border-top: 1px solid ${global.fontColor.dark + "70" };
+			border-top: 1px solid ${props => props.theme.fontClr.primary + "70" };
 		}
 
 		.loading-container {

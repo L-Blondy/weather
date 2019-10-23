@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from "styled-components";
-import { global } from "../styles/globalStyles";
 import { NavLink } from "react-router-dom";
 import { SearchField, FloatShare, Burger } from "./";
 import { ReactComponent as HomeIcon } from "../assets/home.svg";
 import { ReactComponent as ShareIcon } from "../assets/share.svg";
+import ThemeContext from "../ThemeContext";
 
 export default function Navbar ( { handleSearch, searchCount } ) {
 
@@ -13,6 +13,7 @@ export default function Navbar ( { handleSearch, searchCount } ) {
 	const [ isMenuOpened, toggleMenu ] = React.useState( false );
 	const [ prevSearchCount, setSearchCount ] = React.useState( 0 );
 	const navbar = React.useRef();
+	const theme = React.useContext( ThemeContext )
 
 	React.useEffect( () => {
 		if ( prevSearchCount !== searchCount ) {
@@ -83,12 +84,14 @@ export default function Navbar ( { handleSearch, searchCount } ) {
 	}
 
 	return (
-		<NavbarStyled className="navbar" ref={ navbar } >
+		<NavbarStyled className="navbar" ref={ navbar } theme={ theme } >
 			<span className="logo">AccuWeather</span>
 
-			{ ( window.innerWidth <= 1024 ) && <Burger className={ "burger-menu " + isMenuOpened } onClick={ handleClickBurgerOut } /> }
+			{ ( window.innerWidth <= 1024 ) && (
+				<Burger className={ "burger-menu " + isMenuOpened } onClick={ handleClickBurgerOut } />
+			) }
 
-			<NavLinks className={ "navlinks " + ( isMenuOpened ? "navlinks-enabled" : "navlinks-disabled" ) }>
+			<NavLinks className={ "navlinks " + ( isMenuOpened ? "navlinks-enabled" : "navlinks-disabled" ) } theme={ theme }>
 				<li >
 					{ window.innerWidth > 1024 ?
 						(
@@ -146,11 +149,11 @@ const iconSize = "1.3rem";
 
 const NavbarStyled = styled.div`
 	background-image: linear-gradient(transparent, #ffffff20);
-	color: ${global.fontColor.dark };
+	color: ${props => props.theme.fontClr.primary };
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	height: ${global.navbar_height };
+	height: ${props => props.theme.navbar_height };
 	box-shadow: 0 0 50px 0 #26374f15;
 	flex-shrink: 0;
 
@@ -167,8 +170,8 @@ const NavbarStyled = styled.div`
 	}
 
 	@media (max-width: 1024px) {
-		background: ${global.bckClr.dark };
-		color: ${global.fontColor.light };
+		background: ${props => props.theme.bkgClr.primary };
+		color: ${props => props.theme.fontClr.secondary };
 
 		.navlinks {
 			margin-right: 0;
@@ -189,7 +192,7 @@ const NavLinks = styled.ul`
 		border: none;
 		text-decoration: none;
 		color: inherit;
-		font-family: ${global.fontFamily.secondary };
+		font-family: ${props => props.theme.fontFam.secondary };
 		font-size: 1rem;
 		font-weight: bold;
 		letter-spacing: 0.7px;
@@ -203,7 +206,7 @@ const NavLinks = styled.ul`
 		&:hover:not(:focus-within):not(.share-button) ,
 		&:hover:not(:focus-within) .search-icon {
 			outline: none;
-			color: ${global.btnClr.primary };
+			color: ${props => props.theme.btnClr.primary };
 			transition: color 200ms;
 		}
 
@@ -222,12 +225,12 @@ const NavLinks = styled.ul`
 
 		&.share-button {
 			color: white;
-			background: ${global.btnClr.primary };
+			background: ${props => props.theme.btnClr.primary };
 			border-radius: 7px;
 			transition: background 250ms 40ms;
 
 			&:hover {
-				background: ${global.btnClr.secondary };
+				background: ${props => props.theme.btnClr.secondary };
 			}
 		}
 		&.search-button svg:first-of-type {
@@ -312,14 +315,14 @@ const NavLinks = styled.ul`
 		bottom: 0;
 		right: 0;
 		flex-direction: column;
-		background: ${global.bckClr.dark };
+		background: ${props => props.theme.bkgClr.primary };
 		height: calc(100vh - 50px);
 		margin-top: 50px;
 		justify-content: flex-start;
 		align-items: flex-end;
 		z-index: 1;
 		transition: transform 500ms;
-		color: ${global.fontColor.light };
+		color: ${props => props.theme.fontClr.secondary };
 
 		.burger-menu {
 			color: currentColor;
@@ -338,13 +341,13 @@ const NavLinks = styled.ul`
 		.search-button {
 			padding: 0;
 			cursor: text;
-			color: ${global.fontColor.light };
+			color: ${props => props.theme.fontClr.secondary };
 
 			.ap-nostyle-dropdown-menu {
 				pointer-events: auto;
-				background:  ${global.bckClr.light };
+				background:  ${props => props.theme.bkgClr.secondary };
 				box-shadow: 0 0 5px 0 #00000020;
-				color: ${global.fontColor.dark };
+				color: ${props => props.theme.fontClr.primary };
 				font-size: 1rem;
 			}
 		}

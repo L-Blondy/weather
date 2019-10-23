@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { global } from "../styles/globalStyles";
+import ThemeContext from "../ThemeContext";
 
 export default function Burger ( { onClick, className } ) {
+	const theme = React.useContext( ThemeContext )
+
 	return (
-		<BurgerStyled className={ className } onClick={ onClick } >
+		<BurgerStyled className={ className } onClick={ onClick } theme={ theme } >
 			<div className="line line1"></div>
 			<div className="line line2"></div>
 			<div className="line line3"></div>
@@ -23,7 +25,7 @@ const BurgerStyled = styled.button`
 	transition: color 200ms;
 
 	&:hover {
-		color: ${global.btnClr.primary };
+		color: ${props => props.theme.btnClr.primary };
 	}
 	
 	.line {

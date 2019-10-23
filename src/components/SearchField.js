@@ -4,10 +4,11 @@ import styled from 'styled-components';
 import { ReactComponent as SearchIcon } from '../assets/search.svg';
 import { ReactComponent as ClearIcon } from '../assets/clear.svg';
 import { fadeIn, scaleX } from "../styles/keyframes";
-import { global } from "../styles/globalStyles";
+import ThemeContext from "../ThemeContext";
 import { withRouter } from 'react-router-dom'
 
 function SearchForm ( { className, handleSearch, history, animated } ) {
+	const theme = React.useContext( ThemeContext )
 
 	const sentences = [
 		"Florence, Toscana, Italy".split( "" ),
@@ -71,6 +72,7 @@ function SearchForm ( { className, handleSearch, history, animated } ) {
 			ref={ searchInput }
 			animated={ animated }
 			inputVal={ inputVal }
+			theme={ theme }
 			onChange={ () => {
 				setInputVal( searchInput.current.querySelector( ".ap-nostyle-input" ).value )
 			} }
@@ -123,7 +125,7 @@ const SearchFieldStyled = styled.div`
 		font-size: 1.2rem;
 		letter-spacing: 1px;
 		color: currentColor;
-		font-family: ${global.fontFamily.secondary };
+		font-family: ${props => props.theme.fontFam.secondary };
 		text-transform: capitalize;
 		border-radius: 2px;
 
@@ -182,10 +184,10 @@ const SearchFieldStyled = styled.div`
 	}
 
 	.ap-nostyle-dropdown-menu {
-		font-family: ${global.fontFamily.secondary };
+		font-family: ${props => props.theme.fontFam.secondary };
 		width: 100%;
 		padding: 0.5rem;
-		color: ${global.fontColor.dark };
+		color: ${props => props.theme.fontClr.primary };
 		font-size: 1.1rem;
 		letter-spacing: 1px;
 		background: #00000007;

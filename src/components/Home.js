@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from "styled-components";
-import { global } from "../styles/globalStyles";
+import ThemeContext from "../ThemeContext";
 import { SearchField, Title } from "./";
 import { pokeRight, fadeIn } from "../styles/keyframes";
 import { ReactComponent as Right } from "../assets/chevron-right.svg"
-import { brotliDecompress } from 'zlib';
 
 export default function Home ( { handleSearch } ) {
 
+	const theme = React.useContext( ThemeContext )
 	const [ startNow, setStartNow ] = React.useState( false );
 
 	const handleStartNow = () => {
@@ -15,7 +15,7 @@ export default function Home ( { handleSearch } ) {
 	}
 
 	return (
-		<HomeStyled startNowDuration={ 1000 } className="home">
+		<HomeStyled startNowDuration={ 1000 } className="home" theme={ theme } >
 
 			<div className={ "side left-side " + ( startNow ? "fadeout " : "fadein" ) }>
 				<Title className="title"></Title>
@@ -57,8 +57,8 @@ export default function Home ( { handleSearch } ) {
 const HomeStyled = styled.div`
 	flex-grow: 1;
 	position: relative;
-	font-family: ${global.fontFamily.primary };
-	color: ${global.fontColor.dark };
+	font-family: ${props => props.theme.fontFam.primary };
+	color: ${props => props.theme.fontClr.primary };
 	letter-spacing: 1px;
 
 	.side {
@@ -84,13 +84,13 @@ const HomeStyled = styled.div`
 			}
 			.start-btn {
 				margin-top: 2rem;
-				font-family: ${global.fontFamily.primary };
+				font-family: ${props => props.theme.fontFam.primary };
 				font-variant: small-caps;
 				font-size: 1.2rem;
 				letter-spacing: 0.5px;
 				color: white;
 				border: none;
-				background: ${global.btnClr.primary };
+				background: ${props => props.theme.btnClr.primary };
 				padding: 0.5rem 1.3rem;
 				border-radius: 7px;
 				transition: background 200ms 40ms;
@@ -106,7 +106,7 @@ const HomeStyled = styled.div`
 				}
 				&:hover,
 				&:focus {
-					background: ${global.btnClr.secondary };
+					background: ${props => props.theme.btnClr.secondary };
 
 					svg {
 						animation: ${pokeRight } 200ms alternate infinite 100ms;
@@ -146,7 +146,7 @@ const HomeStyled = styled.div`
 				&:hover,
 				&:focus {
 					outline: none;
-					color: ${global.btnClr.primary };
+					color: ${props => props.theme.btnClr.primary };
 				}
 			}
 			.wrapper-right {
@@ -206,14 +206,7 @@ const HomeStyled = styled.div`
 		}
 		.side.left-side .moto {
 			font-size: 1.1rem;
-			/* margin: 3rem 0; */
 		}
-		/* .side.left-side .description {
-			margin-bottom: 3rem;
-		}
-		.side.left-side .start-btn {
-			margin: 0;
-		} */
 	}
 `
 

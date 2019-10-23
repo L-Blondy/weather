@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from "react-dom";
 import styled from "styled-components";
 import "./styles/styles.css"
-import { Navbar, Home, Footer, Result, Settings } from "./components";
+import { Navbar, Home, Footer, Result } from "./components";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { fadeIn } from "./styles/keyframes";
 import { fetchDaily, fetchHourly, reduceDaily, reduceHourly, getLocalTime } from "./helpers/helpers";
+import ThemeContext, { theme } from "./ThemeContext";
 
 class App extends React.Component {
 
@@ -81,35 +82,37 @@ class App extends React.Component {
 	render () {
 		return (
 			<Router >
-				<AppStyled className="app">
+				<ThemeContext.Provider value={ theme } >
+					<AppStyled className="app">
 
-					<Navbar handleSearch={ this.handleSearch } searchCount={ this.state.searchCount } />
+						<Navbar handleSearch={ this.handleSearch } searchCount={ this.state.searchCount } />
 
-					<div className="background-image" ></div>
+						<div className="background-image" ></div>
 
-					<Route
-						path="/"
-						exact
-						render={ () => (
-							<Home handleSearch={ this.handleSearch } />
-						) }
-					/>
-					<Route
-						path="/Result"
-						render={ props => (
-							<Result
-								{ ...props }
-								place={ this.state.placeFullName }
-								localTime={ this.state.localTime }
-								dailyData={ this.state.dailyData }
-								hourlyData={ this.state.hourlyData }
-								offsetTime={ this.state.offsetTime }
-								resize={ this.state.resize }
-							/>
-						) }
-					/>
-					<Footer />
-				</AppStyled>
+						<Route
+							path="/"
+							exact
+							render={ () => (
+								<Home handleSearch={ this.handleSearch } />
+							) }
+						/>
+						<Route
+							path="/Result"
+							render={ props => (
+								<Result
+									{ ...props }
+									place={ this.state.placeFullName }
+									localTime={ this.state.localTime }
+									dailyData={ this.state.dailyData }
+									hourlyData={ this.state.hourlyData }
+									offsetTime={ this.state.offsetTime }
+									resize={ this.state.resize }
+								/>
+							) }
+						/>
+						<Footer />
+					</AppStyled>
+				</ThemeContext.Provider>
 			</Router >
 		)
 	}
