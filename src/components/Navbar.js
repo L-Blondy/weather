@@ -6,7 +6,7 @@ import { ReactComponent as HomeIcon } from "../assets/home.svg";
 import { ReactComponent as ShareIcon } from "../assets/share.svg";
 import ThemeContext from "../ThemeContext";
 
-export default function Navbar ( { handleSearch, searchCount } ) {
+export default function Navbar ( { handleSearch, searchCount, switchTheme } ) {
 
 	const [ showShare, setShowShare ] = React.useState( "hide-float" );
 	const [ isSearchEnabled, toggleSearch ] = React.useState( "disabled" );
@@ -33,7 +33,6 @@ export default function Navbar ( { handleSearch, searchCount } ) {
 
 		if ( !isMenuOpened ) {
 			window.addEventListener( "click", cb )
-			// setTimeout( () => document.querySelector( ".searchField-phone .ap-nostyle-input" ).focus(), 500 )
 		}
 		if ( isMenuOpened ) {
 			window.removeEventListener( "click", cb )
@@ -123,7 +122,7 @@ export default function Navbar ( { handleSearch, searchCount } ) {
 				</li>
 
 				<li>
-					<button className="navlink" onClick={ () => toggleMenu( false ) }>
+					<button className="navlink" onClick={ switchTheme }>
 						<HomeIcon height={ iconSize } width={ iconSize } />
 						<span className="name" >Theme</span>
 					</button>

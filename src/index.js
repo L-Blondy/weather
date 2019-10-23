@@ -6,11 +6,12 @@ import { Navbar, Home, Footer, Result } from "./components";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { fadeIn } from "./styles/keyframes";
 import { fetchDaily, fetchHourly, reduceDaily, reduceHourly, getLocalTime } from "./helpers/helpers";
-import ThemeContext, { theme } from "./ThemeContext";
+import ThemeContext, { theme_light, theme_dark } from "./ThemeContext";
 
 class App extends React.Component {
 
 	state = {
+		theme: theme_light,
 		placeFullName: null,
 		localTime: null,
 		hourlyData: null,
@@ -31,6 +32,12 @@ class App extends React.Component {
 
 	resizeCB = () => {
 		this.setState( { resize: this.state.resize + 1 } );
+	}
+
+	switchTheme = () => {
+		this.setState( {
+			theme: this.state.theme === theme_light ? theme_dark : theme_light,
+		} )
 	}
 
 	handleSearch = async ( placeFullName, history, latlng ) => {
@@ -82,10 +89,14 @@ class App extends React.Component {
 	render () {
 		return (
 			<Router >
-				<ThemeContext.Provider value={ theme } >
+				<ThemeContext.Provider value={ this.state.theme } >
 					<AppStyled className="app">
 
-						<Navbar handleSearch={ this.handleSearch } searchCount={ this.state.searchCount } />
+						<Navbar
+							handleSearch={ this.handleSearch }
+							searchCount={ this.state.searchCount }
+							switchTheme={ this.switchTheme }
+						/>
 
 						<div className="background-image" ></div>
 
