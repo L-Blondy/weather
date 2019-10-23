@@ -6,12 +6,12 @@ import { Navbar, Home, Footer, Result } from "./components";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { fadeIn } from "./styles/keyframes";
 import { fetchDaily, fetchHourly, reduceDaily, reduceHourly, getLocalTime } from "./helpers/helpers";
-import ThemeContext, { theme_light, theme_dark } from "./ThemeContext";
+import ThemeContext, { theme } from "./ThemeContext";
 
 class App extends React.Component {
 
 	state = {
-		theme: theme_light,
+		theme: 3,
 		placeFullName: null,
 		localTime: null,
 		hourlyData: null,
@@ -36,7 +36,7 @@ class App extends React.Component {
 
 	switchTheme = () => {
 		this.setState( {
-			theme: this.state.theme === theme_light ? theme_dark : theme_light,
+			theme: this.state.theme < theme.length - 1 ? this.state.theme + 1 : 0
 		} )
 	}
 
@@ -89,8 +89,8 @@ class App extends React.Component {
 	render () {
 		return (
 			<Router >
-				<ThemeContext.Provider value={ this.state.theme } >
-					<AppStyled className="app">
+				<ThemeContext.Provider value={ theme[ this.state.theme ] } >
+					<AppStyled className="app" theme={ theme[ this.state.theme ] }>
 
 						<Navbar
 							handleSearch={ this.handleSearch }
@@ -151,11 +151,37 @@ const AppStyled = styled.div`
 		height: 100%;
 		width: 100%;
 		opacity: 0;
-		animation: ${fadeIn( 0.30 ) } 2000ms forwards;
-		background-image: url("../assets/sun.jpg" );
+		filter: ${props => props.theme.bkgIMG.filter };
+		animation: ${props => fadeIn( props.theme.bkgIMG.opacity ) } 2000ms forwards;
+		background-image: ${props => props.theme.bkgIMG.url };
 		background-position: right top;
 		background-size: cover;
+	}
+
+	.st0 {
+		fill: ${props => props.theme.icons.st0 };
+	}
+	.st1 {
+		fill: ${props => props.theme.icons.st1 };
+	}
+	.st2 {
+		fill: ${props => props.theme.icons.st2 };
+	}
+	.st3 {
+		fill: ${props => props.theme.icons.st3 };
 	}
 `
 
 ReactDOM.render( <App />, document.getElementById( "root" ) );
+
+{/* .background-image {
+		position: fixed;
+		z-index: -1;
+		height: 100%;
+		width: 100%;
+		opacity: 0;
+		animation: ${fadeIn( 0.30 ) } 2000ms forwards;
+		background-image: ${props => props.bkgIMG };
+		background-position: right top;
+		background-size: cover;
+	} */}

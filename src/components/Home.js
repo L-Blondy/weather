@@ -11,7 +11,8 @@ export default function Home ( { handleSearch } ) {
 	const [ startNow, setStartNow ] = React.useState( false );
 
 	const handleStartNow = () => {
-		setStartNow( true )
+		setStartNow( true );
+		setTimeout( () => document.querySelector( ".right-side .ap-nostyle-input" ).focus(), 500 );
 	}
 
 	return (

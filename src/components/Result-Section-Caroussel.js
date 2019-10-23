@@ -161,7 +161,7 @@ const CarousselStyled = styled.div`
 			}
 
 			&.active {
-				background: #ffffffaa;
+				background: ${props => props.theme.activeBtn };
 				box-shadow: 0 0 5px 0 #00000020;
 				outline: none;
 			}
@@ -197,10 +197,10 @@ const CarousselStyled = styled.div`
 		}
 	}
 	.chevron-left {
-		color: ${props => props.scrollCount <= 0 && ( `${ props => props.theme.fontClr.disabled }; pointer-events: none; user-select: none;` ) };
+		color: ${props => props.scrollCount <= 0 && ( `${ props.theme.fontClr.disabled }; pointer-events: none; user-select: none;` ) };
 	}
 	.chevron-right {
-		color: ${props => props.scrollCount + props.items >= 16 && ( `${ props => props.theme.fontClr.disabled }; pointer-events: none; user-select: none;` ) };
+		color: ${props => props.scrollCount + props.items >= 16 && ( `${ props.theme.fontClr.disabled }; pointer-events: none; user-select: none;` ) };
 
 		@media (max-width: 768px){
 			text-align: right;

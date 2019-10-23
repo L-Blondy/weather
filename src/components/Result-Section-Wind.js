@@ -96,7 +96,7 @@ const WindStyled = styled.div`
 	}
 
 	.wind-direction {
-		color: #5d6467;
+		color: ${props => props.theme.windClr };
 	}
 
 	.wind-speed {

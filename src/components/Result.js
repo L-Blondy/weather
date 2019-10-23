@@ -112,7 +112,7 @@ const ResultStyled = styled.div`
 
 		&.active {
 			color: ${ props => props.theme.fontClr.primary + "dd" };
-			background: #ffffffcc;
+			background: ${ props => props.theme.hourlyBtnClr };
 			box-shadow: 0 0 5px 0 #00000020;
 		}
 	}

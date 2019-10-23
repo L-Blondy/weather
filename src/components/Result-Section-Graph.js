@@ -34,8 +34,8 @@ function GraphLoaded ( { hourlyData, activeDay, graphType } ) {
 
 					<defs>
 						<linearGradient id="areaGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-							<stop offset="0%" stopColor="rgba(255,255,255, 0.50)" />
-							<stop offset="100%" stopColor="#A1C7D250" />
+							<stop offset="0%" stopColor="rgba(255,255,255, 0.40)" />
+							<stop offset="100%" stopColor="#b4bdbf50" />
 						</linearGradient>
 					</defs>
 

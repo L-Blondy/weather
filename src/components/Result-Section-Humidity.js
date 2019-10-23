@@ -132,7 +132,7 @@ const HumidityStyled = styled.div`
 			stroke: none;
 		}
 		.recharts-pie-sector:nth-child(2) > path {
-			fill: #2277C6;
+			fill: #2277C6bb;
 			stroke: none;
 		}
 	}
