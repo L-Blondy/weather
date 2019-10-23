@@ -19,8 +19,7 @@ export default function Navbar ( { handleSearch, searchCount } ) {
 			toggleMenu( false )
 		}
 		setSearchCount( searchCount )
-		console.log( document.querySelector( ".searchField-phone .ap-nostyle-input" ) )
-	} )
+	}, [ searchCount, prevSearchCount ] )
 
 	const handleClickBurgerOut = () => {
 		function cb ( e ) {

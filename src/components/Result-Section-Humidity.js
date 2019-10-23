@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { global } from "../styles/globalStyles";
-import { getPrecip } from "../helpers/helpers"
 import { ReactComponent as LoadingCircle } from "../assets/loading-circle.svg";
 import { PieChart, Pie } from 'recharts';
 
@@ -18,7 +17,6 @@ export default function Humidity ( { dailyData, activeDay, className } ) {
 			{ rh: 100 - data_daily.rh },
 			{ rh: data_daily.rh },
 		]
-		console.log( getPrecip( data_daily.precip ) )
 		data_precip = [
 			{ precip: 7 - data_daily.precip_lvl },
 			{ precip: data_daily.precip_lvl },
