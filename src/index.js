@@ -13,7 +13,7 @@ const LS = window.localStorage;
 class App extends React.Component {
 
 	state = {
-		theme: parseInt( LS.getItem( "local_theme" ) ) || 1,
+		theme: parseInt( LS.getItem( "local_theme" ) ) || 0,
 		placeFullName: window.sessionStorage.getItem( "place" ) || null,
 		localTime: JSON.parse( window.sessionStorage.getItem( "localTime" ) ) || null,
 		hourlyData: JSON.parse( window.sessionStorage.getItem( "hourlyData" ) ) || null,
@@ -179,7 +179,7 @@ const AppStyled = styled.div`
 		filter: ${props => props.theme.bkgIMG.filter };
 		animation: ${props => fadeIn( props.theme.bkgIMG.opacity ) } 0ms forwards;
 		background-image: ${props => props.theme.bkgIMG.url };
-		background-position: right top;
+		background-position: ${props => props.theme.bkgIMG.position };
 		background-size: cover;
 	}
 

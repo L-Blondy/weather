@@ -9,6 +9,45 @@ export const theme = [
 			secondary: "raleway",
 		},
 		fontClr: {
+			primary: "#eaeaea",
+			secondary: "#eaeaea",
+			hover: "#ff0066",
+			disabled: "#dddddd50",
+		},
+		btnClr: {
+			primary: "#00ad9d",
+			secondary: "#008dad",
+		},
+		bkgClr: {
+			primary: "#0b1e33",
+			secondary: "#485361",
+		},
+		icons: {
+			st0: "#ffa900",
+			st1: "#ccc",
+			st2: "#eee",
+			st3: "#00aebd",
+		},
+		bkgIMG: {
+			url: `url('../assets/35.jpg' )`,
+			opacity: "1",
+			filter: "brightness(40%) contrast(120%)",
+			position: "center",
+		},
+		hourlyBtnClr: "#b1b1b140",
+		activeBtn: "#b1b1b140",
+		windClr: "#afb3b5",
+
+		chartHeight: "12rem",
+		navbar_height: "50px",
+	},
+
+	{
+		fontFam: {
+			primary: "Roboto",
+			secondary: "raleway",
+		},
+		fontClr: {
 			primary: "#4f545d",
 			secondary: "#eaeaea",
 			hover: "#ff0066",
@@ -29,13 +68,53 @@ export const theme = [
 			st3: "#00aebd",
 		},
 		bkgIMG: {
-			url: 'url("../assets/sun.jpg" )',
+			url: `url('../assets/sun.jpg' )`,
 			opacity: "0.5",
 			filter: "grayscale(0.15)",
+			position: "right top",
 		},
 		hourlyBtnClr: "#ffffffcc",
 		activeBtn: "#ffffffaa",
 		windClr: "#5d6467",
+		chartHeight: "12rem",
+		navbar_height: "50px",
+	},
+
+	{
+		fontFam: {
+			primary: "Roboto",
+			secondary: "raleway",
+		},
+		fontClr: {
+			primary: "#eaeaea",
+			secondary: "#eaeaea",
+			hover: "#ff0066",
+			disabled: "#dddddd50",
+		},
+		btnClr: {
+			primary: "#00ad9d",
+			secondary: "#008dad",
+		},
+		bkgClr: {
+			primary: "#0b1b1b",
+			secondary: "#496666",
+		},
+		icons: {
+			st0: "#ffa900",
+			st1: "#ccc",
+			st2: "#eee",
+			st3: "#00aebd",
+		},
+		bkgIMG: {
+			url: `url('../assets/21.jpg' )`,
+			opacity: "1",
+			filter: "",
+			position: "center",
+		},
+		hourlyBtnClr: "#b1b1b140",
+		activeBtn: "#b1b1b140",
+		windClr: "#afb3b5",
+
 		chartHeight: "12rem",
 		navbar_height: "50px",
 	},
@@ -66,9 +145,10 @@ export const theme = [
 			st3: "#00aebd",
 		},
 		bkgIMG: {
-			url: 'url("../assets/15.jpg" )',
+			url: `url('../assets/15.jpg' )`,
 			opacity: "0.6",
 			filter: "sepia(100%)",
+			position: "center",
 		},
 		hourlyBtnClr: "#ffffffcc",
 		activeBtn: "#ffffffaa",
@@ -76,80 +156,4 @@ export const theme = [
 		chartHeight: "12rem",
 		navbar_height: "50px",
 	},
-
-	{
-		fontFam: {
-			primary: "Roboto",
-			secondary: "raleway",
-		},
-		fontClr: {
-			primary: "#eaeaea",
-			secondary: "#eaeaea",
-			hover: "#ff0066",
-			disabled: "#00000050",
-		},
-		btnClr: {
-			primary: "#ffa013",
-			secondary: "#e00606",
-		},
-		bkgClr: {
-			primary: "#1f1f1f",
-			secondary: "#768187",
-		},
-		icons: {
-			st0: "#ffa900",
-			st1: "#ccc",
-			st2: "#eee",
-			st3: "#00aebd",
-		},
-		bkgIMG: {
-			url: 'url("../assets/19.jpg" )',
-			opacity: "1",
-			filter: "brightness(100%)",
-		},
-		hourlyBtnClr: "#b1b1b140",
-		activeBtn: "#b1b1b140",
-		windClr: "#afb3b5",
-
-		chartHeight: "12rem",
-		navbar_height: "50px",
-	},
-
-	{
-		fontFam: {
-			primary: "Roboto",
-			secondary: "raleway",
-		},
-		fontClr: {
-			primary: "#eaeaea",
-			secondary: "#eaeaea",
-			hover: "#ff0066",
-			disabled: "#dddddd50",
-		},
-		btnClr: {
-			primary: "#00ad9d",
-			secondary: "#008dad",
-		},
-		bkgClr: {
-			primary: "#1f1f1f",
-			secondary: "#768187",
-		},
-		icons: {
-			st0: "#ffa900",
-			st1: "#ccc",
-			st2: "#eee",
-			st3: "#00aebd",
-		},
-		bkgIMG: {
-			url: 'url("../assets/10.jpg" )',
-			opacity: "1",
-			filter: "brightness(80%) grayscale(0.3)",
-		},
-		hourlyBtnClr: "#b1b1b140",
-		activeBtn: "#b1b1b140",
-		windClr: "#afb3b5",
-
-		chartHeight: "12rem",
-		navbar_height: "50px",
-	}
 ]

@@ -14,6 +14,7 @@ export default function Footer () {
 
 const FooterStyled = styled.div`
 	font-family: ${props => props.theme.fontFam.secondary };
+	color: ${props => props.theme.fontClr.primary };
 	height: ${props => props.theme.navbar_height };
 	display: flex;
 	align-items: center;
