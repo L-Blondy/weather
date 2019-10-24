@@ -1,0 +1,50 @@
+<svg class="loading-graph" width="144" height="59" viewBox="0 0 190 59" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<circle class="circle" cx="25.8846" cy="28.8846" r="8.88462" fill="currentColor"/>
+	<circle class="circle" cx="59.8846" cy="28.8846" r="8.88462" fill="currentColor"/>
+	<circle class="circle" cx="93.8846" cy="28.8846" r="8.88462" fill="currentColor"/>
+	<circle class="circle" cx="127.885" cy="28.8846" r="8.88462" fill="currentColor"/>
+	<circle class="circle" cx="161.885" cy="28.8846" r="8.88462" fill="currentColor"/>
+		
+		<style type="text/css">
+			.loading-graph {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				opacity: 0.9;
+			}
+			.circle {
+				animation: jump 1100ms infinite;
+			}
+			.circle:nth-child(1)  {
+				animation-delay: 0;
+			}
+			.circle:nth-child(2)  {
+				animation-delay: 60ms;
+			}
+			.circle:nth-child(3)  {
+				animation-delay: 120ms;
+			}
+			.circle:nth-child(4)  {
+				animation-delay: 180ms;
+			}
+			.circle:nth-child(5)  {
+				animation-delay: 240ms;
+			}
+			@keyframes jump {
+				0% {
+					transform: scale(1) translate(0px, 0px);
+				}
+				25% {
+					transform: scale(0.85) translate(15px, 5px);
+				}
+				50% {
+					transform: scale(1.07) translate(0px, 0px);
+				}
+				100% {
+					transform: scale(1) translate(0px, 0px);
+				}
+			}
+		</style>
+		
+	</svg>
