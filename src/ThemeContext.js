@@ -29,7 +29,6 @@ export const theme = [
 			st3: "#00aebd",
 		},
 		bkgIMG: {
-			url: `url('../assets/35.jpg' )`,
 			opacity: "1",
 			filter: "brightness(40%) contrast(120%)",
 			position: "center",
@@ -68,7 +67,6 @@ export const theme = [
 			st3: "#00aebd",
 		},
 		bkgIMG: {
-			url: `url('../assets/sun.jpg' )`,
 			opacity: "0.5",
 			filter: "grayscale(0.15)",
 			position: "right top",
@@ -106,7 +104,7 @@ export const theme = [
 			st3: "#00aebd",
 		},
 		bkgIMG: {
-			url: `url('../assets/21.jpg' )`,
+			url: `url('./assets/background/21.jpg' )`,
 			opacity: "1",
 			filter: "",
 			position: "center",
@@ -145,7 +143,7 @@ export const theme = [
 			st3: "#00aebd",
 		},
 		bkgIMG: {
-			url: `url('../assets/15.jpg' )`,
+			url: `url('./assets/background/15.jpg' )`,
 			opacity: "0.6",
 			filter: "sepia(100%)",
 			position: "center",

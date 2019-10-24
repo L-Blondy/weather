@@ -7,8 +7,13 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { fadeIn } from "./styles/keyframes";
 import { fetchDaily, fetchHourly, reduceDaily, reduceHourly, getLocalTime } from "./helpers/helpers";
 import ThemeContext, { theme } from "./ThemeContext";
+import sun from "./assets/background/sun.jpg";
+import one from "./assets/background/one.jpg";
+import two from "./assets/background/two.jpg";
+import three from "./assets/background/three.jpg";
 
 const LS = window.localStorage;
+const images = [ three, one, two, one ]
 
 class App extends React.Component {
 
@@ -47,7 +52,7 @@ class App extends React.Component {
 
 	handleSearch = async ( placeFullName, history, latlng ) => {
 		const prevPlace = window.sessionStorage.getItem( "place" ) || null;
-		console.log( prevPlace, placeFullName )
+
 		if ( prevPlace === placeFullName ) {
 			this.setState( {
 				offsetTime: window.sessionStorage.getItem( "offsetTime" ),
@@ -112,9 +117,9 @@ class App extends React.Component {
 
 	render () {
 		return (
-			<Router >
+			<Router basename={ process.env.PUBLIC_URL } >
 				<ThemeContext.Provider value={ theme[ this.state.theme ] } >
-					<AppStyled className="app" theme={ theme[ this.state.theme ] }>
+					<AppStyled className="app" theme={ theme[ this.state.theme ] } bkgURL={ images[ this.state.theme ] }>
 
 						<Navbar
 							handleSearch={ this.handleSearch }
@@ -178,7 +183,7 @@ const AppStyled = styled.div`
 		opacity: 0;
 		filter: ${props => props.theme.bkgIMG.filter };
 		animation: ${props => fadeIn( props.theme.bkgIMG.opacity ) } 0ms forwards;
-		background-image: ${props => props.theme.bkgIMG.url };
+		background-image: url(${props => props.bkgURL });
 		background-position: ${props => props.theme.bkgIMG.position };
 		background-size: cover;
 	}
