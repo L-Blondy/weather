@@ -1,4 +1,9 @@
 import React from 'react';
+import sky from "./assets/background/sky.jpg";
+import landscape from "./assets/background/landscape.jpg";
+import deepWater from "./assets/background/deep-water.jpg";
+import blue from "./assets/background/blue.jpg";
+
 const ThemeContext = React.createContext( null );
 export default ThemeContext;
 
@@ -29,6 +34,7 @@ export const theme = [
 			st3: "#00aebd",
 		},
 		bkgIMG: {
+			url: blue,
 			opacity: "1",
 			filter: "brightness(40%) contrast(120%)",
 			position: "center",
@@ -67,8 +73,9 @@ export const theme = [
 			st3: "#00aebd",
 		},
 		bkgIMG: {
-			opacity: "0.5",
-			filter: "grayscale(0.15)",
+			url: sky,
+			opacity: "0.35",
+			filter: "grayscale(0)",
 			position: "right top",
 		},
 		hourlyBtnClr: "#ffffffcc",
@@ -104,7 +111,7 @@ export const theme = [
 			st3: "#00aebd",
 		},
 		bkgIMG: {
-			url: `url('./assets/background/21.jpg' )`,
+			url: deepWater,
 			opacity: "1",
 			filter: "",
 			position: "center",
@@ -143,7 +150,7 @@ export const theme = [
 			st3: "#00aebd",
 		},
 		bkgIMG: {
-			url: `url('./assets/background/15.jpg' )`,
+			url: landscape,
 			opacity: "0.6",
 			filter: "sepia(100%)",
 			position: "center",

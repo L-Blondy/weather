@@ -7,13 +7,8 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { fadeIn } from "./styles/keyframes";
 import { fetchDaily, fetchHourly, reduceDaily, reduceHourly, getLocalTime } from "./helpers/helpers";
 import ThemeContext, { theme } from "./ThemeContext";
-import sun from "./assets/background/sun.jpg";
-import one from "./assets/background/one.jpg";
-import two from "./assets/background/two.jpg";
-import three from "./assets/background/three.jpg";
 
 const LS = window.localStorage;
-const images = [ three, one, two, one ]
 
 class App extends React.Component {
 
@@ -98,7 +93,7 @@ class App extends React.Component {
 			} )
 		}
 
-		fetchHourly( `http://www.7timer.info/bin/api.pl?lon=${ latlng.lng }&lat=${ latlng.lat }&product=civil&output=json` )
+		fetchHourly( `https://cors-anywhere.herokuapp.com/http://www.7timer.info/bin/api.pl?lon=${ latlng.lng }&lat=${ latlng.lat }&product=civil&output=json` )
 			.then( hourly => {
 				const localTime = getLocalTime( this.state.timezone );
 				const offsetTime = localTime.zone.offset / 60;
@@ -119,7 +114,7 @@ class App extends React.Component {
 		return (
 			<Router basename={ process.env.PUBLIC_URL } >
 				<ThemeContext.Provider value={ theme[ this.state.theme ] } >
-					<AppStyled className="app" theme={ theme[ this.state.theme ] } bkgURL={ images[ this.state.theme ] }>
+					<AppStyled className="app" theme={ theme[ this.state.theme ] } >
 
 						<Navbar
 							handleSearch={ this.handleSearch }
@@ -183,7 +178,7 @@ const AppStyled = styled.div`
 		opacity: 0;
 		filter: ${props => props.theme.bkgIMG.filter };
 		animation: ${props => fadeIn( props.theme.bkgIMG.opacity ) } 0ms forwards;
-		background-image: url(${props => props.bkgURL });
+		background-image: url(${props => props.theme.bkgIMG.url });
 		background-position: ${props => props.theme.bkgIMG.position };
 		background-size: cover;
 	}
