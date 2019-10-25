@@ -89,7 +89,7 @@ export default function Result ( { place, dailyData, hourlyData, localTime, offs
 const ResultStyled = styled.div`
 	font-family: ${ props => props.theme.fontFam.primary };
 	color: ${ props => props.theme.fontClr.primary };
-	padding: 2rem 20vw 0 20vw;
+	padding: 2rem 25vw 0 25vw;
 	flex-grow: 1;
 
 	.hourly-title-content button {
@@ -137,7 +137,11 @@ const ResultStyled = styled.div`
 		}
 	}
 
-	@media (max-width: 1280px){
+	@media (max-width: 1680px){
+		padding: 2rem 20vw 0  20vw;
+	}
+
+	@media (max-width: 1200px){
 		padding: 2rem 15vw 0 15vw;
 	}
 	

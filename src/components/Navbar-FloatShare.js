@@ -8,9 +8,9 @@ import ThemeContext from "../ThemeContext";
 export default function FloatShare ( { className } ) {
 	const theme = React.useContext( ThemeContext )
 
-	const URL_facebook = "https://www.facebook.com/v4.0/dialog/share?app_id=444477226186005&quote=Accuweater%20website&hashtag=%23Accuweather&href=https%3A%2F%2Fwww.google.com&redirect_uri=https%3A%2F%2Fwww.google.com"
-	const URL_twitter = "https://twitter.com/intent/tweet?url=https%3A%2F%2Fwww.google.com&text=This%20is%20my%20custom%20text.­%0A&original_referer=https%3A%2F%2Fwww.google.com"
-	const URL_linkedin = "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.google.com"
+	const URL_facebook = "https://www.facebook.com/v4.0/dialog/share?app_id=444477226186005&quote=Accuweater%20website&hashtag=%23Accuweather&href=https%3A%2F%2Fl-blondy.github.io%2Fweather&redirect_uri=https%3A%2F%2Fl-blondy.github.io%2Fweather"
+	const URL_twitter = "https://twitter.com/intent/tweet?url=https%3A%2F%2Fl-blondy.github.io/weather&text=Check%20the%20weather%20in%20just%20one%20click.­%0A&original_referer=https%3A%2F%2Fl-blondy.github.io/weather"
+	const URL_linkedin = "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fl-blondy.github.io/weather"
 
 	return (
 		<FloatShareStyled
