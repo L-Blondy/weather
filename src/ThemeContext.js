@@ -2,51 +2,11 @@ import React from 'react';
 import sky from "./assets/background/sky.jpg";
 import landscape from "./assets/background/landscape.jpg";
 import deepWater from "./assets/background/deep-water.jpg";
-import blue from "./assets/background/blue.jpg";
 
 const ThemeContext = React.createContext( null );
 export default ThemeContext;
 
 export const theme = [
-	{
-		fontFam: {
-			primary: "Roboto",
-			secondary: "raleway",
-		},
-		fontClr: {
-			primary: "#eaeaea",
-			secondary: "#eaeaea",
-			hover: "#ff0066",
-			disabled: "#dddddd50",
-		},
-		btnClr: {
-			primary: "#00ad9d",
-			secondary: "#008dad",
-		},
-		bkgClr: {
-			primary: "#0b1e33",
-			secondary: "#485361",
-		},
-		icons: {
-			st0: "#ffa900",
-			st1: "#ccc",
-			st2: "#eee",
-			st3: "#00aebd",
-		},
-		bkgIMG: {
-			url: blue,
-			opacity: "1",
-			filter: "brightness(40%) contrast(120%)",
-			position: "center",
-		},
-		hourlyBtnClr: "#b1b1b140",
-		activeBtn: "#b1b1b140",
-		windClr: "#afb3b5",
-
-		chartHeight: "12rem",
-		navbar_height: "50px",
-	},
-
 	{
 		fontFam: {
 			primary: "Roboto",
