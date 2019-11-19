@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "59d4d94df588cefa0a8944d92cb18711",
+    "revision": "db8fcb5ed9e8f458c46e1afee9cd648a",
     "url": "/weather/index.html"
   },
   {
-    "revision": "b970a71a6d45c7884d7b",
-    "url": "/weather/static/css/main.9cbca508.chunk.css"
+    "revision": "0d295184ea68914bdabf",
+    "url": "/weather/static/css/main.e2190e0a.chunk.css"
   },
   {
-    "revision": "b4e6542bc2291830c719",
-    "url": "/weather/static/js/2.96ab1d03.chunk.js"
+    "revision": "b281394e229a78ce690f",
+    "url": "/weather/static/js/2.f9c23e3a.chunk.js"
   },
   {
-    "revision": "b970a71a6d45c7884d7b",
-    "url": "/weather/static/js/main.ef38826b.chunk.js"
+    "revision": "0d295184ea68914bdabf",
+    "url": "/weather/static/js/main.b7fda864.chunk.js"
   },
   {
-    "revision": "bec1e78c4c0ba89b9269",
-    "url": "/weather/static/js/runtime-main.c8cbbcd5.js"
+    "revision": "30dbfb06caa9f7b3ba07",
+    "url": "/weather/static/js/runtime-main.d92e4414.js"
   },
   {
     "revision": "3a8b0254d9a75bcdbb0abc8925ce08e9",
@@ -48,10 +48,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/weather/static/media/CloudyNight.44ab8a6c.svg"
   },
   {
-    "revision": "7d94a98aeee7c4c8129c75c62598374c",
-    "url": "/weather/static/media/Coda-Regular.7d94a98a.ttf"
-  },
-  {
     "revision": "faae22d6705f8bbe606d7cb4e0ae5f63",
     "url": "/weather/static/media/FewCloudsDay.faae22d6.svg"
   },
@@ -70,18 +66,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "8cb1258706502eed6b015542f21d2b66",
     "url": "/weather/static/media/Rain.8cb12587.svg"
-  },
-  {
-    "revision": "9942588a6c84f959132556d99e83ded6",
-    "url": "/weather/static/media/Raleway-Regular.9942588a.ttf"
-  },
-  {
-    "revision": "5a25c50b181b07279489ce5bb6a9545c",
-    "url": "/weather/static/media/Raleway-SemiBold.5a25c50b.ttf"
-  },
-  {
-    "revision": "58aef543c97bbaf6a9896e8484456d98",
-    "url": "/weather/static/media/Roboto-Medium.58aef543.ttf"
   },
   {
     "revision": "6c688e8b0884f11716e1025fbaa2acbb",
