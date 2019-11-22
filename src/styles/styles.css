@@ -1,30 +1,4 @@
-@font-face {
-     font-family: "raleway";
-     src: url("../fonts/raleway/Raleway-Regular.ttf") format("truetype");
-     font-weight: normal;
-     font-style: normal;
-}
-
-@font-face {
-     font-family: "raleway";
-     src: url("../fonts/raleway/Raleway-SemiBold.ttf") format("truetype");
-     font-weight: bold;
-     font-style: normal;
-}
-
-@font-face {
-     font-family: "Roboto";
-     src: url("../fonts/roboto/Roboto-Medium.ttf") format("truetype");
-     font-weight: normal;
-     font-style: normal;
-}
-
-@font-face {
-     font-family: "Coda";
-     src: url("../fonts/coda/Coda-Regular.ttf") format("truetype");
-     font-weight: normal;
-     font-style: normal;
-}
+@import url('https://fonts.googleapis.com/css?family=Coda|Raleway|Roboto&display=swap');
 
 *,
 *::before,
@@ -46,22 +20,6 @@ body,
 
 @media (max-width: 480px) {
      :root {
-          font-size: 80%;
+          font-size: 90%;
      }
 }
-
-/* .st0 {
-     fill: red;
-}
-
-.st1 {
-     fill: blue;
-}
-
-.st2 {
-     fill: green;
-}
-
-.st3 {
-     fill: yellow;
-} */

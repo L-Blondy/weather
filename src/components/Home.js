@@ -87,8 +87,9 @@ const HomeStyled = styled.div`
 				margin-top: 2rem;
 				font-family: ${props => props.theme.fontFam.primary };
 				font-variant: small-caps;
-				font-size: 1.2rem;
-				letter-spacing: 0.5px;
+				font-size: 1.4rem;
+				letter-spacing: 2px;
+				font-weight: 700;
 				color: white;
 				border: none;
 				background: ${props => props.theme.btnClr.primary };

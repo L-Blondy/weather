@@ -9,8 +9,8 @@ export default ThemeContext;
 export const theme = [
 	{
 		fontFam: {
-			primary: "Roboto",
-			secondary: "raleway",
+			primary: "Roboto, sans-serif",
+			secondary: 'Raleway, sans-serif',
 		},
 		fontClr: {
 			primary: "#4f545d",

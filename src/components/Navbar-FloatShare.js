@@ -108,10 +108,13 @@ const FloatShareStyled = styled.div`
 			flex-direction: row-reverse;
 			justify-content: flex-start;
 			padding-right: 1rem;
+			font-size: 1.3rem;
 
 			.share-link-icon {
 				margin-left: 0.5rem;
 				margin-right: 0;
+				height: 2rem;
+				width: 2rem;
 			}
 		}
 		&.show-float {

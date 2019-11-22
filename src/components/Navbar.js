@@ -90,7 +90,7 @@ export default function Navbar ( { handleSearch, searchCount, switchTheme, theme
 				<Burger className={ "burger-menu " + isMenuOpened } onClick={ handleClickBurgerOut } />
 			) }
 
-			<NavLinks className={ "navlinks " + ( isMenuOpened ? "navlinks-enabled" : "navlinks-disabled" ) } theme={ theme }  themeIconRotation={ themeIconRotation }>
+			<NavLinks className={ "navlinks " + ( isMenuOpened ? "navlinks-enabled" : "navlinks-disabled" ) } theme={ theme } themeIconRotation={ themeIconRotation }>
 				<li >
 					{ window.innerWidth > 1024 ?
 						(
@@ -122,8 +122,8 @@ export default function Navbar ( { handleSearch, searchCount, switchTheme, theme
 				</li>
 
 				<li>
-					<button className="navlink" onClick={ switchTheme}>
-						<ThemeIcon className="theme-icon" height={ `calc(${iconSize} * 1.1` } width={ `calc(${iconSize} * 1.1`  } />
+					<button className="navlink" onClick={ switchTheme }>
+						<ThemeIcon className="theme-icon" height={ `calc(${ iconSize } * 1.1` } width={ `calc(${ iconSize } * 1.1` } />
 						<span className="name" >Theme</span>
 					</button>
 				</li>
@@ -158,7 +158,7 @@ const NavbarStyled = styled.div`
 
 	.logo {
 		margin-left: calc(20px + 5%);
-		font-family: Coda;
+		font-family: Coda, sans-serif;
 		font-size: 1.8rem;
 		user-select: none;
 		color: inherit;
@@ -238,7 +238,7 @@ const NavLinks = styled.ul`
 		}
 		.theme-icon {
 			transition: transform 1000ms;
-			transform: rotate(${props => props.themeIconRotation + "deg"});
+			transform: rotate(${props => props.themeIconRotation + "deg" });
 		}
 	}
 
