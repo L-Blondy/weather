@@ -47,8 +47,9 @@ const BurgerStyled = styled.button`
 		transition: opacity 300ms;
 	}
 	.line3 {
-		bottom: 0%;
-		transition: transform 300ms, bottom 300ms;
+		top: 100%;
+		transition: transform 300ms, top 300ms;
+		transform: translateY(-100%);
 	}
 	&.true {
 		.line1 {

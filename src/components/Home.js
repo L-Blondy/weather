@@ -99,6 +99,10 @@ const HomeStyled = styled.div`
 				outline:none;
 				cursor: pointer;
 
+				@media (max-width:480px) {
+					letter-spacing:1px;
+				}
+
 				span {
 					padding-right: 0.7rem;
 				}
