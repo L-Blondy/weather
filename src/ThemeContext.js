@@ -9,11 +9,11 @@ export default ThemeContext;
 export const theme = [
 	{
 		fontFam: {
-			primary: "Roboto, sans-serif",
+			primary: "Raleway, sans-serif",
 			secondary: 'Raleway, sans-serif',
 		},
 		fontClr: {
-			primary: "#4f545d",
+			primary: "#3b3f45",
 			secondary: "#eaeaea",
 			hover: "#ff0066",
 			disabled: "#dadada",
@@ -47,7 +47,7 @@ export const theme = [
 
 	{
 		fontFam: {
-			primary: "Roboto",
+			primary: "raleway",
 			secondary: "raleway",
 		},
 		fontClr: {
@@ -86,11 +86,11 @@ export const theme = [
 
 	{
 		fontFam: {
-			primary: "Roboto",
+			primary: "raleway",
 			secondary: "raleway",
 		},
 		fontClr: {
-			primary: "#3a3e44",
+			primary: "#34383d",
 			secondary: "#e8e6e1",
 			hover: "#ff0066",
 			disabled: "#dadada",

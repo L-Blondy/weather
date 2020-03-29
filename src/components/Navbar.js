@@ -158,8 +158,8 @@ const NavbarStyled = styled.div`
 
 	.logo {
 		margin-left: calc(20px + 5%);
-		font-family: Coda, sans-serif;
-		font-size: 1.8rem;
+		font-family: Comfortaa;
+		font-size: 1.7rem;
 		user-select: none;
 		color: inherit;
 	}
@@ -174,6 +174,9 @@ const NavbarStyled = styled.div`
 
 		.navlinks {
 			margin-right: 0;
+		}
+		.logo {
+			font-size: 1.4rem;
 		}
 	}
 `
@@ -193,7 +196,7 @@ const NavLinks = styled.ul`
 		color: inherit;
 		font-family: ${props => props.theme.fontFam.secondary };
 		font-size: 1rem;
-		font-weight: bold;
+		font-weight: 600;
 		letter-spacing: 0.7px;
 		padding : 0.4rem 1rem;
 		display: flex;

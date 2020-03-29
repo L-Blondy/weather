@@ -1,25 +1,25 @@
 import React from 'react';
 import styled from "styled-components";
 import ThemeContext from "../ThemeContext";
-import { SearchField, Title } from "./";
+import { SearchField } from "./";
 import { pokeRight, fadeIn } from "../styles/keyframes";
-import { ReactComponent as Right } from "../assets/chevron-right.svg"
+import { ReactComponent as Right } from "../assets/chevron-right.svg";
 
-export default function Home ( { handleSearch } ) {
+export default function Home({ handleSearch }) {
 
-	const theme = React.useContext( ThemeContext )
-	const [ startNow, setStartNow ] = React.useState( false );
+	const theme = React.useContext(ThemeContext);
+	const [ startNow, setStartNow ] = React.useState(false);
 
 	const handleStartNow = () => {
-		setStartNow( true );
-		setTimeout( () => document.querySelector( ".right-side .ap-nostyle-input" ).focus(), 500 );
-	}
+		setStartNow(true);
+		setTimeout(() => document.querySelector(".right-side .ap-nostyle-input").focus(), 500);
+	};
 
 	return (
 		<HomeStyled startNowDuration={ 1000 } className="home" theme={ theme } >
 
-			<div className={ "side left-side " + ( startNow ? "fadeout " : "fadein" ) }>
-				<Title className="title"></Title>
+			<div className={ "side left-side " + (startNow ? "fadeout " : "fadein") }>
+				<div className="title">AccuWeather</div>
 
 				<div className="moto">
 					Check the weather anywhere in just one click
@@ -31,16 +31,16 @@ export default function Home ( { handleSearch } ) {
 				</div>
 
 				<button className="start-btn" onClick={ handleStartNow }>
-					<span>Start now</span>
+					<span>Start Now</span>
 					<svg className="chevron-right" width="1rem" viewBox="0 0 18 22" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 						<path d="M16.888 10.0248L4.16584 0.562922C3.55226 0.106582 2.5575 0.106582 1.94399 0.562922L0.460166 1.6665C-0.152362 2.12206 -0.15354 2.86039 0.457548 3.31702L10.5401 10.8511L0.457548 18.3851C-0.15354 18.8417 -0.152362 19.5801 0.460166 20.0356L1.94399 21.1392C2.55757 21.5955 3.55233 21.5955 4.16584 21.1392L16.8879 11.6773C17.5015 11.221 17.5015 10.4812 16.888 10.0248Z" fill="currentColor" />
 					</svg>
 				</button>
 			</div>
 
-			<div className={ "side right-side " + ( startNow && "full-width " ) }>
+			<div className={ "side right-side " + (startNow && "full-width ") }>
 				{ startNow && (
-					<button className="startnow__close" onClick={ () => setStartNow( false ) }>
+					<button className="startnow__close" onClick={ () => setStartNow(false) }>
 						<Right />
 					</button>
 				) }
@@ -52,7 +52,7 @@ export default function Home ( { handleSearch } ) {
 				</div>
 			</div>
 		</HomeStyled>
-	)
+	);
 }
 
 const HomeStyled = styled.div`
@@ -60,7 +60,7 @@ const HomeStyled = styled.div`
 	position: relative;
 	font-family: ${props => props.theme.fontFam.primary };
 	color: ${props => props.theme.fontClr.primary };
-	letter-spacing: 1px;
+	letter-spacing: 0.5px;
 
 	.side {
 		position: absolute;
@@ -75,25 +75,32 @@ const HomeStyled = styled.div`
 			left: 0;
 			align-items: flex-end;
 			text-align: right;
+			font-size: 1.2rem;
+
+			.title {
+				font-size: 2.7em;
+				color: ${props => props.theme.fontClr.primary };
+				font-family:Comfortaa;
+			}
 
 			.moto {
-				font-size: 1.2rem;
-				margin: 2rem 0 1.5rem 0;
+				font-size: 1.1em;
+				margin: 1.5rem 0;
 			}
 			.description {
 				line-height: 2.2rem;
+				font-size: 1em;
 			}
 			.start-btn {
 				margin-top: 2rem;
 				font-family: ${props => props.theme.fontFam.primary };
-				font-variant: small-caps;
-				font-size: 1.4rem;
-				letter-spacing: 2px;
+				font-size: 1.1em;
+				letter-spacing: 0.5px;
 				font-weight: 700;
 				color: white;
 				border: none;
 				background: ${props => props.theme.btnClr.primary };
-				padding: 0.5rem 1.3rem;
+				padding: 0.5rem 1.1em;
 				border-radius: 7px;
 				transition: background 200ms 40ms;
 				outline:none;
@@ -141,7 +148,7 @@ const HomeStyled = styled.div`
 				position: absolute;
 				opacity: 0;
 				z-index: 1;
-				animation: ${fadeIn( 1 ) } 2000ms forwards 700ms;
+				animation: ${fadeIn(1) } 2000ms forwards 700ms;
 				border: none;
 				background: none;
 				top: 30px;
@@ -180,11 +187,12 @@ const HomeStyled = styled.div`
 		}
 	}
 
-	@media (max-width: 1024px) {
+	@media (max-width: 1150px) {
 		.side.left-side,
 		.side.right-side {
 			width: 100%;
 			align-items: center;
+			letter-spacing:0.35px;
 
 			.search-field {
 				left: 50%;
@@ -193,26 +201,28 @@ const HomeStyled = styled.div`
 		}
 		.side.right-side {
 			transform: translateX(100%);
-
+			
 			&.full-width {
 				transform: translateX(0%);
 			}
 		}
 		.description, 
-		.moto {
+		.moto{
 			text-align: center;
+			margin-top: 2rem !important;
+			margin-bottom: 0 !important;
+		}
+		.start-btn {
+			margin-top: 3rem !important;
 		}
 	}
 
 	@media (max-width: 480px) {
-		letter-spacing: 0;
-
-		.title {
-			transform: scale(0.8);
-		}
-		.side.left-side .moto {
-			font-size: 1.1rem;
+	
+		.side.left-side  {
+			font-size: 1rem;
+			letter-spacing: 0;
 		}
 	}
-`
+`;
 

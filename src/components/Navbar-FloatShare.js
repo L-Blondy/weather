@@ -44,6 +44,7 @@ const FloatShareStyled = styled.div`
 	left: 50%;
 	grid-template-rows: repeat( ${ props => props.links }, 1fr);
 	background: ${ props => props.theme.bkgClr.primary };
+	font-family: ${ props => props.theme.fontFam.secondary };
 	color: ${ props => props.theme.fontClr.secondary };
 	row-gap: 1rem;
 	padding: 0.7rem;
@@ -78,7 +79,7 @@ const FloatShareStyled = styled.div`
 		justify-content: flex-start;
 		align-items: center;
 		color: inherit;
-		font-family: ${props => props.theme.fontFam.primary };
+		font-family: ${props => props.theme.fontFam.secondary };
 		font-weight: normal;
 		height: 100%;
 		padding-right: 1.5rem;
