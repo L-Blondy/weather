@@ -7,90 +7,90 @@ import { ReactComponent as ShareIcon } from "../assets/share.svg";
 import { ReactComponent as ThemeIcon } from "../assets/theme.svg";
 import ThemeContext from "../ThemeContext";
 
-export default function Navbar ( { handleSearch, searchCount, switchTheme, themeIconRotation } ) {
+export default function Navbar({ handleSearch, searchCount, switchTheme, themeIconRotation }) {
 
-	const [ showShare, setShowShare ] = React.useState( "hide-float" );
-	const [ isSearchEnabled, toggleSearch ] = React.useState( "disabled" );
-	const [ isMenuOpened, toggleMenu ] = React.useState( false );
-	const [ prevSearchCount, setSearchCount ] = React.useState( 0 );
+	const [ showShare, setShowShare ] = React.useState("hide-float");
+	const [ isSearchEnabled, toggleSearch ] = React.useState("disabled");
+	const [ isMenuOpened, toggleMenu ] = React.useState(false);
+	const [ prevSearchCount, setSearchCount ] = React.useState(0);
 	const navbar = React.useRef();
-	const theme = React.useContext( ThemeContext )
+	const theme = React.useContext(ThemeContext);
 
-	React.useEffect( () => {
-		if ( prevSearchCount !== searchCount ) {
-			toggleMenu( false )
+	React.useEffect(() => {
+		if (prevSearchCount !== searchCount) {
+			toggleMenu(false);
 		}
-		setSearchCount( searchCount )
-	}, [ searchCount, prevSearchCount ] )
+		setSearchCount(searchCount);
+	}, [ searchCount, prevSearchCount ]);
 
 	const handleClickBurgerOut = () => {
-		function cb ( e ) {
-			if ( !navbar.current.contains( e.target ) ) {
-				toggleMenu( false )
-				window.removeEventListener( "click", cb )
+		function cb(e) {
+			if (!navbar.current.contains(e.target)) {
+				toggleMenu(false);
+				window.removeEventListener("click", cb);
 			}
 		}
-		toggleMenu( !isMenuOpened )
+		toggleMenu(!isMenuOpened);
 
-		if ( !isMenuOpened ) {
-			window.addEventListener( "click", cb )
+		if (!isMenuOpened) {
+			window.addEventListener("click", cb);
 		}
-		if ( isMenuOpened ) {
-			window.removeEventListener( "click", cb )
+		if (isMenuOpened) {
+			window.removeEventListener("click", cb);
 		}
 
-	}
+	};
 
-	const enableSearch = ( e ) => {
-		if ( isSearchEnabled === "disabled" ) {
-			window.addEventListener( "click", cb );
+	const enableSearch = (e) => {
+		if (isSearchEnabled === "disabled") {
+			window.addEventListener("click", cb);
 		}
-		if ( e.target !== document.querySelector( ".ap-nostyle-icon-clear" ) ) {
-			document.querySelector( ".ap-nostyle-input" ).focus();
+		if (e.target !== document.querySelector(".ap-nostyle-icon-clear")) {
+			document.querySelector(".ap-nostyle-input").focus();
 		}
-		toggleSearch( "enabled" );
+		toggleSearch("enabled");
 
-		function cb ( e ) {
-			if ( !document.querySelector( ".search-button" ).contains( e.target ) && window.innerWidth > 1024 ) {
-				toggleSearch( "disabled" );
-				window.removeEventListener( "click", cb )
+		function cb(e) {
+			if (!document.querySelector(".search-button").contains(e.target) && window.innerWidth > 1024) {
+				toggleSearch("disabled");
+				window.removeEventListener("click", cb);
 			}
 		}
-	}
+	};
 
-	const toggleShare = ( e ) => {
-		const floatPane = document.querySelector( ".show-float" ) || document.querySelector( ".hide-float" );
+	const toggleShare = (e) => {
+		const floatPane = document.querySelector(".show-float") || document.querySelector(".hide-float");
 
-		if ( floatPane.contains( e.target ) ) {
+		if (floatPane.contains(e.target)) {
 			return;
 		}
-		if ( showShare === "hide-float" ) {
-			window.addEventListener( "click", cb )
+		if (showShare === "hide-float") {
+			window.addEventListener("click", cb);
 		}
 		else {
-			window.removeEventListener( "click", cb )
+			window.removeEventListener("click", cb);
 		}
-		setShowShare( showShare === "hide-float" ? "show-float" : "hide-float" );
+		setShowShare(showShare === "hide-float" ? "show-float" : "hide-float");
 
-		function cb ( e ) {
-			const btn = document.querySelector( ".share-button" ) || document.querySelector( ".share-button-phone" );
+		function cb(e) {
+			const btn = document.querySelector(".share-button") || document.querySelector(".share-button-phone");
 
-			if ( btn && !btn.contains( e.target ) ) {
-				window.removeEventListener( "click", cb )
-				setShowShare( "hide-float" );
+			if (btn && !btn.contains(e.target)) {
+				window.removeEventListener("click", cb);
+				setShowShare("hide-float");
 			}
 		}
-	}
+	};
 
 	return (
 		<NavbarStyled className="navbar" ref={ navbar } theme={ theme }>
 			<span className="logo">AccuWeather</span>
 
-			{ ( window.innerWidth <= 1024 ) && (
+			{ (window.innerWidth <= 1024) && (
 				<Burger className={ "burger-menu " + isMenuOpened } onClick={ handleClickBurgerOut } />
 			) }
 
-			<NavLinks className={ "navlinks " + ( isMenuOpened ? "navlinks-enabled" : "navlinks-disabled" ) } theme={ theme } themeIconRotation={ themeIconRotation }>
+			<NavLinks className={ "navlinks " + (isMenuOpened ? "navlinks-enabled" : "navlinks-disabled") } theme={ theme } themeIconRotation={ themeIconRotation }>
 				<li >
 					{ window.innerWidth > 1024 ?
 						(
@@ -115,7 +115,7 @@ export default function Navbar ( { handleSearch, searchCount, switchTheme, theme
 				</li>
 
 				<li>
-					<NavLink className="navlink" to="/" onClick={ () => toggleMenu( false ) } >
+					<NavLink className="navlink" to="/" onClick={ () => toggleMenu(false) } >
 						<HomeIcon height={ iconSize } width={ iconSize } />
 						<span className="name" >Home</span>
 					</NavLink>
@@ -130,7 +130,7 @@ export default function Navbar ( { handleSearch, searchCount, switchTheme, theme
 
 				<li>
 					<button
-						className={ "navlink " + ( window.innerWidth > 1024 ? "share-button" : "share-button-phone" ) }
+						className={ "navlink " + (window.innerWidth > 1024 ? "share-button" : "share-button-phone") }
 						onClick={ toggleShare }
 					>
 						<ShareIcon height={ iconSize } width={ iconSize } />
@@ -141,7 +141,7 @@ export default function Navbar ( { handleSearch, searchCount, switchTheme, theme
 
 			</NavLinks>
 		</NavbarStyled>
-	)
+	);
 }
 
 const iconSize = "1.3rem";
@@ -179,7 +179,7 @@ const NavbarStyled = styled.div`
 			font-size: 1.4rem;
 		}
 	}
-`
+`;
 
 const NavLinks = styled.ul`
 	list-style: none;
@@ -376,4 +376,4 @@ const NavLinks = styled.ul`
 			font-size: 1.5rem;
 		}
 	}
-`
+`;

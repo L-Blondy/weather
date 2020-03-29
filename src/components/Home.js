@@ -12,7 +12,7 @@ export default function Home({ handleSearch }) {
 
 	const handleStartNow = () => {
 		setStartNow(true);
-		setTimeout(() => document.querySelector(".right-side .ap-nostyle-input").focus(), 500);
+		setTimeout(() => document.querySelector(".right-side .ap-nostyle-input").focus(), 700);
 	};
 
 	return (
@@ -85,14 +85,14 @@ const HomeStyled = styled.div`
 
 			.moto {
 				font-size: 1.1em;
-				margin: 1.5rem 0;
+				margin: 2rem 0;
 			}
 			.description {
 				line-height: 2.2rem;
 				font-size: 1em;
 			}
 			.start-btn {
-				margin-top: 2rem;
+				margin-top: 2.5rem;
 				font-family: ${props => props.theme.fontFam.primary };
 				font-size: 1.1em;
 				letter-spacing: 0.5px;

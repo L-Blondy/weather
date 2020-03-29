@@ -5,66 +5,66 @@ import { ReactComponent as SearchIcon } from '../assets/search.svg';
 import { ReactComponent as ClearIcon } from '../assets/clear.svg';
 import { fadeIn, scaleX } from "../styles/keyframes";
 import ThemeContext from "../ThemeContext";
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 
-function SearchForm ( { className, handleSearch, history, animated } ) {
-	const theme = React.useContext( ThemeContext )
+function SearchForm({ className, handleSearch, history, animated }) {
+	const theme = React.useContext(ThemeContext);
 
 	const sentences = [
-		"Florence, Toscana, Italy".split( "" ),
-		"Paris, Île-de-France, France".split( "" ),
-		"Rio de Janeiro, Brazil".split( "" ),
-		"Istanbul, Turkey".split( "" ),
-		"Haiphong, Vietnam".split( "" ),
-		"Montreal, Québec, Canada".split( "" ),
-		"Havana, La Habana, Cuba".split( "" ),
-		"La Plata, Buenos Aires, Argentina".split( "" ),
-		"Nairobi, Kenya".split( "" ),
-		"Barcelona, Catalunya, Spain".split( "" ),
+		"Florence, Toscana, Italy".split(""),
+		"Paris, Île-de-France, France".split(""),
+		"Rio de Janeiro, Brazil".split(""),
+		"Istanbul, Turkey".split(""),
+		"Haiphong, Vietnam".split(""),
+		"Montreal, Québec, Canada".split(""),
+		"Havana, La Habana, Cuba".split(""),
+		"La Plata, Buenos Aires, Argentina".split(""),
+		"Nairobi, Kenya".split(""),
+		"Barcelona, Catalunya, Spain".split(""),
 	];
 
 	const [ inputVal, setInputVal ] = React.useState();
 	const anim = React.useRef();
 	const searchInput = React.useRef();
 
-	React.useEffect( () => {
-		if ( !animated ) return;
+	React.useEffect(() => {
+		if (!animated) return;
 
-		const input = searchInput.current.querySelector( ".ap-nostyle-input" )
+		const input = searchInput.current.querySelector(".ap-nostyle-input");
 		input.placeholder = "";
 		anim.current = { letter: 0, sentence: 0, timeout: 250, countID: 0, restartID: 0 };
 		let { letter, sentence, timeout, countID, restartID } = anim.current;
-		let frameID = window.requestAnimationFrame( animPlaceholder );
+		let frameID = window.requestAnimationFrame(animPlaceholder);
 		countID = frameID;
 		const startID = countID + timeout;
 
-		function animPlaceholder () {
+		function animPlaceholder() {
 			countID++;
-			if ( countID >= startID ) {
-				if ( countID % 5 === 0 && letter < sentences[ sentence ].length ) {
+			if (countID >= startID) {
+				if (countID % 5 === 0 && letter < sentences[ sentence ].length) {
 					input.placeholder += sentences[ sentence ][ letter ];
-					letter++
+					letter++;
 				}
-				if ( letter === sentences[ sentence ].length - 1 && countID > restartID ) {
+				if (letter === sentences[ sentence ].length - 1 && countID > restartID) {
 					restartID = countID + timeout;
 				}
-				if ( countID === restartID ) {
+				if (countID === restartID) {
 					input.placeholder = "";
 					letter = 0;
 					sentence < sentences.length - 1 ? sentence++ : sentence = 0;
 				}
 			}
-			frameID = window.requestAnimationFrame( animPlaceholder )
+			frameID = window.requestAnimationFrame(animPlaceholder);
 		}
 		return () => {
-			window.cancelAnimationFrame( frameID )
-		}
-	} )
+			window.cancelAnimationFrame(frameID);
+		};
+	});
 
 	const resetInput = () => {
-		searchInput.current && searchInput.current.querySelector( ".ap-nostyle-icon-clear" ).click()
-		setInputVal( "" );
-	}
+		searchInput.current && searchInput.current.querySelector(".ap-nostyle-icon-clear").click();
+		setInputVal("");
+	};
 
 	return (
 		<SearchFieldStyled
@@ -74,15 +74,15 @@ function SearchForm ( { className, handleSearch, history, animated } ) {
 			inputVal={ inputVal }
 			theme={ theme }
 			onChange={ () => {
-				setInputVal( searchInput.current.querySelector( ".ap-nostyle-input" ).value )
+				setInputVal(searchInput.current.querySelector(".ap-nostyle-input").value);
 			} }
 		>
 			<AlgoliaPlaces
 				placeholder=""
-				onChange={ ( { suggestion } ) => {
+				onChange={ ({ suggestion }) => {
 					const PlaceFullName = suggestion.name + "," + suggestion.country;
-					resetInput()
-					handleSearch( PlaceFullName, history, suggestion.latlng );
+					resetInput();
+					handleSearch(PlaceFullName, history, suggestion.latlng);
 				} }
 				options={ {
 					appId: "pl8X2ZGNUAZU",
@@ -92,10 +92,10 @@ function SearchForm ( { className, handleSearch, history, animated } ) {
 					aroundLatLngViaIP: true,
 					style: false,
 					templates: {
-						value: function ( suggestion ) {
+						value: function (suggestion) {
 							return suggestion.name + ", " + suggestion.country;
 						},
-						suggestion: function ( { name, country } ) {
+						suggestion: function ({ name, country }) {
 							return name + ', ' + country;
 						}
 					},
@@ -106,7 +106,7 @@ function SearchForm ( { className, handleSearch, history, animated } ) {
 			<ClearIcon className="clear-icon" onClick={ resetInput } />
 
 		</SearchFieldStyled>
-	)
+	);
 }
 
 const SearchFieldStyled = styled.div`
@@ -162,7 +162,7 @@ const SearchFieldStyled = styled.div`
 		width: 1.7rem;
 		opacity: 0;
 		visibility: ${props => props.inputVal ? "hidden" : "visible" };
-		animation: ${fadeIn( 1 ) } ${ props => props.animated ? "3000ms 1000ms" : "0ms" } forwards;
+		animation: ${fadeIn(1) } ${ props => props.animated ? "3000ms 1000ms" : "0ms" } forwards;
 	}
 	.clear-icon {
 		height: 1.5rem;
@@ -215,7 +215,7 @@ const SearchFieldStyled = styled.div`
 			font-weight: bold;
 		}
 		&.selected {
-			background: #00000040
+			background: #00000040;
 		}
 	}
 	@media (max-width: 1024px){
@@ -225,9 +225,11 @@ const SearchFieldStyled = styled.div`
 	}
 	@media (max-width: 480px){
 		.ap-nostyle-input {
-			max-width: 200px;
+			min-width: 200px;
+			width: 75vw;
+			max-width: 340px;
 		}
 	}
-`
+`;
 
-export default withRouter( SearchForm );
+export default withRouter(SearchForm);
