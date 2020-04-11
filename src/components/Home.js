@@ -223,6 +223,10 @@ const HomeStyled = styled.div`
 			font-size: 1rem;
 			letter-spacing: 0;
 		}
+
+		.start-btn {
+			text-transform: uppercase
+		}
 	}
 `;
 

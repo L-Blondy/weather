@@ -118,7 +118,7 @@ const SearchFieldStyled = styled.div`
 		border: none;
 		height: 2.5rem;
 		width: 32vw;	
-		min-width: 300px;
+		min-width: 260px;
 		max-width: 450px;
 		padding: 0 2.5rem 0 7px;
 		background: none;
@@ -226,7 +226,7 @@ const SearchFieldStyled = styled.div`
 	@media (max-width: 480px){
 		.ap-nostyle-input {
 			min-width: 200px;
-			width: 75vw;
+			width: 67vw;
 			max-width: 340px;
 		}
 	}
