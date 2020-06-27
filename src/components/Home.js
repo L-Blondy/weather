@@ -193,6 +193,7 @@ const HomeStyled = styled.div`
 			width: 100%;
 			align-items: center;
 			letter-spacing:0.35px;
+			padding-bottom: 5rem;
 
 			.search-field {
 				left: 50%;
